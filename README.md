@@ -2,7 +2,11 @@
 
 Prince of Persia reimplementation written in HTML5/Javascript
 
-## Start
+## Play Online
+
+- Chrome: https://oklemenz.github.io/PrinceJS/
+
+## Play Locally
 
 - Install [Node.js](https://nodejs.org)
 - Terminal:
