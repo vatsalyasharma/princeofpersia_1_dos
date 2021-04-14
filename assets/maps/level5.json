@@ -2478,28 +2478,38 @@
    ],
    "guards":[
       {
+         "room":11,
+         "location":5,
+         "skill":3,
+         "colors":0,
+         "type":"shadow",
+         "direction":1,
+         "active": false,
+         "visible": false
+      },
+      {
          "room":16,
-         "location":13,
+         "location":12,
          "skill":4,
          "colors":4,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":12,
-         "location":13,
+         "location":12,
          "skill":4,
          "colors":7,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":8,
-         "location":6,
+         "location":5,
          "skill":3,
          "colors":6,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":9,
@@ -2507,7 +2517,7 @@
          "skill":3,
          "colors":6,
          "type":"guard",
-         "direction":1
+         "direction":-1
       }
    ],
    "events":[
@@ -2527,7 +2537,8 @@
          "number":3,
          "room":24,
          "location":2,
-         "next":0
+         "next":0,
+         "state": 1
       },
       {
          "number":4,

@@ -2705,11 +2705,11 @@
    "guards":[
       {
          "room":5,
-         "location":6,
+         "location":5,
          "skill":7,
          "colors":5,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":12,
@@ -2717,7 +2717,7 @@
          "skill":2,
          "colors":3,
          "type":"guard",
-         "direction":1
+         "direction":-1
       },
       {
          "room":22,
@@ -2725,7 +2725,7 @@
          "skill":3,
          "colors":4,
          "type":"guard",
-         "direction":1
+         "direction":-1
       },
       {
          "room":24,
@@ -2733,7 +2733,7 @@
          "skill":3,
          "colors":4,
          "type":"guard",
-         "direction":1
+         "direction":-1
       }
    ],
    "events":[

@@ -1277,7 +1277,7 @@
                "modifier":0
             },
             {
-               "element":1,
+               "element":13,
                "modifier":1
             },
             {
@@ -3046,12 +3046,22 @@
    ],
    "guards":[
       {
+         "room":4,
+         "location":4,
+         "skill":3,
+         "colors":0,
+         "type":"shadow",
+         "direction":1,
+         "active": false,
+         "visible": false
+      },
+      {
          "room":2,
          "location":15,
          "skill":4,
          "colors":7,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":24,
@@ -3059,7 +3069,7 @@
          "skill":4,
          "colors":7,
          "type":"guard",
-         "direction":1
+         "direction":-1
       },
       {
          "room":18,
@@ -3067,7 +3077,7 @@
          "skill":3,
          "colors":3,
          "type":"guard",
-         "direction":1
+         "direction":-1
       },
       {
          "room":22,
@@ -3075,7 +3085,7 @@
          "skill":3,
          "colors":6,
          "type":"guard",
-         "direction":1
+         "direction":-1
       }
    ],
    "events":[
@@ -3101,7 +3111,8 @@
          "number":4,
          "room":18,
          "location":2,
-         "next":0
+         "next":0,
+         "state":1
       },
       {
          "number":5,
@@ -3113,7 +3124,8 @@
          "number":6,
          "room":23,
          "location":10,
-         "next":0
+         "next":0,
+         "state":1
       },
       {
          "number":7,

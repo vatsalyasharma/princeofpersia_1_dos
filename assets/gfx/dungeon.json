@@ -2375,6 +2375,24 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":79},
 	"sourceSize": {"w":60,"h":79},
 	"pivot": {"x":0.5,"y":0.5}
+},
+"dungeon_30":
+{
+	"frame": {"x":932,"y":893,"w":60,"h":79},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":79},
+	"sourceSize": {"w":60,"h":79},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"dungeon_31":
+{
+	"frame": {"x":747,"y":650,"w":60,"h":79},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":79},
+	"sourceSize": {"w":60,"h":79},
+	"pivot": {"x":0.5,"y":0.5}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",

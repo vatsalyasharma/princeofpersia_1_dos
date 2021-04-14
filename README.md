@@ -1,8 +1,13 @@
-# PrinceJS readme
+# Prince of Persia (JS)
 
-## About
+Prince of Persia reimplementation written in HTML5/Javascript
 
-PrinceJS is a Prince of Persia reimplementation written in HTML5/Javascript using assets from the MSDOS version 
+## Start
 
-## Credits
-Jordan Mechner for written the original Apple II version and release the source code
+- Install [Node.js](https://nodejs.org)
+- Terminal:
+  - `npm install`
+  - `npm start`
+- Chrome:
+  - `localhost:8080`
+- Enjoy!

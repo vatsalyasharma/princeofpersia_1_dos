@@ -2414,15 +2414,15 @@
          "skill":4,
          "colors":3,
          "type":"guard",
-         "direction":1
+         "direction":-1
       },
       {
          "room":5,
-         "location":3,
+         "location":2,
          "skill":4,
          "colors":7,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":2,
@@ -2430,15 +2430,15 @@
          "skill":3,
          "colors":6,
          "type":"guard",
-         "direction":1
+         "direction":-1
       },
       {
          "room":7,
-         "location":7,
+         "location":6,
          "skill":3,
          "colors":6,
          "type":"guard",
-         "direction":-1
+         "direction":1
       },
       {
          "room":14,
@@ -2446,7 +2446,7 @@
          "skill":3,
          "colors":4,
          "type":"guard",
-         "direction":1
+         "direction":-1
       }
    ],
    "events":[

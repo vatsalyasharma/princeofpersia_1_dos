@@ -1789,13 +1789,23 @@
       }
    ],
    "guards":[
+       {
+          "room":1,
+          "location":10,
+          "skill":5,
+          "colors":0,
+          "type":"shadow",
+          "direction":1,
+          "active": false,
+          "visible": true
+      },
       {
          "room":6,
-         "location":13,
+         "location":12,
          "skill":5,
          "colors":0,
          "type":"fatguard",
-         "direction":-1
+         "direction":1
       }
    ],
    "events":[

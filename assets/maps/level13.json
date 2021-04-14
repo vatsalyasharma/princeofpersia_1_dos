@@ -1402,7 +1402,7 @@
          "skill":9,
          "colors":0,
          "type":"jaffar",
-         "direction":1
+         "direction":-1
       }
    ],
    "events":[
@@ -1414,8 +1414,11 @@
       }
    ],
    "prince":{
-      "location":20,
-      "room":23,
+      "location":10,
+      "turn": false,
+      "offset": 5,
+      "room":13,
+      "cameraRoom":23,
       "direction":-1
    }
 }

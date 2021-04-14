@@ -2745,6 +2745,8 @@
    ],
    "prince":{
       "location":1,
+      "offset": -5,
+      "turn": false,
       "room":1,
       "direction":1
    }

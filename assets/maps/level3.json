@@ -569,7 +569,8 @@
             },
             {
                "element":4,
-               "modifier":0
+               "modifier":0,
+               "mute":false
             },
             {
                "element":0,
@@ -2828,7 +2829,16 @@
       }
    ],
    "guards":[
-
+      {
+         "room":1,
+         "location":15,
+         "skill":2,
+         "colors":0,
+         "type":"skeleton",
+         "direction":-1,
+         "active": false,
+         "visible": false
+      }
    ],
    "events":[
       {

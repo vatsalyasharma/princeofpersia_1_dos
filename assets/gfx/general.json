@@ -207,6 +207,51 @@
 	"sourceSize": {"w":28,"h":26},
 	"pivot": {"x":0.5,"y":0.5}
 },
+"chopper-blood_1":
+{
+	"frame": {"x":2,"y":722,"w":6,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":6,"h":29},
+	"sourceSize": {"w":6,"h":29},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"chopper-blood_2":
+{
+	"frame": {"x":10,"y":722,"w":6,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":6,"h":29},
+	"sourceSize": {"w":6,"h":29},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"chopper-blood_3":
+{
+	"frame": {"x":2,"y":753,"w":6,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":6,"h":29},
+	"sourceSize": {"w":6,"h":29},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"chopper-blood_4":
+{
+	"frame": {"x":10,"y":753,"w":6,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":6,"h":29},
+	"sourceSize": {"w":6,"h":29},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"chopper-blood_5":
+{
+	"frame": {"x":18,"y":753,"w":6,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":6,"h":29},
+	"sourceSize": {"w":6,"h":29},
+	"pivot": {"x":0.5,"y":0.5}
+},
 "fire_1":
 {
 	"frame": {"x":2,"y":374,"w":16,"h":18},
@@ -680,7 +725,7 @@
 	"version": "1.0",
 	"image": "general.png",
 	"format": "RGBA8888",
-	"size": {"w":32,"h":722},
+	"size": {"w":32,"h":786},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:7e3c4af874426068d7bf152cb29b4004:0649190518493c9f50ca9cc514eb512e:49afdaefc8003509a7dad15a6a269fdc$"
 }

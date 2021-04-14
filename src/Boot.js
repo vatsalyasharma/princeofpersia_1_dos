@@ -1,4 +1,6 @@
-var PrinceJS = {};
+"use strict";
+
+let PrinceJS = {};
 
 PrinceJS.SCALE_FACTOR = 2;
 
@@ -19,27 +21,26 @@ PrinceJS.UI_HEIGHT = 8;
 PrinceJS.SKIP_TITLE = false;
 PrinceJS.SKIP_CUTSCENES = false;
 
-PrinceJS.currentLevel = 1;
-
-PrinceJS.Boot = function (game) {
-
-    
+PrinceJS.Init = function () {
+  PrinceJS.currentLevel = 1;
+  PrinceJS.startTime = undefined;
+  PrinceJS.endTime = undefined;
+  PrinceJS.maxHealth = 3;
+  PrinceJS.firstLand = false;
+  PrinceJS.danger = true;
 };
+PrinceJS.Init();
+
+PrinceJS.Boot = function (game) {};
 
 PrinceJS.Boot.prototype = {
+  preload: function () {
+    this.load.bitmapFont("font", "assets/font/prince_0.png", "assets/font/prince.fnt");
+  },
 
-    preload: function () {
+  create: function () {
+    this.world.scale.set(PrinceJS.SCALE_FACTOR);
 
-        this.load.bitmapFont('font', 'assets/font/prince_0.png', 'assets/font/prince.fnt');
-
-    },
-
-    create: function () {
-
-        this.world.scale.set(PrinceJS.SCALE_FACTOR);
-        
-        this.state.start('Preloader');
-        
-    }
-
+    this.state.start("Preloader");
+  }
 };
