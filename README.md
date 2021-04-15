@@ -4,7 +4,7 @@ Prince of Persia reimplementation written in HTML5/Javascript
 
 ## Play Online
 
-- Chrome: https://oklemenz.github.io/PrinceJS/
+- Chrome: https://oklemenz.github.io/PrinceJS
 
 ## Play Locally
 
@@ -12,6 +12,4 @@ Prince of Persia reimplementation written in HTML5/Javascript
 - Terminal:
   - `npm install`
   - `npm start`
-- Chrome:
-  - `localhost:8080`
-- Enjoy!
+- Chrome: `localhost:8080`

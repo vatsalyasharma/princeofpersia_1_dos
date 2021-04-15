@@ -22,11 +22,7 @@ PrinceJS.Cutscene.prototype = {
     this.scene = new PrinceJS.Scene(this.game);
     this.executeProgram();
 
-    if (PrinceJS.currentLevel < 15) {
-      this.input.keyboard.onDownCallback = this.play.bind(this);
-    } else {
-      this.input.keyboard.onDownCallback = this.next.bind(this);
-    }
+    this.input.keyboard.onDownCallback = this.continue.bind(this);
     this.game.time.events.loop(120, this.updateScene, this);
   },
 
@@ -124,13 +120,10 @@ PrinceJS.Cutscene.prototype = {
     for (let i = 0; i < this.actors.length; i++) {
       this.actors[i].updateActor();
     }
-  },
 
-  play: function () {
-    this.stopMusic();
-
-    this.input.keyboard.onDownCallback = null;
-    this.state.start("Game");
+    if (PrinceJS.Utils.pointerPressed(this.game)) {
+      this.continue();
+    }
   },
 
   endCutscene: function (fadeOut = true) {
@@ -141,6 +134,21 @@ PrinceJS.Cutscene.prototype = {
     } else {
       this.next();
     }
+  },
+
+  continue: function () {
+    if (PrinceJS.currentLevel < 15) {
+      this.play();
+    } else {
+      this.next();
+    }
+  },
+
+  play: function () {
+    this.stopMusic();
+
+    this.input.keyboard.onDownCallback = null;
+    this.state.start("Game");
   },
 
   next: function () {

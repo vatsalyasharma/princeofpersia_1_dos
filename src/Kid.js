@@ -1003,23 +1003,56 @@ PrinceJS.Kid.prototype.tryPickup = function () {
 };
 
 PrinceJS.Kid.prototype.keyL = function () {
-  return this.cursors.left.isDown;
+  return this.cursors.left.isDown || this.pointerL();
 };
 
 PrinceJS.Kid.prototype.keyR = function () {
-  return this.cursors.right.isDown;
+  return this.cursors.right.isDown || this.pointerR();
 };
 
 PrinceJS.Kid.prototype.keyU = function () {
-  return this.cursors.up.isDown;
+  return this.cursors.up.isDown || this.pointerU();
 };
 
 PrinceJS.Kid.prototype.keyD = function () {
-  return this.cursors.down.isDown;
+  return this.cursors.down.isDown || this.pointerD();
 };
 
 PrinceJS.Kid.prototype.keyS = function () {
-  return this.shiftKey.isDown;
+  return this.shiftKey.isDown || this.pointerS();
+};
+
+PrinceJS.Kid.prototype.pointerL = function () {
+  return this.game.input.activePointer.leftButton.isDown && this.game.input.activePointer.x <= PrinceJS.WORLD_WIDTH / 3;
+};
+
+PrinceJS.Kid.prototype.pointerR = function () {
+  return (
+    this.game.input.activePointer.leftButton.isDown && this.game.input.activePointer.x >= (2 * PrinceJS.WORLD_WIDTH) / 3
+  );
+};
+
+PrinceJS.Kid.prototype.pointerU = function () {
+  return (
+    this.game.input.activePointer.leftButton.isDown && this.game.input.activePointer.y <= PrinceJS.WORLD_HEIGHT / 3
+  );
+};
+
+PrinceJS.Kid.prototype.pointerD = function () {
+  return (
+    this.game.input.activePointer.leftButton.isDown &&
+    this.game.input.activePointer.y >= (2 * PrinceJS.WORLD_HEIGHT) / 3
+  );
+};
+
+PrinceJS.Kid.prototype.pointerS = function () {
+  return (
+    this.game.input.activePointer.leftButton.isDown &&
+    this.game.input.activePointer.x >= 0.5 * PrinceJS.WORLD_WIDTH / 3 &&
+    this.game.input.activePointer.x <= (2.5 * PrinceJS.WORLD_WIDTH) / 3 &&
+    this.game.input.activePointer.y >= 0.5 * PrinceJS.WORLD_HEIGHT / 3 &&
+    this.game.input.activePointer.y <= (2.5 * PrinceJS.WORLD_HEIGHT) / 3
+  );
 };
 
 PrinceJS.Kid.prototype.syncShadow = function () {

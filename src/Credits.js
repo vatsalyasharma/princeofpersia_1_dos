@@ -65,6 +65,10 @@ PrinceJS.Credits.prototype = {
     this.tick++;
     this.back.updateCrop();
     this.credits.updateCrop();
+
+    if (PrinceJS.Utils.pointerPressed(this.game)) {
+      this.play();
+    }
   },
 
   play: function () {

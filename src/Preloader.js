@@ -41,72 +41,78 @@ PrinceJS.Preloader.prototype = {
     this.load.json("vizier-anims", "assets/anims/vizier.json");
     this.load.json("mouse-anims", "assets/anims/mouse.json");
 
-    this.game.load.audio("PrologueA", "assets/music/01_Prologue_A.ogg");
-    this.game.load.audio("PrologueB", "assets/music/02_Prologue_B.ogg");
-    this.game.load.audio("Princess", "assets/music/03_Princess.ogg");
-    this.game.load.audio("Jaffar", "assets/music/04_Jaffar.ogg");
-    this.game.load.audio("Heartbeat", "assets/music/05_Heartbeat.ogg");
-    this.game.load.audio("Danger", "assets/music/06_Danger.ogg");
-    this.game.load.audio("Accident", "assets/music/07_Accident.ogg");
-    this.game.load.audio("Potion1", "assets/music/08_Potion_1.ogg");
-    this.game.load.audio("Victory", "assets/music/09_Victory.ogg");
-    this.game.load.audio("Prince", "assets/music/11_Prince.ogg");
-    this.game.load.audio("Heartbeat2", "assets/music/12_Heartbeat_2.ogg");
-    this.game.load.audio("HeroicDeath", "assets/music/13_Heroic_Death.ogg");
-    this.game.load.audio("Potion2", "assets/music/14_Potion_2.ogg");
-    this.game.load.audio("TheShadow", "assets/music/15_The_Shadow.ogg");
-    this.game.load.audio("Float", "assets/music/16_Float.ogg");
-    this.game.load.audio("Timer", "assets/music/17_Timer.ogg");
-    this.game.load.audio("TragicEnd", "assets/music/18_Tragic_End.ogg");
-    this.game.load.audio("Jaffar2", "assets/music/19_Jaffar_2.ogg");
-    this.game.load.audio("JaffarDead", "assets/music/20_Jaffar_Dead.ogg");
-    this.game.load.audio("Embrace", "assets/music/21_Embrace.ogg");
-    this.game.load.audio("Epilogue", "assets/music/22_Epilogue.ogg");
+    this.game.load.audio("PrologueA", "assets/music/01_Prologue_A.mp3");
+    this.game.load.audio("PrologueB", "assets/music/02_Prologue_B.mp3");
+    this.game.load.audio("Princess", "assets/music/03_Princess.mp3");
+    this.game.load.audio("Jaffar", "assets/music/04_Jaffar.mp3");
+    this.game.load.audio("Heartbeat", "assets/music/05_Heartbeat.mp3");
+    this.game.load.audio("Danger", "assets/music/06_Danger.mp3");
+    this.game.load.audio("Accident", "assets/music/07_Accident.mp3");
+    this.game.load.audio("Potion1", "assets/music/08_Potion_1.mp3");
+    this.game.load.audio("Victory", "assets/music/09_Victory.mp3");
+    this.game.load.audio("Prince", "assets/music/11_Prince.mp3");
+    this.game.load.audio("Heartbeat2", "assets/music/12_Heartbeat_2.mp3");
+    this.game.load.audio("HeroicDeath", "assets/music/13_Heroic_Death.mp3");
+    this.game.load.audio("Potion2", "assets/music/14_Potion_2.mp3");
+    this.game.load.audio("TheShadow", "assets/music/15_The_Shadow.mp3");
+    this.game.load.audio("Float", "assets/music/16_Float.mp3");
+    this.game.load.audio("Timer", "assets/music/17_Timer.mp3");
+    this.game.load.audio("TragicEnd", "assets/music/18_Tragic_End.mp3");
+    this.game.load.audio("Jaffar2", "assets/music/19_Jaffar_2.mp3");
+    this.game.load.audio("JaffarDead", "assets/music/20_Jaffar_Dead.mp3");
+    this.game.load.audio("Embrace", "assets/music/21_Embrace.mp3");
+    this.game.load.audio("Epilogue", "assets/music/22_Epilogue.mp3");
 
-    this.game.load.audio("FreeFallLand", "assets/sfx/01_Free_fall_land.wav");
-    this.game.load.audio("LooseFloorLands", "assets/sfx/02_Loose_floor_lands.wav");
-    this.game.load.audio("LooseFloorShakes", "assets/sfx/03_Loose_floor_shakes.wav");
-    this.game.load.audio("GateComingDownSlow", "assets/sfx/04_Gate_coming_down_slow.wav");
-    this.game.load.audio("GateRising", "assets/sfx/05_Gate_rising.wav");
-    this.game.load.audio("GateReachesBottomClang", "assets/sfx/06_Gate_reaches_bottom_clang.wav");
-    this.game.load.audio("GateStopsAtTop", "assets/sfx/07_Gate_stops_at_top.wav");
-    this.game.load.audio("BumpIntoWallSoft", "assets/sfx/08_Bump_into_wall_soft.wav");
-    this.game.load.audio("BumpIntoWallHard", "assets/sfx/09_Bump_into_wall_hard.wav");
-    this.game.load.audio("SwordClash", "assets/sfx/10_Sword_clash.wav");
-    this.game.load.audio("StabAir", "assets/sfx/11_Stab_air.wav");
-    this.game.load.audio("StabOpponent", "assets/sfx/12_Stab_opponent.wav");
-    this.game.load.audio("StabbedByOpponent", "assets/sfx/13_Stabbed_by_opponent.wav");
-    this.game.load.audio("MediumLandingOof", "assets/sfx/14_Medium_landing_oof.wav");
-    this.game.load.audio("SoftLanding", "assets/sfx/15_Soft_landing.wav");
-    this.game.load.audio("UnsheatheSword", "assets/sfx/16_Unsheathe_sword.wav");
-    this.game.load.audio("LooseFloorShakes3", "assets/sfx/17_Loose_floor_shakes_3.wav");
-    this.game.load.audio("LooseFloorShakes2", "assets/sfx/18_Loose_floor_shakes_2.wav");
-    this.game.load.audio("FloorButton", "assets/sfx/19_Floor_button.wav");
-    this.game.load.audio("Footsteps", "assets/sfx/20_Footsteps.wav");
-    this.game.load.audio("BonesLeapToLife", "assets/sfx/21_Bones_leap_to_life.wav");
-    this.game.load.audio("Mirror", "assets/sfx/22_Mirror.wav");
-    this.game.load.audio("HalvedByChopper", "assets/sfx/23_Halved_by_chopper.wav");
-    this.game.load.audio("SlicerBladesClash", "assets/sfx/24_Slicer_blades_clash.wav");
-    this.game.load.audio("HardLandingSplat", "assets/sfx/25_Hard_landing_splat.wav");
-    this.game.load.audio("ImpaledBySpikes", "assets/sfx/26_Impaled_by_spikes.wav");
-    this.game.load.audio("DoorSqueak", "assets/sfx/27_Door_squeak.wav");
-    this.game.load.audio("FallingFloorLands", "assets/sfx/28_Falling_floor_lands.wav");
-    this.game.load.audio("EntranceDoorCloses", "assets/sfx/29_Entrance_door_closes.wav");
-    this.game.load.audio("ExitDoorOpening", "assets/sfx/30_Exit_door_opening.wav");
-    this.game.load.audio("DrinkPotionGlugGlug", "assets/sfx/31_Drink_potion_glug_glug.wav");
-    this.game.load.audio("Beep", "assets/sfx/32_Beep.wav");
-    this.game.load.audio("SpikedBySpikes", "assets/sfx/33_Spiked_by_spikes.wav");
+    this.game.load.audio("FreeFallLand", "assets/sfx/01_Free_fall_land.mp3");
+    this.game.load.audio("LooseFloorLands", "assets/sfx/02_Loose_floor_lands.mp3");
+    this.game.load.audio("LooseFloorShakes", "assets/sfx/03_Loose_floor_shakes.mp3");
+    this.game.load.audio("GateComingDownSlow", "assets/sfx/04_Gate_coming_down_slow.mp3");
+    this.game.load.audio("GateRising", "assets/sfx/05_Gate_rising.mp3");
+    this.game.load.audio("GateReachesBottomClang", "assets/sfx/06_Gate_reaches_bottom_clang.mp3");
+    this.game.load.audio("GateStopsAtTop", "assets/sfx/07_Gate_stops_at_top.mp3");
+    this.game.load.audio("BumpIntoWallSoft", "assets/sfx/08_Bump_into_wall_soft.mp3");
+    this.game.load.audio("BumpIntoWallHard", "assets/sfx/09_Bump_into_wall_hard.mp3");
+    this.game.load.audio("SwordClash", "assets/sfx/10_Sword_clash.mp3");
+    this.game.load.audio("StabAir", "assets/sfx/11_Stab_air.mp3");
+    this.game.load.audio("StabOpponent", "assets/sfx/12_Stab_opponent.mp3");
+    this.game.load.audio("StabbedByOpponent", "assets/sfx/13_Stabbed_by_opponent.mp3");
+    this.game.load.audio("MediumLandingOof", "assets/sfx/14_Medium_landing_oof.mp3");
+    this.game.load.audio("SoftLanding", "assets/sfx/15_Soft_landing.mp3");
+    this.game.load.audio("UnsheatheSword", "assets/sfx/16_Unsheathe_sword.mp3");
+    this.game.load.audio("LooseFloorShakes3", "assets/sfx/17_Loose_floor_shakes_3.mp3");
+    this.game.load.audio("LooseFloorShakes2", "assets/sfx/18_Loose_floor_shakes_2.mp3");
+    this.game.load.audio("FloorButton", "assets/sfx/19_Floor_button.mp3");
+    this.game.load.audio("Footsteps", "assets/sfx/20_Footsteps.mp3");
+    this.game.load.audio("BonesLeapToLife", "assets/sfx/21_Bones_leap_to_life.mp3");
+    this.game.load.audio("Mirror", "assets/sfx/22_Mirror.mp3");
+    this.game.load.audio("HalvedByChopper", "assets/sfx/23_Halved_by_chopper.mp3");
+    this.game.load.audio("SlicerBladesClash", "assets/sfx/24_Slicer_blades_clash.mp3");
+    this.game.load.audio("HardLandingSplat", "assets/sfx/25_Hard_landing_splat.mp3");
+    this.game.load.audio("ImpaledBySpikes", "assets/sfx/26_Impaled_by_spikes.mp3");
+    this.game.load.audio("DoorSqueak", "assets/sfx/27_Door_squeak.mp3");
+    this.game.load.audio("FallingFloorLands", "assets/sfx/28_Falling_floor_lands.mp3");
+    this.game.load.audio("EntranceDoorCloses", "assets/sfx/29_Entrance_door_closes.mp3");
+    this.game.load.audio("ExitDoorOpening", "assets/sfx/30_Exit_door_opening.mp3");
+    this.game.load.audio("DrinkPotionGlugGlug", "assets/sfx/31_Drink_potion_glug_glug.mp3");
+    this.game.load.audio("Beep", "assets/sfx/32_Beep.mp3");
+    this.game.load.audio("SpikedBySpikes", "assets/sfx/33_Spiked_by_spikes.mp3");
   },
 
   create: function () {
     this.text.setText("Click to Start");
-    this.text.inputEnabled = true;
-    this.text.events.onInputDown.add(this.start, this);
 
     this.input.keyboard.onDownCallback = this.start.bind(this);
     this.game.input.onDown.addOnce(() => {
       this.game.sound.context.resume();
     });
+
+    this.game.input.mouse.capture = true;
+  },
+
+  update: function () {
+    if (PrinceJS.Utils.pointerPressed(this.game)) {
+      this.start();
+    }
   },
 
   start: function () {

@@ -81,5 +81,18 @@ PrinceJS.Utils = {
 
   random: function (max) {
     return Math.floor(Math.random() * Math.floor(max));
+  },
+
+  pointerPressed: function (game) {
+    if (PrinceJS.Utils._pointerTimer > 0) {
+      PrinceJS.Utils._pointerTimer--;
+    } else {
+      PrinceJS.Utils._pointerTimer = 0;
+    }
+    if (PrinceJS.Utils._pointerTimer === 0 && game.input.activePointer.leftButton.isDown) {
+      PrinceJS.Utils._pointerTimer = 50;
+      return true;
+    }
+    return false;
   }
 };
