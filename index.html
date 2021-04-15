@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html style="width: 100%; height: 100%">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrinceJS - An HTML5 port of Prince of Persia</title>
     <script src="lib/phaser.min.js"></script>
     <script src="src/Boot.js"></script>
@@ -36,18 +37,41 @@
     <script src="src/tiles/Sword.js"></script>
     <script src="src/tiles/Torch.js"></script>
     <style>
+      .screen {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: table;
+        background-color: black;
+        -webkit-touch-callout: none;
+      }
+      .table {
+        width: 100%;
+        height: 100%;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .game {
+        width: 640px;
+        height: 400px;
+        padding-left: 0;
+        padding-top: 0;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-touch-callout: none;
+      }
       .flipped {
         transform: scaleY(-1);
       }
     </style>
   </head>
-  <body style="background-color: black">
-    <div style="padding-left: 0; padding-top: 0" id="gameContainer"></div>
-
+  <body class="screen" oncontextmenu="return false;">
+    <div class="table">
+      <div class="game" id="gameContainer"></div>
+    </div>
     <script type="text/javascript">
       window.onload = function () {
         let game = new Phaser.Game(640, 400, Phaser.AUTO, "gameContainer", null, false, false);
-
         game.state.add("Boot", PrinceJS.Boot);
         game.state.add("Preloader", PrinceJS.Preloader);
         game.state.add("Game", PrinceJS.Game);
@@ -55,7 +79,6 @@
         game.state.add("EndTitle", PrinceJS.EndTitle);
         game.state.add("Credits", PrinceJS.Credits);
         game.state.add("Cutscene", PrinceJS.Cutscene);
-
         game.state.start("Boot");
       };
     </script>
