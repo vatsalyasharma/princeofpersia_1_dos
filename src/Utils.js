@@ -89,10 +89,22 @@ PrinceJS.Utils = {
     } else {
       PrinceJS.Utils._pointerTimer = 0;
     }
-    if (PrinceJS.Utils._pointerTimer === 0 && game.input.activePointer.leftButton.isDown) {
+    if (PrinceJS.Utils._pointerTimer === 0 && PrinceJS.Utils.pointerDown(game)) {
       PrinceJS.Utils._pointerTimer = 50;
       return true;
     }
     return false;
+  },
+
+  pointerDown: function (game) {
+    return game.input.activePointer.leftButton.isDown || game.input.pointer1.isDown;
+  },
+
+  pointerX: function (game) {
+    return game.input.activePointer.x || game.input.pointer1.x || 0;
+  },
+
+  pointerY: function (game) {
+    return game.input.activePointer.y || game.input.pointer1.y || 0;
   }
 };

@@ -108,7 +108,11 @@ PrinceJS.Game.prototype = {
     this.firstUpdate = true;
   },
 
-  update: function () {},
+  update: function () {
+    if (this.pressButtonToContinueTimer > -1 && PrinceJS.Utils.pointerPressed(this.game)) {
+      this.continueLevel();
+    }
+  },
 
   updateWorld: function () {
     this.level.update();

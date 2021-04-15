@@ -99,7 +99,7 @@ PrinceJS.Preloader.prototype = {
   },
 
   create: function () {
-    this.text.setText("Click to Start");
+    this.text.setText("Press to Start");
 
     this.input.keyboard.onDownCallback = this.start.bind(this);
     this.game.input.onDown.addOnce(() => {
@@ -107,6 +107,10 @@ PrinceJS.Preloader.prototype = {
     });
 
     this.game.input.mouse.capture = true;
+    this.game.input.addPointer();
+    this.game.canvas.oncontextmenu = function (event) {
+      event.preventDefault();
+    };
   },
 
   update: function () {

@@ -1023,35 +1023,28 @@ PrinceJS.Kid.prototype.keyS = function () {
 };
 
 PrinceJS.Kid.prototype.pointerL = function () {
-  return this.game.input.activePointer.leftButton.isDown && this.game.input.activePointer.x <= PrinceJS.WORLD_WIDTH / 3;
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) <= PrinceJS.WORLD_WIDTH / 3;
 };
 
 PrinceJS.Kid.prototype.pointerR = function () {
-  return (
-    this.game.input.activePointer.leftButton.isDown && this.game.input.activePointer.x >= (2 * PrinceJS.WORLD_WIDTH) / 3
-  );
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) >= (2 * PrinceJS.WORLD_WIDTH) / 3;
 };
 
 PrinceJS.Kid.prototype.pointerU = function () {
-  return (
-    this.game.input.activePointer.leftButton.isDown && this.game.input.activePointer.y <= PrinceJS.WORLD_HEIGHT / 3
-  );
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) <= PrinceJS.WORLD_HEIGHT / 3;
 };
 
 PrinceJS.Kid.prototype.pointerD = function () {
-  return (
-    this.game.input.activePointer.leftButton.isDown &&
-    this.game.input.activePointer.y >= (2 * PrinceJS.WORLD_HEIGHT) / 3
-  );
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) >= (2 * PrinceJS.WORLD_HEIGHT) / 3;
 };
 
 PrinceJS.Kid.prototype.pointerS = function () {
   return (
-    this.game.input.activePointer.leftButton.isDown &&
-    this.game.input.activePointer.x >= 0.5 * PrinceJS.WORLD_WIDTH / 3 &&
-    this.game.input.activePointer.x <= (2.5 * PrinceJS.WORLD_WIDTH) / 3 &&
-    this.game.input.activePointer.y >= 0.5 * PrinceJS.WORLD_HEIGHT / 3 &&
-    this.game.input.activePointer.y <= (2.5 * PrinceJS.WORLD_HEIGHT) / 3
+    PrinceJS.Utils.pointerDown(this.game) &&
+    PrinceJS.Utils.pointerX(this.game) >= (0.5 * PrinceJS.WORLD_WIDTH) / 3 &&
+    PrinceJS.Utils.pointerX(this.game) <= (2.5 * PrinceJS.WORLD_WIDTH) / 3 &&
+    PrinceJS.Utils.pointerY(this.game) >= (0.5 * PrinceJS.WORLD_HEIGHT) / 3 &&
+    PrinceJS.Utils.pointerY(this.game) <= (2.5 * PrinceJS.WORLD_HEIGHT) / 3
   );
 };
 
