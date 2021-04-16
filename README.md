@@ -5,9 +5,11 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 ## Play Online
 
 - Safari / Chrome: https://oklemenz.github.io/PrinceJS
+- Keyboard Controls
 
 ## Play Mobile
 
+- Safari / Chrome: https://oklemenz.github.io/PrinceJS
 - Use Landscape Mode (Single Tab)
 - Add to Home Screen to start as App
 - Touch controls:
