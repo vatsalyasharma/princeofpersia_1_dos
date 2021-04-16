@@ -1,9 +1,21 @@
 <!DOCTYPE html>
-<html style="width: 100%; height: 100%">
+<html style="width: 100%; height: 100%" lang="en">
   <head>
+    <title>PrinceJS</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>PrinceJS - An HTML5 port of Prince of Persia</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0.0, viewport-fit=cover"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PrinceJS" />
+    <link rel="icon" type="image/png" href="assets/web/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/web/touch-icon-152.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/web/touch-icon-152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/web/touch-icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <script src="lib/phaser.min.js"></script>
     <script src="src/Boot.js"></script>
     <script src="src/Preloader.js"></script>
@@ -43,17 +55,14 @@
         height: 100%;
         display: table;
         background-color: black;
+        transform-origin: top;
+        -webkit-transform-origin: top;
+      }
+      .screen,
+      .screen * {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
-      }
-      @media screen and ( max-height: 399px ) {
-        .adjust {
-          -webkit-transform: scale(0.925);
-          -webkit-transform-origin: top;
-          transform: scale(0.925);
-          transform-origin: top;
-        }
       }
       .center {
         width: 100%;
@@ -66,6 +75,42 @@
         height: 400px;
         margin-left: auto;
         margin-right: auto;
+      }
+      @media screen and (max-height: 199px) {
+        .adjust {
+          transform: scale(0.5);
+          -webkit-transform: scale(0.5);
+        }
+      }
+      @media screen and (min-height: 200px) and (max-height: 239px) {
+        .adjust {
+          transform: scale(0.5);
+          -webkit-transform: scale(0.5);
+        }
+      }
+      @media screen and (min-height: 240px) and (max-height: 319px) {
+        .adjust {
+          transform: scale(0.6);
+          -webkit-transform: scale(0.6);
+        }
+      }
+      @media screen and (min-height: 320px) and (max-height: 359px) {
+        .adjust {
+          transform: scale(0.8);
+          -webkit-transform: scale(0.8);
+        }
+      }
+      @media screen and (min-height: 360px) and (max-height: 374px) {
+        .adjust {
+          transform: scale(0.9);
+          -webkit-transform: scale(0.9);
+        }
+      }
+      @media screen and (min-height: 375px) and (max-height: 399px) {
+        .adjust {
+          transform: scale(0.9375);
+          -webkit-transform: scale(0.9375);
+        }
       }
       .flipped {
         transform: scaleY(-1);
