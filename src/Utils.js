@@ -106,5 +106,17 @@ PrinceJS.Utils = {
 
   pointerY: function (game) {
     return game.input.activePointer.y || game.input.pointer1.y || 0;
+  },
+
+  effectiveScreenWidth: function() {
+    return document.getElementById("gameContainer").getBoundingClientRect().width;
+  },
+
+  effectiveScreenHeight: function() {
+    return document.getElementById("gameContainer").getBoundingClientRect().height;
+  },
+
+  toggleFlipScreen: function() {
+    document.getElementById("gameContainer").classList.toggle("flipped");
   }
 };

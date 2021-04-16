@@ -1023,28 +1023,28 @@ PrinceJS.Kid.prototype.keyS = function () {
 };
 
 PrinceJS.Kid.prototype.pointerL = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) <= PrinceJS.WORLD_WIDTH / 3;
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) <= PrinceJS.Utils.effectiveScreenWidth() / 3;
 };
 
 PrinceJS.Kid.prototype.pointerR = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) >= (2 * PrinceJS.WORLD_WIDTH) / 3;
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) >= (2 * PrinceJS.Utils.effectiveScreenWidth()) / 3;
 };
 
 PrinceJS.Kid.prototype.pointerU = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) <= PrinceJS.WORLD_HEIGHT / 3;
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) <= PrinceJS.Utils.effectiveScreenHeight() / 3;
 };
 
 PrinceJS.Kid.prototype.pointerD = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) >= (2 * PrinceJS.WORLD_HEIGHT) / 3;
+  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) >= (2 * PrinceJS.Utils.effectiveScreenHeight()) / 3;
 };
 
 PrinceJS.Kid.prototype.pointerS = function () {
   return (
     PrinceJS.Utils.pointerDown(this.game) &&
-    PrinceJS.Utils.pointerX(this.game) >= (0.5 * PrinceJS.WORLD_WIDTH) / 3 &&
-    PrinceJS.Utils.pointerX(this.game) <= (2.5 * PrinceJS.WORLD_WIDTH) / 3 &&
-    PrinceJS.Utils.pointerY(this.game) >= (0.5 * PrinceJS.WORLD_HEIGHT) / 3 &&
-    PrinceJS.Utils.pointerY(this.game) <= (2.5 * PrinceJS.WORLD_HEIGHT) / 3
+    PrinceJS.Utils.pointerX(this.game) >= (0.5 * PrinceJS.Utils.effectiveScreenWidth()) / 3 &&
+    PrinceJS.Utils.pointerX(this.game) <= (2.5 * PrinceJS.Utils.effectiveScreenWidth()) / 3 &&
+    PrinceJS.Utils.pointerY(this.game) >= (0.5 * PrinceJS.Utils.effectiveScreenHeight()) / 3 &&
+    PrinceJS.Utils.pointerY(this.game) <= (2.5 * PrinceJS.Utils.effectiveScreenHeight()) / 3
   );
 };
 
@@ -1546,8 +1546,7 @@ PrinceJS.Kid.prototype.addLife = function () {
 };
 
 PrinceJS.Kid.prototype.flipScreen = function () {
-  let gameContainer = document.getElementById("gameContainer");
-  gameContainer.classList.toggle("flipped");
+  PrinceJS.Utils.toggleFlipScreen();
 };
 
 PrinceJS.Kid.prototype.floatFall = function () {

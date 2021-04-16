@@ -8,7 +8,7 @@ PrinceJS.Preloader.prototype = {
       PrinceJS.SCREEN_WIDTH * 0.5,
       PrinceJS.SCREEN_HEIGHT * 0.5,
       "font",
-      "Loading. . . .",
+      "Loading . . .",
       16
     );
     this.text.anchor.setTo(0.5, 0.5);

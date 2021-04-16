@@ -12,10 +12,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="PrinceJS" />
     <link rel="icon" type="image/png" href="assets/web/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/web/touch-icon-152.png">
     <link rel="apple-touch-icon" href="assets/web/touch-icon-152.png" />
     <link rel="apple-touch-icon" sizes="152x152" href="assets/web/touch-icon-152.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/web/touch-icon-180.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="manifest" href="site.webmanifest" />
     <script src="lib/phaser.min.js"></script>
     <script src="src/Boot.js"></script>
     <script src="src/Preloader.js"></script>
@@ -61,8 +62,8 @@
       .screen,
       .screen * {
         -webkit-touch-callout: none;
-        -webkit-user-select: none;
         user-select: none;
+        -webkit-user-select: none;
       }
       .center {
         width: 100%;
@@ -108,8 +109,8 @@
       }
       @media screen and (min-height: 375px) and (max-height: 399px) {
         .adjust {
-          transform: scale(0.9375);
-          -webkit-transform: scale(0.9375);
+          transform: scale(0.925);
+          -webkit-transform: scale(0.925);
         }
       }
       .flipped {
