@@ -10,11 +10,11 @@ PrinceJS.Enemy = function (game, level, location, direction, room, skill, color,
   this.id = id;
   this.charX += direction * 7;
 
-  this.strikeProbability = PrinceJS.Enemy.STRIKE_PROBABILITY[skill];
-  this.restrikeProbability = PrinceJS.Enemy.RESTRIKE_PROBABILITY[skill];
-  this.blockProbability = PrinceJS.Enemy.BLOCK_PROBABILITY[skill];
-  this.impairblockProbability = PrinceJS.Enemy.IMPAIRBLOCK_PROBABILITY[skill];
-  this.advanceProbability = PrinceJS.Enemy.ADVANCE_PROBABILITY[skill];
+  this.strikeProbability = PrinceJS.Utils.applyStrength(PrinceJS.Enemy.STRIKE_PROBABILITY[skill]);
+  this.restrikeProbability = PrinceJS.Utils.applyStrength(PrinceJS.Enemy.RESTRIKE_PROBABILITY[skill]);
+  this.blockProbability = PrinceJS.Utils.applyStrength(PrinceJS.Enemy.BLOCK_PROBABILITY[skill]);
+  this.impairblockProbability = PrinceJS.Utils.applyStrength(PrinceJS.Enemy.IMPAIRBLOCK_PROBABILITY[skill]);
+  this.advanceProbability = PrinceJS.Utils.applyStrength(PrinceJS.Enemy.ADVANCE_PROBABILITY[skill]);
 
   this.refracTimer = 0;
   this.blockTimer = 0;

@@ -8,7 +8,6 @@ PrinceJS.Title.prototype = {
   preload: function () {},
 
   create: function () {
-    PrinceJS.Init();
     this.stopMusic();
 
     this.tick = 0;

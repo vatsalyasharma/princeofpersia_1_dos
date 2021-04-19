@@ -256,7 +256,7 @@ PrinceJS.Level.prototype = {
   },
 
   getGatesAll: function (room, prevRoom) {
-    let gates = [...this.getGates(room), ...this.getGatesLeft(room), ...this.getGatesRight(room)];
+    let gates = [...this.getGates(room), ...this.getGatesLeft(room)];
     if (prevRoom) {
       if (room && this.rooms[room]) {
         if (this.rooms[room].links.up === prevRoom) {
@@ -266,18 +266,22 @@ PrinceJS.Level.prototype = {
           gates.push(...this.getGatesDown(room));
         }
       }
-    } else {
-      gates.push(...this.getGatesUp(room), ...this.getGatesDown(room));
     }
     return gates;
   },
 
-  getGates: function (room, edge = false) {
+  getGates: function (room, edgeX, edgeY) {
     let gates = [];
     if (room && this.rooms[room]) {
       this.rooms[room].tiles.forEach((tile) => {
         if (tile.element === PrinceJS.Level.TILE_GATE) {
-          if (!edge || tile.roomX === 9) {
+          if (edgeX === undefined && edgeY === undefined) {
+            gates.push(tile);
+          } else if (edgeX !== undefined && edgeY !== undefined && tile.roomX === edgeX && tile.roomY === edgeY) {
+            gates.push(tile);
+          } else if (edgeX !== undefined && tile.roomX === edgeX) {
+            gates.push(tile);
+          } else if (edgeY !== undefined && tile.roomY === edgeY) {
             gates.push(tile);
           }
         }
@@ -291,11 +295,7 @@ PrinceJS.Level.prototype = {
     if (room && this.rooms[room]) {
       let roomLeft = this.rooms[room].links.left;
       if (roomLeft > 0) {
-        gates.push(...this.getGates(roomLeft));
-        let roomLeftLeft = this.rooms[roomLeft].links.left;
-        if (roomLeftLeft > 0) {
-          gates.push(...this.getGates(roomLeftLeft, true));
-        }
+        gates.push(...this.getGates(roomLeft, 9));
       }
     }
     return gates;
@@ -306,7 +306,7 @@ PrinceJS.Level.prototype = {
     if (room && this.rooms[room]) {
       let roomRight = this.rooms[room].links.right;
       if (roomRight > 0) {
-        gates.push(...this.getGates(roomRight));
+        gates.push(...this.getGates(roomRight, 0));
       }
     }
     return gates;
@@ -317,10 +317,10 @@ PrinceJS.Level.prototype = {
     if (room && this.rooms[room]) {
       let roomUp = this.rooms[room].links.up;
       if (roomUp > 0) {
-        gates.push(...this.getGates(roomUp));
+        gates.push(...this.getGates(roomUp, undefined, 2));
         let roomUpLeft = this.rooms[roomUp].links.left;
         if (roomUpLeft > 0) {
-          gates.push(...this.getGates(roomUpLeft, true));
+          gates.push(...this.getGates(roomUpLeft, 9, 2));
         }
       }
     }
@@ -332,10 +332,10 @@ PrinceJS.Level.prototype = {
     if (room && this.rooms[room]) {
       let roomDown = this.rooms[room].links.down;
       if (roomDown > 0) {
-        gates.push(...this.getGates(roomDown));
+        gates.push(...this.getGates(roomDown, undefined, 0));
         let roomDownLeft = this.rooms[roomDown].links.left;
         if (roomDownLeft > 0) {
-          gates.push(...this.getGates(roomDownLeft, true));
+          gates.push(...this.getGates(roomDownLeft, 9, 0));
         }
       }
     }

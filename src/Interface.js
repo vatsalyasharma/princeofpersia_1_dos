@@ -12,7 +12,7 @@ PrinceJS.Interface = function (game, delegate) {
   this.layer = this.game.add.sprite(0, (PrinceJS.SCREEN_HEIGHT - PrinceJS.UI_HEIGHT) * PrinceJS.SCALE_FACTOR, bmd);
   this.layer.fixedToCamera = true;
 
-  this.text = this.game.make.bitmapText(PrinceJS.SCREEN_WIDTH * 0.5, (PrinceJS.UI_HEIGHT - 1) * 0.5, "font", "", 16);
+  this.text = this.game.make.bitmapText(PrinceJS.SCREEN_WIDTH * 0.5, (PrinceJS.UI_HEIGHT - 2) * 0.5, "font", "", 16);
   this.text.anchor.setTo(0.5, 0.5);
   this.showTextType = null;
   this.showLevel();
@@ -154,35 +154,6 @@ PrinceJS.Interface.prototype = {
     }
   },
 
-  setRemainingMinutesTo15() {
-    let date = new Date();
-    date.setMinutes(date.getMinutes() - (60 - 15));
-    PrinceJS.startTime = date;
-  },
-
-  getDeltaTime: function () {
-    if (!PrinceJS.startTime) {
-      return {
-        minutes: -1,
-        seconds: -1
-      };
-    }
-    let diff = (PrinceJS.endTime || new Date()).getTime() - PrinceJS.startTime.getTime();
-    let minutes = Math.floor(diff / 60000);
-    let seconds = Math.floor(diff / 1000) % 60;
-    return { minutes, seconds };
-  },
-
-  getRemainingMinutes: function () {
-    let deltaTime = this.getDeltaTime();
-    return Math.max(0, 60 - deltaTime.minutes);
-  },
-
-  getRemainingSeconds: function () {
-    let deltaTime = this.getDeltaTime();
-    return Math.max(0, 60 - deltaTime.seconds);
-  },
-
   showLevel: function () {
     if (PrinceJS.endTime) {
       return;
@@ -198,14 +169,16 @@ PrinceJS.Interface.prototype = {
     if (PrinceJS.endTime) {
       return;
     }
-    if (this.getRemainingMinutes() === 0) {
+    if (PrinceJS.Utils.getRemainingMinutes() === 0) {
       this.delegate.timeUp();
       PrinceJS.startTime = null;
-    } else if (this.getRemainingMinutes() === 1) {
+    } else if (PrinceJS.Utils.getRemainingMinutes() === 1) {
       this.showRemainingSeconds();
     } else if (
       force ||
-      (this.getRemainingMinutes() < 60 && this.getRemainingMinutes() % 5 === 0 && this.getDeltaTime().seconds === 0)
+      (PrinceJS.Utils.getRemainingMinutes() < 60 &&
+        PrinceJS.Utils.getRemainingMinutes() % 5 === 0 &&
+        PrinceJS.Utils.getDeltaTime().seconds === 0)
     ) {
       this.showRemainingMinutes();
     }
@@ -215,7 +188,7 @@ PrinceJS.Interface.prototype = {
     if (this.showTextType) {
       return;
     }
-    let minutes = this.getRemainingMinutes();
+    let minutes = PrinceJS.Utils.getRemainingMinutes();
     this.showText(minutes + (minutes === 1 ? " MINUTE " : " MINUTES ") + "LEFT", "minutes");
     PrinceJS.Utils.delayed(() => {
       this.hideText();
@@ -226,7 +199,7 @@ PrinceJS.Interface.prototype = {
     if (["level", "continue"].includes(this.showTextType)) {
       return;
     }
-    let seconds = this.getRemainingSeconds();
+    let seconds = PrinceJS.Utils.getRemainingSeconds();
     this.showText(seconds + (seconds === 1 ? " SECOND " : " SECONDS ") + "LEFT", "seconds");
   },
 
@@ -245,5 +218,13 @@ PrinceJS.Interface.prototype = {
   hideText: function () {
     this.text.setText("");
     this.showTextType = null;
+  },
+
+  flipped: function () {
+    this.text.scale.y *= -1;
+    this.text.y = (PrinceJS.UI_HEIGHT - 2) * 0.5;
+    if (this.text.scale.y === -1) {
+      this.text.y += 2;
+    }
   }
 };

@@ -9,25 +9,22 @@ PrinceJS.Game = function (game) {
   this.currentRoom;
 
   this.enemies = [];
-
-  this.continueTimer = -1;
-  this.pressButtonToContinueTimer = -1;
 };
 
 PrinceJS.Game.prototype = {
   preload: function () {
     this.load.json("level", "assets/maps/level" + PrinceJS.currentLevel + ".json");
-
-    if (!PrinceJS.startTime) {
-      PrinceJS.startTime = new Date();
-    }
   },
 
   create: function () {
     this.game.sound.stopAll();
 
-    if (PrinceJS.currentLevel === 1) {
-      PrinceJS.firstLand = true;
+    this.continueTimer = -1;
+    this.pressButtonToContinueTimer = -1;
+    this.pressButtonToNext = false;
+
+    if (!PrinceJS.startTime) {
+      PrinceJS.startTime = new Date();
     }
 
     let json = this.game.cache.getJSON("level");
@@ -74,8 +71,10 @@ PrinceJS.Game.prototype = {
     this.kid.charX += json.prince.offset || 0;
 
     this.kid.onChangeRoom.add(this.changeRoom, this);
-    this.kid.onNextLevel.add(this.nextLevel, this);
     this.kid.onDead.add(this.handleDead, this);
+    this.kid.onFlipped.add(this.handleFlipped, this);
+    this.kid.onNextLevel.add(this.nextLevel, this);
+    this.kid.onLevelFinished.add(this.levelFinished, this);
 
     this.blockCamera = false;
     this.setupCamera(json.prince.room, json.prince.cameraRoom);
@@ -96,21 +95,21 @@ PrinceJS.Game.prototype = {
     this.input.keyboard.addKey(Phaser.Keyboard.L).onDown.add(this.nextLevelEvent, this);
     this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(this.showRemainingMinutes, this);
 
-    this.input.keyboard.onDownCallback = this.continueLevel.bind(this);
-
-    if (PrinceJS.danger) {
-      PrinceJS.danger = false;
-      PrinceJS.Utils.delayed(() => {
-        this.game.sound.play("Danger");
-      }, 800);
-    }
+    this.input.keyboard.onDownCallback = this.buttonPressed.bind(this);
 
     this.firstUpdate = true;
+
+    PrinceJS.Utils.updateQuery(this.game);
   },
 
   update: function () {
-    if (this.pressButtonToContinueTimer > -1 && PrinceJS.Utils.pointerPressed(this.game)) {
-      this.continueLevel();
+    if (PrinceJS.Utils.pointerPressed(this.game)) {
+      this.buttonPressed();
+      let pos = PrinceJS.Utils.effectivePointer(this.game);
+      let size = PrinceJS.Utils.effectiveScreenSize(this.game);
+      if (pos.y >= size.height * 0.96 && pos.y <= size.height) {
+        this.ui.showRemainingMinutes();
+      }
     }
   },
 
@@ -137,6 +136,11 @@ PrinceJS.Game.prototype = {
       case 1:
         if (this.firstUpdate) {
           this.level.fireEvent(8, PrinceJS.Level.TILE_DROP_BUTTON);
+          if (PrinceJS.danger) {
+            PrinceJS.Utils.delayed(() => {
+              this.game.sound.play("Danger");
+            }, 800);
+          }
         }
         break;
 
@@ -501,14 +505,17 @@ PrinceJS.Game.prototype = {
   },
 
   restartGame() {
-    PrinceJS.Init();
-
     this.input.keyboard.onDownCallback = null;
+    PrinceJS.Restart(this.game);
     this.state.start("Title");
   },
 
   restartLevel() {
     this.reset(true);
+  },
+
+  levelFinished() {
+    this.pressButtonToNext = true;
   },
 
   nextLevel: function (triggerLevel, skipped = false) {
@@ -524,7 +531,7 @@ PrinceJS.Game.prototype = {
     }
 
     if (skipped) {
-      this.ui.setRemainingMinutesTo15();
+      PrinceJS.Utils.setRemainingMinutesTo15();
     }
 
     this.reset();
@@ -542,6 +549,10 @@ PrinceJS.Game.prototype = {
     this.continueTimer = 10;
   },
 
+  handleFlipped: function () {
+    this.ui.flipped();
+  },
+
   timeUp() {
     PrinceJS.Utils.delayed(() => {
       PrinceJS.currentLevel = 16;
@@ -554,15 +565,19 @@ PrinceJS.Game.prototype = {
     this.handleDead();
   },
 
-  continueLevel: function () {
+  buttonPressed: function () {
     if (this.pressButtonToContinueTimer > -1) {
       this.reset(true);
+    }
+    if (this.pressButtonToNext) {
+      this.nextLevel(PrinceJS.currentLevel);
     }
   },
 
   reset: function (suppressCutscene) {
     this.continueTimer = -1;
     this.pressButtonToContinueTimer = -1;
+    this.pressButtonToNext = false;
 
     this.enemies = [];
     if (!suppressCutscene && [2, 4, 6, 8, 9, 12, 15].indexOf(PrinceJS.currentLevel) > -1) {

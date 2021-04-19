@@ -9,6 +9,7 @@ PrinceJS.SCREEN_HEIGHT = 200;
 
 PrinceJS.WORLD_WIDTH = PrinceJS.SCREEN_WIDTH * PrinceJS.SCALE_FACTOR;
 PrinceJS.WORLD_HEIGHT = PrinceJS.SCREEN_HEIGHT * PrinceJS.SCALE_FACTOR;
+PrinceJS.WORLD_RATIO = PrinceJS.WORLD_WIDTH / PrinceJS.WORLD_HEIGHT;
 
 PrinceJS.BLOCK_WIDTH = 32;
 PrinceJS.BLOCK_HEIGHT = 63;
@@ -23,15 +24,22 @@ PrinceJS.SKIP_CUTSCENES = false;
 
 PrinceJS.Init = function () {
   PrinceJS.currentLevel = 1;
+  PrinceJS.maxHealth = 3;
   PrinceJS.startTime = undefined;
   PrinceJS.endTime = undefined;
-  PrinceJS.maxHealth = 3;
-  PrinceJS.firstLand = false;
+  PrinceJS.strength = 100;
   PrinceJS.danger = true;
+  PrinceJS.screenWidth = 0;
 };
-PrinceJS.Init();
 
-PrinceJS.Boot = function (game) {};
+PrinceJS.Restart = function (game) {
+  PrinceJS.Utils.clearQuery(game);
+  PrinceJS.Init();
+};
+
+PrinceJS.Boot = function (game) {
+  PrinceJS.Init();
+};
 
 PrinceJS.Boot.prototype = {
   preload: function () {
@@ -40,7 +48,11 @@ PrinceJS.Boot.prototype = {
 
   create: function () {
     this.world.scale.set(PrinceJS.SCALE_FACTOR);
-
     this.state.start("Preloader");
+
+    PrinceJS.Utils.applyQuery(this.game);
+    PrinceJS.Utils.applyScreenWidth(this.game);
+
+    PrinceJS.danger = PrinceJS.currentLevel === 1;
   }
 };

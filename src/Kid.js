@@ -3,9 +3,11 @@
 PrinceJS.Kid = function (game, level, location, direction, room) {
   PrinceJS.Fighter.call(this, game, level, location, direction, room, "kid");
 
+  this.onLevelFinished = new Phaser.Signal();
   this.onNextLevel = new Phaser.Signal();
   this.onRecoverLive = new Phaser.Signal();
   this.onAddLive = new Phaser.Signal();
+  this.onFlipped = new Phaser.Signal();
 
   this.pickupSword = false;
   this.pickupPotion = false;
@@ -117,8 +119,10 @@ PrinceJS.Kid.prototype.CMD_NEXTLEVEL = function (data) {
     this.game.sound.play("Prince");
     waitTime = 13000;
   }
+  let currentLevel = PrinceJS.currentLevel;
+  this.onLevelFinished.dispatch(currentLevel);
   PrinceJS.Utils.delayed(() => {
-    this.onNextLevel.dispatch(PrinceJS.currentLevel);
+    this.onNextLevel.dispatch(currentLevel);
   }, waitTime);
 };
 
@@ -224,7 +228,7 @@ PrinceJS.Kid.prototype.updateTimer = function () {
 };
 
 PrinceJS.Kid.prototype.updateBehaviour = function () {
-  if (this.firstLand) {
+  if (this.danger) {
     return;
   }
 
@@ -1023,28 +1027,45 @@ PrinceJS.Kid.prototype.keyS = function () {
 };
 
 PrinceJS.Kid.prototype.pointerL = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) <= PrinceJS.Utils.effectiveScreenWidth() / 3;
+  if (!PrinceJS.Utils.pointerDown(this.game)) {
+    return;
+  }
+  return PrinceJS.Utils.effectivePointer(this.game).x <= PrinceJS.Utils.effectiveScreenSize(this.game).width / 3;
 };
 
 PrinceJS.Kid.prototype.pointerR = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerX(this.game) >= (2 * PrinceJS.Utils.effectiveScreenWidth()) / 3;
+  if (!PrinceJS.Utils.pointerDown(this.game)) {
+    return;
+  }
+  return PrinceJS.Utils.effectivePointer(this.game).x >= (2 * PrinceJS.Utils.effectiveScreenSize(this.game).width) / 3;
 };
 
 PrinceJS.Kid.prototype.pointerU = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) <= PrinceJS.Utils.effectiveScreenHeight() / 3;
+  if (!PrinceJS.Utils.pointerDown(this.game)) {
+    return;
+  }
+  return PrinceJS.Utils.effectivePointer(this.game).y <= PrinceJS.Utils.effectiveScreenSize(this.game).height / 3;
 };
 
 PrinceJS.Kid.prototype.pointerD = function () {
-  return PrinceJS.Utils.pointerDown(this.game) && PrinceJS.Utils.pointerY(this.game) >= (2 * PrinceJS.Utils.effectiveScreenHeight()) / 3;
+  if (!PrinceJS.Utils.pointerDown(this.game)) {
+    return;
+  }
+  return PrinceJS.Utils.effectivePointer(this.game).y >= (2 * PrinceJS.Utils.effectiveScreenSize(this.game).height) / 3;
 };
 
 PrinceJS.Kid.prototype.pointerS = function () {
+  if (!PrinceJS.Utils.pointerDown(this.game)) {
+    return;
+  }
+  let pos = PrinceJS.Utils.effectivePointer(this.game);
+  let size = PrinceJS.Utils.effectiveScreenSize(this.game);
+  let bias = this.swordDrawn ? 0.5 : 0;
   return (
-    PrinceJS.Utils.pointerDown(this.game) &&
-    PrinceJS.Utils.pointerX(this.game) >= (0.5 * PrinceJS.Utils.effectiveScreenWidth()) / 3 &&
-    PrinceJS.Utils.pointerX(this.game) <= (2.5 * PrinceJS.Utils.effectiveScreenWidth()) / 3 &&
-    PrinceJS.Utils.pointerY(this.game) >= (0.5 * PrinceJS.Utils.effectiveScreenHeight()) / 3 &&
-    PrinceJS.Utils.pointerY(this.game) <= (2.5 * PrinceJS.Utils.effectiveScreenHeight()) / 3
+    pos.x >= ((0.5 + bias) * size.width) / 3 &&
+    pos.x <= ((2.5 - bias) * size.width) / 3 &&
+    pos.y >= ((0.5 + bias) * size.height) / 3 &&
+    pos.y <= ((2.5 - bias) * size.height) / 3
   );
 };
 
@@ -1153,7 +1174,7 @@ PrinceJS.Kid.prototype.land = function () {
     switch (fallingBlocks) {
       case 0:
       case 1:
-        if (PrinceJS.firstLand) {
+        if (PrinceJS.danger) {
           this.action = "medland";
         } else {
           this.action = "softland";
@@ -1173,7 +1194,7 @@ PrinceJS.Kid.prototype.land = function () {
   this.alignToFloor();
   this.processCommand();
   this.level.unMaskTile();
-  PrinceJS.firstLand = false;
+  PrinceJS.danger = false;
 };
 
 PrinceJS.Kid.prototype.crawl = function () {
@@ -1547,6 +1568,7 @@ PrinceJS.Kid.prototype.addLife = function () {
 
 PrinceJS.Kid.prototype.flipScreen = function () {
   PrinceJS.Utils.toggleFlipScreen();
+  this.onFlipped.dispatch();
 };
 
 PrinceJS.Kid.prototype.floatFall = function () {
