@@ -107,7 +107,7 @@ PrinceJS.Game.prototype = {
       this.buttonPressed();
       let pos = PrinceJS.Utils.effectivePointer(this.game);
       let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-      if (pos.y >= size.height * 0.96 && pos.y <= size.height) {
+      if (pos.y >= 0.96 * size.height && pos.y <= size.height) {
         this.ui.showRemainingMinutes();
       }
     }

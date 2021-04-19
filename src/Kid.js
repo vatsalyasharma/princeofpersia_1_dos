@@ -1030,28 +1030,36 @@ PrinceJS.Kid.prototype.pointerL = function () {
   if (!PrinceJS.Utils.pointerDown(this.game)) {
     return;
   }
-  return PrinceJS.Utils.effectivePointer(this.game).x <= PrinceJS.Utils.effectiveScreenSize(this.game).width / 3;
+  let pos = PrinceJS.Utils.effectivePointer(this.game);
+  let size = PrinceJS.Utils.effectiveScreenSize(this.game);
+  return pos.x >= 0 && pos.x <= (1 / 3) * size.width;
 };
 
 PrinceJS.Kid.prototype.pointerR = function () {
   if (!PrinceJS.Utils.pointerDown(this.game)) {
     return;
   }
-  return PrinceJS.Utils.effectivePointer(this.game).x >= (2 * PrinceJS.Utils.effectiveScreenSize(this.game).width) / 3;
+  let pos = PrinceJS.Utils.effectivePointer(this.game);
+  let size = PrinceJS.Utils.effectiveScreenSize(this.game);
+  return pos.x >= (2 / 3) * size.width && pos.x <= size.width;
 };
 
 PrinceJS.Kid.prototype.pointerU = function () {
   if (!PrinceJS.Utils.pointerDown(this.game)) {
     return;
   }
-  return PrinceJS.Utils.effectivePointer(this.game).y <= PrinceJS.Utils.effectiveScreenSize(this.game).height / 3;
+  let pos = PrinceJS.Utils.effectivePointer(this.game);
+  let size = PrinceJS.Utils.effectiveScreenSize(this.game);
+  return pos.y >= 0 && pos.y <= (1 / 3) * size.height;
 };
 
 PrinceJS.Kid.prototype.pointerD = function () {
   if (!PrinceJS.Utils.pointerDown(this.game)) {
     return;
   }
-  return PrinceJS.Utils.effectivePointer(this.game).y >= (2 * PrinceJS.Utils.effectiveScreenSize(this.game).height) / 3;
+  let pos = PrinceJS.Utils.effectivePointer(this.game);
+  let size = PrinceJS.Utils.effectiveScreenSize(this.game);
+  return pos.y >= (2 / 3) * size.height && pos.y <= 0.96 * size.height;
 };
 
 PrinceJS.Kid.prototype.pointerS = function () {
