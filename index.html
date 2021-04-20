@@ -74,12 +74,9 @@
         width: 100%;
         height: calc(100% - env(safe-area-inset-bottom, 0px));
       }
-      /* Safari only */
-      @media not all and (min-resolution:.001dpcm) {
-        @media all and (orientation: landscape) {
-          .game {
-            height: calc(100vh - env(safe-area-inset-bottom, 0px));
-          }
+      @media all and (orientation: landscape) {
+        .fullscreen.game {
+          height: calc(100vh - env(safe-area-inset-bottom, 0px));
         }
       }
       .flipped {

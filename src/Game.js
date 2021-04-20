@@ -162,13 +162,14 @@ PrinceJS.Game.prototype = {
           if (skeleton.room === 3 && skeleton.setCharForRoom !== skeleton.room) {
             skeleton.setCharForRoom = skeleton.room;
             PrinceJS.Utils.delayed(() => {
-              skeleton.charX = PrinceJS.Utils.convertBlockXtoX(4);
-              skeleton.charY = PrinceJS.Utils.convertBlockYtoY(1);
-              skeleton.land();
               if (skeleton.charFace === -1) {
                 skeleton.turn();
               }
-            }, 500);
+              skeleton.room = 3;
+              skeleton.charX = PrinceJS.Utils.convertBlockXtoX(4);
+              skeleton.charY = PrinceJS.Utils.convertBlockYtoY(1);
+              skeleton.action = "stand"
+            }, 100);
           }
         }
         break;
@@ -594,6 +595,7 @@ PrinceJS.Game.prototype = {
     }
     this.updateRoom(room);
     this.checkForOpponent(room);
+    this.kid.flee = false;
   },
 
   setupCamera: function (room, cameraRoom) {
