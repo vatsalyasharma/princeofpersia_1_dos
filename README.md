@@ -11,8 +11,8 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 
 - Browser: https://oklemenz.github.io/PrinceJS
 - Use Landscape Mode (single browser tab)
-  - Enforce Fullscreen: https://oklemenz.github.io/PrinceJS?fullscreen=true 
-- Add to Home Screen to start as fullscreen app
+  - Force Fullscreen: https://oklemenz.github.io/PrinceJS?fullscreen=true 
+- Add to Home Screen to start as Fullscreen App
 - Touch Controls:
 
   ![Mobile](assets/web/mobile.svg)
