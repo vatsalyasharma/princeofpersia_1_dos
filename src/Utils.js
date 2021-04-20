@@ -97,7 +97,10 @@ PrinceJS.Utils = {
   },
 
   pointerDown: function (game) {
-    return game.input.activePointer.leftButton.isDown || game.input.pointer1.isDown;
+    if (game.input.activePointer.leftButton) {
+      return game.input.activePointer.leftButton.isDown || game.input.pointer1.isDown;
+    }
+    return game.input.activePointer.isDown || game.input.pointer1.isDown;
   },
 
   effectivePointer: function (game) {
@@ -171,35 +174,35 @@ PrinceJS.Utils = {
   },
 
   applyQuery: function (game) {
-    let query = game.net.getQueryString();
-    if (query["level"]) {
-      let queryLevel = parseInt(query["level"], 10);
+    let query = new URLSearchParams(window.location.search);
+    if (query.get("level")) {
+      let queryLevel = parseInt(query.get("level"), 10);
       if (!isNaN(queryLevel) && queryLevel >= 1 && queryLevel <= 14) {
         PrinceJS.currentLevel = queryLevel;
       }
     }
-    if (query["health"]) {
-      let queryHealth = parseInt(query["health"], 10);
+    if (query.get("health")) {
+      let queryHealth = parseInt(query.get("health"), 10);
       if (!isNaN(queryHealth) && queryHealth >= 3 && queryHealth <= 10) {
         PrinceJS.maxHealth = queryHealth;
       }
     }
-    if (query["time"]) {
-      let queryTime = parseInt(query["time"], 10);
+    if (query.get("time")) {
+      let queryTime = parseInt(query.get("time"), 10);
       if (!isNaN(queryTime) && queryTime >= 1 && queryTime <= 60) {
         let date = new Date();
         date.setMinutes(date.getMinutes() - (60 - queryTime));
         PrinceJS.startTime = date;
       }
     }
-    if (query["strength"]) {
-      let queryStrength = parseInt(query["strength"], 10);
+    if (query.get("strength")) {
+      let queryStrength = parseInt(query.get("strength"), 10);
       if (!isNaN(queryStrength) && queryStrength >= 1 && queryStrength <= 100) {
         PrinceJS.strength = queryStrength;
       }
     }
-    if (query["width"]) {
-      let queryWidth = parseInt(query["width"], 10);
+    if (query.get("width")) {
+      let queryWidth = parseInt(query.get("width"), 10);
       if (!isNaN(queryWidth) && queryWidth > 0) {
         PrinceJS.screenWidth = queryWidth;
       }
