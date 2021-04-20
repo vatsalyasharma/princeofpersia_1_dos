@@ -10,7 +10,8 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 ## Play Mobile
 
 - Browser: https://oklemenz.github.io/PrinceJS
-- Use Landscape Mode (Single Tab)
+- Use Landscape Mode (single browser tab)
+  - Enforce Fullscreen: https://oklemenz.github.io/PrinceJS?fullscreen=true 
 - Add to Home Screen to start as fullscreen app
 - Touch Controls:
 
@@ -33,9 +34,10 @@ Url parameters are leveraged to save game state automatically
 - `time`: Remaining Minutes (1-60, default: 60)
 - `strength`: Guard Strength in "%" (1-100, default: 100)
 - `width`: Game Width in "px" (default: 0 (fit to screen))
+- `fullscreen`: Fullscreen mode (=100vh) (default: false)
 
 Default url looks as follows:
 
-https://oklemenz.github.io/PrinceJS?level=1&health=3&time=60&strength=100&width=0
+https://oklemenz.github.io/PrinceJS?level=1&health=3&time=60&strength=100&width=0&fullscreen=false
 
 Manual adjustments of url parameters is possible as preset options.

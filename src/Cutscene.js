@@ -20,6 +20,10 @@ PrinceJS.Cutscene.prototype = {
     this.program = this.game.cache.getJSON("cutscene").program;
 
     this.scene = new PrinceJS.Scene(this.game);
+
+    this.cover = this.game.add.sprite(0, 0, "cover");
+    this.scene.front.addChild(this.cover);
+
     this.executeProgram();
 
     this.input.keyboard.onDownCallback = this.continue.bind(this);
@@ -181,7 +185,7 @@ PrinceJS.Cutscene.prototype = {
   },
 
   fadeIn: function (duration = 2000, callback) {
-    this.camera.fadeIn(0x000000, duration, false, 1);
+    this.game.add.tween(this.cover).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
     PrinceJS.Utils.delayed(() => {
       if (callback) {
         callback();
@@ -190,7 +194,7 @@ PrinceJS.Cutscene.prototype = {
   },
 
   fadeOut: function (duration = 2000, callback) {
-    this.camera.fade(0x000000, duration, false, 1);
+    this.game.add.tween(this.cover).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
     PrinceJS.Utils.delayed(() => {
       if (callback) {
         callback();

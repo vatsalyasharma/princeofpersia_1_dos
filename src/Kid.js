@@ -1050,7 +1050,7 @@ PrinceJS.Kid.prototype.pointerU = function () {
   }
   let pos = PrinceJS.Utils.effectivePointer(this.game);
   let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-  return pos.y >= 0 && pos.y <= (1 / 3) * size.height;
+  return pos.y >= (PrinceJS.Utils.isScreenFlipped() ? 0.04 : 0) * size.height && pos.y <= (1 / 3) * size.height;
 };
 
 PrinceJS.Kid.prototype.pointerD = function () {
@@ -1059,7 +1059,7 @@ PrinceJS.Kid.prototype.pointerD = function () {
   }
   let pos = PrinceJS.Utils.effectivePointer(this.game);
   let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-  return pos.y >= (2 / 3) * size.height && pos.y <= 0.96 * size.height;
+  return pos.y >= (2 / 3) * size.height && pos.y <= (PrinceJS.Utils.isScreenFlipped() ? 1 : 0.96) * size.height;
 };
 
 PrinceJS.Kid.prototype.pointerS = function () {

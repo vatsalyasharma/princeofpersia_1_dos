@@ -30,6 +30,7 @@ PrinceJS.Init = function () {
   PrinceJS.strength = 100;
   PrinceJS.danger = true;
   PrinceJS.screenWidth = 0;
+  PrinceJS.screenFull = false;
 };
 
 PrinceJS.Restart = function (game) {

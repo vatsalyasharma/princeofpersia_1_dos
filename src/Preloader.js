@@ -41,6 +41,8 @@ PrinceJS.Preloader.prototype = {
     this.load.json("vizier-anims", "assets/anims/vizier.json");
     this.load.json("mouse-anims", "assets/anims/mouse.json");
 
+    this.game.load.image("cover","assets/gfx/cover.png");
+
     this.game.load.audio("PrologueA", "assets/music/01_Prologue_A.mp3");
     this.game.load.audio("PrologueB", "assets/music/02_Prologue_B.mp3");
     this.game.load.audio("Princess", "assets/music/03_Princess.mp3");

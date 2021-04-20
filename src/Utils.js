@@ -131,8 +131,16 @@ PrinceJS.Utils = {
     }
   },
 
+  gameContainer: function() {
+    return document.getElementById("gameContainer");
+  },
+
   toggleFlipScreen: function () {
-    document.getElementById("gameContainer").classList.toggle("flipped");
+    PrinceJS.Utils.gameContainer().classList.toggle("flipped");
+  },
+
+  isScreenFlipped: function() {
+    return PrinceJS.Utils.gameContainer().classList.contains("flipped");
   },
 
   setRemainingMinutesTo15() {
@@ -207,11 +215,20 @@ PrinceJS.Utils = {
         PrinceJS.screenWidth = queryWidth;
       }
     }
+
+    if (query.get("fullscreen")) {
+      PrinceJS.screenFull = query.get("fullscreen") === "true";
+      if (PrinceJS.screenFull) {
+        PrinceJS.Utils.gameContainer().classList.add("fullscreen");
+      } else {
+        PrinceJS.Utils.gameContainer().classList.remove("fullscreen");
+      }
+    }
   },
 
   applyScreenWidth() {
     if (PrinceJS.screenWidth > 0) {
-      document.getElementById("gameContainer").style["max-width"] = `${PrinceJS.screenWidth}px`;
+      PrinceJS.Utils.gameContainer().style["max-width"] = `${PrinceJS.screenWidth}px`;
     }
   },
 
@@ -221,14 +238,16 @@ PrinceJS.Utils = {
       health: PrinceJS.maxHealth,
       time: PrinceJS.Utils.getRemainingMinutes(),
       strength: PrinceJS.strength,
-      width: PrinceJS.screenWidth
+      width: PrinceJS.screenWidth,
+      fullscreen: PrinceJS.screenFull
     });
   },
 
   clearQuery: function (game) {
     PrinceJS.Utils.setHistoryState({
       strength: PrinceJS.strength,
-      width: PrinceJS.screenWidth
+      width: PrinceJS.screenWidth,
+      fullscreen: PrinceJS.screenFull
     });
   },
 
