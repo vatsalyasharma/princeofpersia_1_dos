@@ -13,6 +13,19 @@ PrinceJS.Game = function (game) {
 
 PrinceJS.Game.prototype = {
   preload: function () {
+    switch (PrinceJS.currentLevel) {
+      case 4:
+        this.game.load.audio("TheShadow", "assets/music/15_The_Shadow.mp3");
+        break;
+      case 7:
+        this.game.load.audio("Float", "assets/music/16_Float.mp3");
+        break;
+      case 13:
+        this.game.load.audio("Jaffar2", "assets/music/19_Jaffar_2.mp3");
+        this.game.load.audio("JaffarDead", "assets/music/20_Jaffar_Dead.mp3");
+        this.game.load.audio("HeroicDeath", "assets/music/13_Heroic_Death.mp3");
+        break;
+    }
     this.load.json("level", "assets/maps/level" + PrinceJS.currentLevel + ".json");
   },
 
@@ -174,7 +187,7 @@ PrinceJS.Game.prototype = {
               skeleton.room = 3;
               skeleton.charX = PrinceJS.Utils.convertBlockXtoX(4);
               skeleton.charY = PrinceJS.Utils.convertBlockYtoY(1);
-              skeleton.action = "stand"
+              skeleton.action = "stand";
             }, 100);
           }
         }

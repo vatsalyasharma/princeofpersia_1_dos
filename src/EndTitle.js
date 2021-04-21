@@ -5,7 +5,9 @@ PrinceJS.EndTitle = function (game) {
 };
 
 PrinceJS.EndTitle.prototype = {
-  preload: function () {},
+  preload: function () {
+    this.game.load.audio("Epilogue", "assets/music/22_Epilogue.mp3");
+  },
 
   create: function () {
     this.stopMusic();

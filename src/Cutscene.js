@@ -11,13 +11,42 @@ PrinceJS.Cutscene.STATE_RUNNING = 3;
 
 PrinceJS.Cutscene.prototype = {
   preload: function () {
+    this.game.load.image("cover", "assets/gfx/cover.png");
+    switch (PrinceJS.currentLevel) {
+      case 1:
+        this.game.load.audio("Princess", "assets/music/03_Princess.mp3");
+        this.game.load.audio("Jaffar", "assets/music/04_Jaffar.mp3");
+        this.game.load.audio("Heartbeat", "assets/music/05_Heartbeat.mp3");
+        break;
+      case 2:
+      case 4:
+      case 6:
+      case 12:
+        this.game.load.audio("Heartbeat2", "assets/music/12_Heartbeat_2.mp3");
+        break;
+      case 8:
+      case 9:
+        this.game.load.audio("Timer", "assets/music/17_Timer.mp3");
+        break;
+      case 15:
+        this.game.load.audio("Embrace", "assets/music/21_Embrace.mp3");
+        break;
+      case 16:
+        this.game.load.audio("TragicEnd", "assets/music/18_Tragic_End.mp3");
+        break;
+    }
     this.load.json("cutscene", "assets/cutscenes/scene" + PrinceJS.currentLevel + ".json");
   },
 
   create: function () {
     this.reset();
 
-    this.program = this.game.cache.getJSON("cutscene").program;
+    let cutscene = this.game.cache.getJSON("cutscene");
+    if (!cutscene) {
+      this.next();
+      return;
+    }
+    this.program = cutscene.program;
 
     this.scene = new PrinceJS.Scene(this.game);
 
@@ -112,6 +141,12 @@ PrinceJS.Cutscene.prototype = {
     }
   },
 
+  update: function () {
+    if (PrinceJS.Utils.pointerPressed(this.game)) {
+      this.continue();
+    }
+  },
+
   updateScene: function () {
     if (this.sceneState === PrinceJS.Cutscene.STATE_RUNNING) {
       return;
@@ -123,10 +158,6 @@ PrinceJS.Cutscene.prototype = {
 
     for (let i = 0; i < this.actors.length; i++) {
       this.actors[i].updateActor();
-    }
-
-    if (PrinceJS.Utils.pointerPressed(this.game)) {
-      this.continue();
     }
   },
 
@@ -185,7 +216,7 @@ PrinceJS.Cutscene.prototype = {
   },
 
   fadeIn: function (duration = 2000, callback) {
-    this.game.add.tween(this.cover).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    this.game.add.tween(this.cover).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
     PrinceJS.Utils.delayed(() => {
       if (callback) {
         callback();
@@ -194,7 +225,7 @@ PrinceJS.Cutscene.prototype = {
   },
 
   fadeOut: function (duration = 2000, callback) {
-    this.game.add.tween(this.cover).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    this.game.add.tween(this.cover).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
     PrinceJS.Utils.delayed(() => {
       if (callback) {
         callback();

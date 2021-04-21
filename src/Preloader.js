@@ -41,30 +41,17 @@ PrinceJS.Preloader.prototype = {
     this.load.json("vizier-anims", "assets/anims/vizier.json");
     this.load.json("mouse-anims", "assets/anims/mouse.json");
 
-    this.game.load.image("cover","assets/gfx/cover.png");
-
+    // Music
     this.game.load.audio("PrologueA", "assets/music/01_Prologue_A.mp3");
     this.game.load.audio("PrologueB", "assets/music/02_Prologue_B.mp3");
-    this.game.load.audio("Princess", "assets/music/03_Princess.mp3");
-    this.game.load.audio("Jaffar", "assets/music/04_Jaffar.mp3");
-    this.game.load.audio("Heartbeat", "assets/music/05_Heartbeat.mp3");
     this.game.load.audio("Danger", "assets/music/06_Danger.mp3");
     this.game.load.audio("Accident", "assets/music/07_Accident.mp3");
     this.game.load.audio("Potion1", "assets/music/08_Potion_1.mp3");
     this.game.load.audio("Victory", "assets/music/09_Victory.mp3");
     this.game.load.audio("Prince", "assets/music/11_Prince.mp3");
-    this.game.load.audio("Heartbeat2", "assets/music/12_Heartbeat_2.mp3");
-    this.game.load.audio("HeroicDeath", "assets/music/13_Heroic_Death.mp3");
     this.game.load.audio("Potion2", "assets/music/14_Potion_2.mp3");
-    this.game.load.audio("TheShadow", "assets/music/15_The_Shadow.mp3");
-    this.game.load.audio("Float", "assets/music/16_Float.mp3");
-    this.game.load.audio("Timer", "assets/music/17_Timer.mp3");
-    this.game.load.audio("TragicEnd", "assets/music/18_Tragic_End.mp3");
-    this.game.load.audio("Jaffar2", "assets/music/19_Jaffar_2.mp3");
-    this.game.load.audio("JaffarDead", "assets/music/20_Jaffar_Dead.mp3");
-    this.game.load.audio("Embrace", "assets/music/21_Embrace.mp3");
-    this.game.load.audio("Epilogue", "assets/music/22_Epilogue.mp3");
 
+    // SFX
     this.game.load.audio("FreeFallLand", "assets/sfx/01_Free_fall_land.mp3");
     this.game.load.audio("LooseFloorLands", "assets/sfx/02_Loose_floor_lands.mp3");
     this.game.load.audio("LooseFloorShakes", "assets/sfx/03_Loose_floor_shakes.mp3");

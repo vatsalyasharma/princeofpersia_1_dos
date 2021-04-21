@@ -131,7 +131,7 @@ PrinceJS.Utils = {
     }
   },
 
-  gameContainer: function() {
+  gameContainer: function () {
     return document.getElementById("gameContainer");
   },
 
@@ -139,7 +139,7 @@ PrinceJS.Utils = {
     PrinceJS.Utils.gameContainer().classList.toggle("flipped");
   },
 
-  isScreenFlipped: function() {
+  isScreenFlipped: function () {
     return PrinceJS.Utils.gameContainer().classList.contains("flipped");
   },
 
