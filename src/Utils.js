@@ -198,9 +198,7 @@ PrinceJS.Utils = {
     if (query.get("time")) {
       let queryTime = parseInt(query.get("time"), 10);
       if (!isNaN(queryTime) && queryTime >= 1 && queryTime <= 60) {
-        let date = new Date();
-        date.setMinutes(date.getMinutes() - (60 - queryTime));
-        PrinceJS.startTime = date;
+        PrinceJS.minutes = queryTime;
       }
     }
     if (query.get("strength")) {

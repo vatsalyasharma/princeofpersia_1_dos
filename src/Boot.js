@@ -25,12 +25,13 @@ PrinceJS.SKIP_CUTSCENES = false;
 PrinceJS.Init = function () {
   PrinceJS.currentLevel = 1;
   PrinceJS.maxHealth = 3;
+  PrinceJS.minutes = 60;
   PrinceJS.startTime = undefined;
   PrinceJS.endTime = undefined;
   PrinceJS.strength = 100;
-  PrinceJS.danger = true;
   PrinceJS.screenWidth = 0;
   PrinceJS.screenFull = false;
+  PrinceJS.danger = true;
 };
 
 PrinceJS.Restart = function (game) {

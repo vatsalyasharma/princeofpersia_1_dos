@@ -37,7 +37,9 @@ PrinceJS.Game.prototype = {
     this.pressButtonToNext = false;
 
     if (!PrinceJS.startTime) {
-      PrinceJS.startTime = new Date();
+      let date = new Date();
+      date.setMinutes(date.getMinutes() - (60 - PrinceJS.minutes));
+      PrinceJS.startTime = date;
     }
 
     let json = this.game.cache.getJSON("level");
