@@ -1022,7 +1022,7 @@ PrinceJS.Fighter.prototype.checkChoppers = function () {
 
 PrinceJS.Fighter.prototype.inChopDistance = function (tile) {
   let offsetX = -16;
-  return Math.abs(tile.centerX - this.centerX + offsetX) < 6 + (this.swordDrawn ? 10 : 0);
+  return Math.abs(tile.centerX - this.centerX + offsetX) <= 6 + (this.swordDrawn ? 10 : 0);
 };
 
 PrinceJS.Fighter.prototype.tryChoppers = function (x, y) {
@@ -1031,9 +1031,16 @@ PrinceJS.Fighter.prototype.tryChoppers = function (x, y) {
   }
 
   let tile = this.level.getTileAt(x, y, this.room);
-  if (tile.element !== PrinceJS.Level.TILE_CHOPPER || this.faceR()) {
-    tile = this.level.getTileAt(x + 1, y, this.room);
+  if (tile.element === PrinceJS.Level.TILE_CHOPPER) {
+    this.tryChopperTile(x, y, tile);
   }
+  tile = this.level.getTileAt(x + 1, y, this.room);
+  if (tile.element === PrinceJS.Level.TILE_CHOPPER) {
+    this.tryChopperTile(x, y, tile);
+  }
+};
+
+PrinceJS.Fighter.prototype.tryChopperTile = function (x, y, tile) {
   if (tile.element === PrinceJS.Level.TILE_CHOPPER && tile.step >= 1 && tile.step <= 3) {
     if (this.inChopDistance(tile) && this.action !== "turn") {
       tile.showBlood();
@@ -1048,7 +1055,7 @@ PrinceJS.Fighter.prototype.tryChoppers = function (x, y) {
       }
     }
   }
-};
+}
 
 PrinceJS.Fighter.prototype.dieSpikes = function () {
   if (!this.alive || this.charName === "skeleton") {

@@ -1032,7 +1032,12 @@ PrinceJS.Kid.prototype.pointerL = function () {
   }
   let pos = PrinceJS.Utils.effectivePointer(this.game);
   let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-  return pos.x >= 0 && pos.x <= (1 / 3) * size.width;
+  return (
+    pos.x >= 0 &&
+    pos.x <= (1 / 3) * size.width &&
+    pos.y >= (PrinceJS.Utils.isScreenFlipped() ? 0.04 : 0) * size.height &&
+    pos.y <= (PrinceJS.Utils.isScreenFlipped() ? 1 : 0.96) * size.height
+  );
 };
 
 PrinceJS.Kid.prototype.pointerR = function () {
@@ -1041,7 +1046,12 @@ PrinceJS.Kid.prototype.pointerR = function () {
   }
   let pos = PrinceJS.Utils.effectivePointer(this.game);
   let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-  return pos.x >= (2 / 3) * size.width && pos.x <= size.width;
+  return (
+    pos.x >= (2 / 3) * size.width &&
+    pos.x <= size.width &&
+    pos.y >= (PrinceJS.Utils.isScreenFlipped() ? 0.04 : 0) * size.height &&
+    pos.y <= (PrinceJS.Utils.isScreenFlipped() ? 1 : 0.96) * size.height
+  );
 };
 
 PrinceJS.Kid.prototype.pointerU = function () {
@@ -1050,7 +1060,12 @@ PrinceJS.Kid.prototype.pointerU = function () {
   }
   let pos = PrinceJS.Utils.effectivePointer(this.game);
   let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-  return pos.y >= (PrinceJS.Utils.isScreenFlipped() ? 0.04 : 0) * size.height && pos.y <= (1 / 3) * size.height;
+  return (
+    pos.x >= 0 &&
+    pos.x <= size.width &&
+    pos.y >= (PrinceJS.Utils.isScreenFlipped() ? 0.04 : 0) * size.height &&
+    pos.y <= (1 / 3) * size.height
+  );
 };
 
 PrinceJS.Kid.prototype.pointerD = function () {
@@ -1059,7 +1074,12 @@ PrinceJS.Kid.prototype.pointerD = function () {
   }
   let pos = PrinceJS.Utils.effectivePointer(this.game);
   let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-  return pos.y >= (2 / 3) * size.height && pos.y <= (PrinceJS.Utils.isScreenFlipped() ? 1 : 0.96) * size.height;
+  return (
+    pos.x >= 0 &&
+    pos.x <= size.width &&
+    pos.y >= (2 / 3) * size.height &&
+    pos.y <= (PrinceJS.Utils.isScreenFlipped() ? 1 : 0.96) * size.height
+  );
 };
 
 PrinceJS.Kid.prototype.pointerS = function () {
@@ -1227,7 +1247,7 @@ PrinceJS.Kid.prototype.step = function () {
     (tile.element === PrinceJS.Level.TILE_CHOPPER && this.faceL()) ||
     (tileF.element === PrinceJS.Level.TILE_CHOPPER && this.faceR())
   ) {
-    px = this.distanceToEdge() - 3;
+    px = this.distanceToEdge() - 4 - (this.faceL() ? 1 : 0);
     if (px <= 0) {
       px = 11;
     }
