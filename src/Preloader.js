@@ -97,6 +97,8 @@ PrinceJS.Preloader.prototype = {
 
     this.game.input.mouse.capture = true;
     this.game.input.addPointer();
+    this.game.input.addPointer();
+
     this.game.canvas.oncontextmenu = function (event) {
       event.preventDefault();
     };

@@ -97,18 +97,32 @@ PrinceJS.Utils = {
   },
 
   pointerDown: function (game) {
-    if (game.input.activePointer.leftButton) {
-      return game.input.activePointer.leftButton.isDown || game.input.pointer1.isDown;
+    if (game.input.activePointer.leftButton && game.input.activePointer.leftButton.isDown) {
+      return true;
     }
-    return game.input.activePointer.isDown || game.input.pointer1.isDown;
+    if (game.input.activePointer.isDown) {
+      return true;
+    }
+    if (game.input.pointer1.isDown) {
+      return true;
+    }
+    return game.input.pointer2.isDown;
   },
 
   effectivePointer: function (game) {
     let width = document.getElementsByTagName("canvas")[0].getBoundingClientRect().width;
     let height = document.getElementsByTagName("canvas")[0].getBoundingClientRect().height;
     let size = PrinceJS.Utils.effectiveScreenSize(game);
-    let x = game.input.activePointer.x || game.input.pointer1.x || 0;
-    let y = game.input.activePointer.y || game.input.pointer1.y || 0;
+    let x =
+      game.input.activePointer.x ||
+      (game.input.pointer1.isDown && game.input.pointer1.x) ||
+      (game.input.pointer2.isDown && game.input.pointer2.x) ||
+      0;
+    let y =
+      game.input.activePointer.y ||
+      (game.input.pointer1.isDown && game.input.pointer1.y) ||
+      (game.input.pointer2.isDown && game.input.pointer2.y) ||
+      0;
     return {
       x: x - (width - size.width) / 2,
       y: y - (height - size.height) / 2
