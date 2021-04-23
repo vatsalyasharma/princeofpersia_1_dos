@@ -885,18 +885,29 @@ PrinceJS.Fighter.prototype.checkFloor = function () {
 
     case 4: // freefall
       this.inFallDown = true;
-      if (this.charY >= PrinceJS.Utils.convertBlockYtoY(this.charBlockY)) {
-        tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-
-        if (tile.isWalkable()) {
-          this.land();
-        } else if (tile.isBarrier()) {
-          this.charX -= 10 * this.charFace;
-        }
-      }
+      this.checkFall(tile);
       break;
   }
 };
+
+PrinceJS.Fighter.prototype.checkFall = function (tile) {
+  if (this.charY >= PrinceJS.Utils.convertBlockYtoY(this.charBlockY)) {
+    tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+    if (tile.isWalkable()) {
+      this.land();
+    } else {
+      this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room);
+      if (tile.isBarrier()) {
+        this.charX -= (tile.isBarrierLeft() ? 10 : 5) * this.charFace;
+        this.updateBlockXY();
+        tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+        if (tile.isWalkable()) {
+          this.land();
+        }
+      }
+    }
+  }
+}
 
 PrinceJS.Fighter.prototype.checkRoomChange = function () {
   if (this.charY > 192) {
@@ -1020,9 +1031,17 @@ PrinceJS.Fighter.prototype.checkChoppers = function () {
   this.tryChoppers(this.charBlockX, this.charBlockY);
 };
 
-PrinceJS.Fighter.prototype.inChopDistance = function (tile) {
+PrinceJS.Fighter.prototype.chopDistance = function (tile) {
   let offsetX = -16;
-  return Math.abs(tile.centerX - this.centerX + offsetX) <= 6 + (this.swordDrawn ? 10 : 0);
+  return tile.centerX - this.centerX + offsetX;
+};
+
+PrinceJS.Fighter.prototype.inChopDistance = function (tile) {
+  return Math.abs(this.chopDistance(tile)) <= 6 + (this.swordDrawn ? 10 : 0);
+};
+
+PrinceJS.Fighter.prototype.nearChopDistance = function (tile) {
+  return Math.abs(this.chopDistance(tile)) <= 16;
 };
 
 PrinceJS.Fighter.prototype.tryChoppers = function (x, y) {
@@ -1054,6 +1073,35 @@ PrinceJS.Fighter.prototype.tryChopperTile = function (x, y, tile) {
         }
       }
     }
+  }
+}
+
+PrinceJS.Fighter.prototype.chopperDistance = function (x, y) {
+  if (this.charName === "skeleton") {
+    return;
+  }
+
+  let tile = this.level.getTileAt(x, y, this.room);
+  if (tile.element === PrinceJS.Level.TILE_CHOPPER) {
+    if (this.nearChopDistance(tile)) {
+      return this.chopDistance(tile);
+    }
+  }
+  tile = this.level.getTileAt(x + 1, y, this.room);
+  if (tile.element === PrinceJS.Level.TILE_CHOPPER) {
+    if (this.nearChopDistance(tile)) {
+      return this.chopDistance(tile);
+    }
+  }
+  return 999;
+};
+
+PrinceJS.Fighter.prototype.dodgeChoppers = function () {
+  let chopperDistance = this.chopperDistance(this.charBlockX, this.charBlockY);
+  if (chopperDistance >= 13 && chopperDistance <= 16) {
+    this.charX -= 3;
+  } else if (chopperDistance >= -16 && chopperDistance <= -13) {
+    this.charX += 3;
   }
 }
 

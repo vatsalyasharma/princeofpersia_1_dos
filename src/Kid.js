@@ -471,6 +471,7 @@ PrinceJS.Kid.prototype.tryEngarde = function () {
   if (this.blockEngarde) {
     return false;
   }
+  this.dodgeChoppers();
 
   if (this.opponent && this.opponent.alive && this.opponentDistance() < 100) {
     this.engarde();
@@ -870,24 +871,11 @@ PrinceJS.Kid.prototype.checkFloor = function () {
     case 3: // stepfall
     case 4: // freefall
       this.inFallDown = true;
-
       if (this.actionCode === 3 && !this.checkFloorStepFall) {
         return;
       }
       this.checkFloorStepFall = false;
-
-      if (this.charY >= PrinceJS.Utils.convertBlockYtoY(this.charBlockY)) {
-        tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-
-        if (tile.isWalkable()) {
-          this.land();
-        } else {
-          if (tile.isBarrier()) {
-            this.charX -= (tile.isBarrierLeft() ? 10 : 5) * this.charFace;
-          }
-          this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room);
-        }
-      }
+      this.checkFall(tile);
       break;
   }
 };
