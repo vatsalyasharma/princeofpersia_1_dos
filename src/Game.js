@@ -91,11 +91,10 @@ PrinceJS.Game.prototype = {
     this.kid.onNextLevel.add(this.nextLevel, this);
     this.kid.onLevelFinished.add(this.levelFinished, this);
 
+    PrinceJS.Tile.Gate.reset();
+    this.currentRoom = json.prince.room;
     this.blockCamera = false;
     this.setupCamera(json.prince.room, json.prince.cameraRoom);
-    this.currentRoom = json.prince.room;
-    PrinceJS.Tile.Gate.reset();
-    this.updateRoom(this.currentRoom, json.prince.cameraRoom, true);
 
     this.world.sort("z");
     this.world.alpha = 1;
@@ -614,7 +613,7 @@ PrinceJS.Game.prototype = {
     if (this.currentRoom === room) {
       return;
     }
-    this.updateRoom(room);
+    this.currentRoom = room;
     this.checkForOpponent(room);
     this.kid.flee = false;
   },
@@ -634,6 +633,8 @@ PrinceJS.Game.prototype = {
     if (this.level.rooms[room]) {
       this.game.camera.x = this.level.rooms[room].x * PrinceJS.SCREEN_WIDTH * PrinceJS.SCALE_FACTOR;
       this.game.camera.y = this.level.rooms[room].y * PrinceJS.ROOM_HEIGHT * PrinceJS.SCALE_FACTOR;
+      this.level.checkGates(room, this.currentCameraRoom);
+      this.currentCameraRoom = room;
     }
   },
 
@@ -699,14 +700,6 @@ PrinceJS.Game.prototype = {
     } else if (!opponentNextRoom) {
       this.ui.resetOpponentLive();
     }
-  },
-
-  updateRoom: function (room, cameraRoom, force = false) {
-    if (!force && this.currentRoom === room) {
-      return;
-    }
-    this.level.checkGates(room, this.currentRoom);
-    this.currentRoom = room;
   },
 
   floorStartFall: function (tile) {

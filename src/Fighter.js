@@ -907,7 +907,7 @@ PrinceJS.Fighter.prototype.checkFall = function (tile) {
       }
     }
   }
-}
+};
 
 PrinceJS.Fighter.prototype.checkRoomChange = function () {
   if (this.charY > 192) {
@@ -1074,7 +1074,7 @@ PrinceJS.Fighter.prototype.tryChopperTile = function (x, y, tile) {
       }
     }
   }
-}
+};
 
 PrinceJS.Fighter.prototype.chopperDistance = function (x, y) {
   if (this.charName === "skeleton") {
@@ -1103,7 +1103,7 @@ PrinceJS.Fighter.prototype.dodgeChoppers = function () {
   } else if (chopperDistance >= -16 && chopperDistance <= -13) {
     this.charX += 3;
   }
-}
+};
 
 PrinceJS.Fighter.prototype.dieSpikes = function () {
   if (!this.alive || this.charName === "skeleton") {
