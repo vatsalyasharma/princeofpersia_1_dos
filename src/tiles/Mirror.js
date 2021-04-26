@@ -46,7 +46,7 @@ PrinceJS.Tile.Mirror.prototype.syncFrame = function (actor) {
   if (this.reflection) {
     this.reflection.frameName = actor.frameName;
     this.reflection.x = actor.x - this.x - 55;
-    this.reflection.x = Math.max(this.reflection.x, actor.faceL() ? -25 : -7);
+    this.reflection.x = Math.max(this.reflection.x, actor.faceL() ? -25 : -10);
     this.reflection.y = actor.y - this.y;
     this.reflection.visible = this.reflection.x > -40 && this.reflection.x < 20;
   }

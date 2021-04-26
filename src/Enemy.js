@@ -190,7 +190,8 @@ PrinceJS.Enemy.prototype.advance = function () {
   }
 
   let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
-  if (tileF.isSafeWalkable()) {
+  let tileFF = this.level.getTileAt(this.charBlockX + 2 * this.charFace, this.charBlockY, this.room);
+  if (tileF.isSafeWalkable() && (!this.opponent.isHanging() || tileFF.isSafeWalkable())) {
     PrinceJS.Fighter.prototype.advance.call(this);
   }
 };

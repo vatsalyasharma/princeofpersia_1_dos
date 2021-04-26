@@ -160,6 +160,9 @@ PrinceJS.Fighter.prototype.updateBlockXY = function () {
   this.charBlockY = Math.min(PrinceJS.Utils.convertYtoBlockY(footY), 2);
   this.updateFallingBlocks(this.charBlockY, charBlockYBefore);
 
+  if (["climbup", "climbdown"].includes(this.action)) {
+    return;
+  }
   if (this.charBlockX < 0) {
     if (this.action === "highjump" && this.faceR()) {
       return;
@@ -710,8 +713,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
         tile.element === PrinceJS.Level.TILE_SPACE &&
         below &&
         charBlockY < 2 &&
-        this.opponent.charBlockY === charBlockY + 1 &&
-        !this.opponent.isHanging()
+        this.opponent.charBlockY === charBlockY + 1
       ) {
         return {
           value: this.checkPathToOpponent(
@@ -1099,10 +1101,11 @@ PrinceJS.Fighter.prototype.chopperDistance = function (x, y) {
 PrinceJS.Fighter.prototype.dodgeChoppers = function () {
   let chopperDistance = this.chopperDistance(this.charBlockX, this.charBlockY);
   if (chopperDistance >= 13 && chopperDistance <= 16) {
-    this.charX -= 3;
+    this.charX -= 16 - chopperDistance;
   } else if (chopperDistance >= -16 && chopperDistance <= -13) {
-    this.charX += 3;
+    this.charX += chopperDistance - -16;
   }
+  this.updateCharPosition();
 };
 
 PrinceJS.Fighter.prototype.dieSpikes = function () {

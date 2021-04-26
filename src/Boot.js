@@ -37,6 +37,7 @@ PrinceJS.Init = function () {
 PrinceJS.Restart = function (game) {
   PrinceJS.Utils.clearQuery(game);
   PrinceJS.Init();
+  PrinceJS.Utils.applyQuery(game);
 };
 
 PrinceJS.Boot = function (game) {

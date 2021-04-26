@@ -52,31 +52,52 @@ PrinceJS.Utils = {
     }
   },
 
+  flashPattern: function (game, color, pattern) {
+    return pattern.reduce((promise, time) => {
+      return promise.then(() => {
+        PrinceJS.Utils.flashScreen(game, 1, color, time);
+        return PrinceJS.Utils.delayed(undefined, 4 * time);
+      });
+    }, Promise.resolve());
+  },
+
   flashRedDamage: function (game) {
-    PrinceJS.Utils.flashScreen(game, 1, PrinceJS.Level.FLASH_RED, 25);
+    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_RED, [25]);
   },
 
   flashRedPotion: function (game) {
-    PrinceJS.Utils.flashScreen(game, 3, PrinceJS.Level.FLASH_RED, 30);
+    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_RED, [50, 25, 25]);
   },
 
   flashGreenPotion: function (game) {
-    PrinceJS.Utils.flashScreen(game, 3, PrinceJS.Level.FLASH_GREEN, 30);
+    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_GREEN, [50, 25, 25]);
   },
 
   flashYellowSword: function (game) {
-    PrinceJS.Utils.flashScreen(game, 3, PrinceJS.Level.FLASH_YELLOW, 50);
+    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_YELLOW, [50, 25, 25, 50, 25, 25, 25]);
   },
 
   flashWhiteShadowMerge: function (game) {
-    PrinceJS.Utils.flashScreen(game, 15, PrinceJS.Level.FLASH_WHITE, 50);
+    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_WHITE, [
+      50,
+      25,
+      25,
+      50,
+      25,
+      25,
+      25,
+      50,
+      25,
+      25,
+      50,
+      25,
+      25,
+      25
+    ]);
   },
 
   flashWhiteVizierVictory: function (game) {
-    PrinceJS.Utils.flashScreen(game, 2, PrinceJS.Level.FLASH_WHITE, 100);
-    PrinceJS.Utils.delayed(() => {
-      PrinceJS.Utils.flashScreen(game, 2, PrinceJS.Level.FLASH_WHITE, 75);
-    }, 500);
+    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_WHITE, [25, 25, 100, 100, 50, 50, 25, 25, 50]);
   },
 
   random: function (max) {
@@ -90,7 +111,7 @@ PrinceJS.Utils = {
       PrinceJS.Utils._pointerTimer = 0;
     }
     if (PrinceJS.Utils._pointerTimer === 0 && PrinceJS.Utils.pointerDown(game)) {
-      PrinceJS.Utils._pointerTimer = 50;
+      PrinceJS.Utils._pointerTimer = 25;
       return true;
     }
     return false;
@@ -158,10 +179,12 @@ PrinceJS.Utils = {
   },
 
   setRemainingMinutesTo15() {
-    if (PrinceJS.Utils.getRemainingMinutes > 15) {
+    if (PrinceJS.Utils.getRemainingMinutes() > 15) {
+      PrinceJS.Utils.minutes = 15;
       let date = new Date();
-      date.setMinutes(date.getMinutes() - (60 - 15));
+      date.setMinutes(date.getMinutes() - (60 - PrinceJS.Utils.minutes));
       PrinceJS.startTime = date;
+      PrinceJS.Utils.updateQuery(this.game);
     }
   },
 
@@ -189,7 +212,7 @@ PrinceJS.Utils = {
   },
 
   applyStrength: function (value) {
-    if (PrinceJS.strength > 0 && PrinceJS.strength < 100) {
+    if (PrinceJS.strength >= 0 && PrinceJS.strength < 100) {
       return Math.ceil((value * PrinceJS.strength) / 100);
     }
     return value;
@@ -217,7 +240,7 @@ PrinceJS.Utils = {
     }
     if (query.get("strength")) {
       let queryStrength = parseInt(query.get("strength"), 10);
-      if (!isNaN(queryStrength) && queryStrength >= 1 && queryStrength <= 100) {
+      if (!isNaN(queryStrength) && queryStrength >= 0 && queryStrength <= 100) {
         PrinceJS.strength = queryStrength;
       }
     }
@@ -245,10 +268,11 @@ PrinceJS.Utils = {
   },
 
   updateQuery: function (game) {
+    PrinceJS.minutes = PrinceJS.Utils.getRemainingMinutes();
     PrinceJS.Utils.setHistoryState({
       level: PrinceJS.currentLevel,
       health: PrinceJS.maxHealth,
-      time: PrinceJS.Utils.getRemainingMinutes(),
+      time: PrinceJS.minutes,
       strength: PrinceJS.strength,
       width: PrinceJS.screenWidth,
       fullscreen: PrinceJS.screenFull

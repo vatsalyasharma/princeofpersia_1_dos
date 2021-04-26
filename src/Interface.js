@@ -112,6 +112,7 @@ PrinceJS.Interface.prototype = {
     }
     this.opp.onDamageLife.removeAll();
     this.opp.onDead.removeAll();
+    this.opp.opponent = null;
     this.opp = null;
     this.oppHPs = [];
     this.oppHPActive = 0;
@@ -170,6 +171,7 @@ PrinceJS.Interface.prototype = {
       return;
     }
     if (PrinceJS.Utils.getRemainingMinutes() === 0) {
+      this.showRemainingSeconds();
       this.delegate.timeUp();
       PrinceJS.startTime = null;
     } else if (PrinceJS.Utils.getRemainingMinutes() === 1) {
@@ -199,7 +201,10 @@ PrinceJS.Interface.prototype = {
     if (["level", "continue"].includes(this.showTextType)) {
       return;
     }
-    let seconds = PrinceJS.Utils.getRemainingSeconds();
+    let seconds = 0;
+    if (PrinceJS.Utils.getRemainingMinutes() > 0) {
+      seconds = PrinceJS.Utils.getRemainingSeconds();
+    }
     this.showText(seconds + (seconds === 1 ? " SECOND " : " SECONDS ") + "LEFT", "seconds");
   },
 

@@ -614,7 +614,6 @@ PrinceJS.Game.prototype = {
       return;
     }
     this.currentRoom = room;
-    this.checkForOpponent(room);
     this.kid.flee = false;
   },
 
@@ -633,6 +632,7 @@ PrinceJS.Game.prototype = {
     if (this.level.rooms[room]) {
       this.game.camera.x = this.level.rooms[room].x * PrinceJS.SCREEN_WIDTH * PrinceJS.SCALE_FACTOR;
       this.game.camera.y = this.level.rooms[room].y * PrinceJS.ROOM_HEIGHT * PrinceJS.SCALE_FACTOR;
+      this.checkForOpponent(room);
       this.level.checkGates(room, this.currentCameraRoom);
       this.currentCameraRoom = room;
     }
@@ -695,10 +695,17 @@ PrinceJS.Game.prototype = {
         opponentNextRoom = true;
       }
     }
-    if (opponentSameRoom) {
-      this.ui.setOpponentLive(this.kid.opponent);
-    } else if (!opponentNextRoom) {
-      this.ui.resetOpponentLive();
+    if (this.ui) {
+      if (opponentSameRoom) {
+        this.ui.setOpponentLive(this.kid.opponent);
+      } else if (
+        !this.kid.opponent ||
+        this.kid.opponent !== this.ui.opp ||
+        !this.kid.opponentOnSameLevel() ||
+        !opponentNextRoom
+      ) {
+        this.ui.resetOpponentLive();
+      }
     }
   },
 

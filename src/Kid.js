@@ -507,6 +507,10 @@ PrinceJS.Kid.prototype.inGrabDistance = function (tile) {
 };
 
 PrinceJS.Kid.prototype.tryGrabEdge = function () {
+  this.updateBlockXY();
+  if (this.fallingBlocks > 2) {
+    return;
+  }
   let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
   let tileTF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY - 1, this.room);
   let tileTR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY - 1, this.room);
@@ -565,9 +569,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
     return;
   }
   if (
-    ["jumpup", "highjump", "jumphanglong", "climbup", "climbdown", "climbfail", "stand", "standup", "turn"].includes(
-      this.action
-    )
+    ["jumpup", "highjump", "jumphanglong", "climbup", "climbdown", "climbfail", "stand", "turn"].includes(this.action)
   ) {
     return;
   }
@@ -901,6 +903,9 @@ PrinceJS.Kid.prototype.moveL = function () {
 };
 
 PrinceJS.Kid.prototype.checkRoomChange = function () {
+  if ([16, 17, 28].includes(this.charFrame)) {
+    return;
+  }
   let footX = this.charX + this.charFdx * this.charFace;
   let footBlockX = PrinceJS.Utils.convertXtoBlockX(footX);
 
@@ -912,11 +917,15 @@ PrinceJS.Kid.prototype.checkRoomChange = function () {
         cameraRoom = this.level.rooms[this.room].links.right;
       }
     }
-    this.onChangeRoom.dispatch(this.room, cameraRoom);
+    if (!["climbup", "climbdown", "stand", "jumpup"].includes(this.action)) {
+      this.onChangeRoom.dispatch(this.room, cameraRoom);
+    }
   }
 
-  if (this.moveL() && (footBlockX === 8 || (footBlockX === 9 && footX < 134))) {
-    this.onChangeRoom.dispatch(this.room);
+  if (this.moveL() && (footBlockX === 8 || (footBlockX === 9 && footX < 135))) {
+    if (!["climbup", "climbdown", "stand", "jumpup"].includes(this.action)) {
+      this.onChangeRoom.dispatch(this.room);
+    }
   }
 
   if (this.charY > 189) {
@@ -1356,8 +1365,11 @@ PrinceJS.Kid.prototype.startFall = function () {
       act = "stepfall2";
     }
 
-    if (this.distanceToEdge() <= 2 && this.action === "running") {
-      this.charX -= 8 * this.charFace;
+    if (
+      this.distanceToEdge() <= 5 &&
+      (["running", "runstop"].includes(this.action) || this.action.startsWith("step"))
+    ) {
+      this.charX -= 7 * this.charFace;
     }
 
     if (["retreat"].includes(this.action) || this.swordDrawn) {
