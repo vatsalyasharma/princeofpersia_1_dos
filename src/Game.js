@@ -164,6 +164,18 @@ PrinceJS.Game.prototype = {
         }
         break;
 
+      case 2:
+        if (this.firstUpdate) {
+          for (let i = 0; i < this.enemies.length; i++) {
+            let enemy = this.enemies[i];
+            if (enemy.room === 24) {
+              enemy.charX -= 14;
+              enemy.updateBlockXY();
+            }
+          }
+        }
+        break;
+
       case 3:
         skeleton = this.kid.opponent && this.kid.opponent.charName === "skeleton" ? this.kid.opponent : null;
         if (skeleton) {
@@ -414,7 +426,7 @@ PrinceJS.Game.prototype = {
                 button.mute = true;
                 button.push();
               }
-            }, 5000);
+            }, 7000);
           }
         }
         break;

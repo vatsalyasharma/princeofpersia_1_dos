@@ -118,13 +118,16 @@ PrinceJS.Interface.prototype = {
     this.oppHPActive = 0;
   },
 
-  damageOpponentLive: function () {
+  damageOpponentLive: function (num) {
     if (!this.opp || this.opp.charName === "skeleton") {
       return;
     }
 
-    this.oppHPActive--;
-    this.oppHPs[this.oppHPActive].visible = false;
+    let n = Math.min(this.oppHPActive, num);
+    for (let i = 0; i < n; i++) {
+      this.oppHPActive--;
+      this.oppHPs[this.oppHPActive].visible = false;
+    }
   },
 
   updateUI: function () {

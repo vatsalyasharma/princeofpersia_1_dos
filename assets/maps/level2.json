@@ -3095,7 +3095,7 @@
    "guards":[
       {
          "room":24,
-         "location":10,
+         "location":11,
          "skill":3,
          "colors":6,
          "type":"guard",

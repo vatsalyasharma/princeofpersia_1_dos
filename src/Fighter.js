@@ -307,19 +307,25 @@ PrinceJS.Fighter.prototype.updateSwordPosition = function () {
 };
 
 PrinceJS.Fighter.prototype.opponentOnSameLevel = function () {
-  return this.opponent.charBlockY === this.charBlockY;
+  return this.opponent && this.opponent.charBlockY === this.charBlockY;
 };
 
 PrinceJS.Fighter.prototype.opponentOnSameTile = function () {
-  return this.charBlockX === this.opponent.charBlockX && this.charBlockY === this.opponent.charBlockY;
+  return this.opponent && this.charBlockX === this.opponent.charBlockX && this.charBlockY === this.opponent.charBlockY;
 };
 
 PrinceJS.Fighter.prototype.opponentOnSameTileBelow = function () {
-  return this.charBlockX === this.opponent.charBlockX && this.charBlockY + 1 === this.opponent.charBlockY;
+  return (
+    this.opponent && this.charBlockX === this.opponent.charBlockX && this.charBlockY + 1 === this.opponent.charBlockY
+  );
 };
 
 PrinceJS.Fighter.prototype.opponentOnNextTileBelow = function () {
-  return this.charBlockX + 1 === this.opponent.charBlockX && this.charBlockY + 1 === this.opponent.charBlockY;
+  return (
+    this.opponent &&
+    this.charBlockX + 1 === this.opponent.charBlockX &&
+    this.charBlockY + 1 === this.opponent.charBlockY
+  );
 };
 
 PrinceJS.Fighter.prototype.opponentDistance = function () {
@@ -410,14 +416,14 @@ PrinceJS.Fighter.prototype.turnengarde = function () {
   if (this.flee) {
     return;
   }
-  if ("turnengarde" === this.action) {
+  if (["turnengarde"].includes(this.action)) {
     return;
   }
   if (!["stand", "engarde", "advance", "retreat"].includes(this.action)) {
     return;
   }
-  let begin = Math.abs(this.opponentDistance()) > 10;
-  this.action = (this.charName === "kid" && begin ? "begin" : "") + "turnengarde";
+  let begin = this.charName === "kid" && this.action === "stand" && Math.abs(this.opponentDistance()) > 10;
+  this.action = (begin ? "begin" : "") + "turnengarde";
   if (!this.swordDrawn && this.charName === "kid") {
     this.game.sound.play("UnsheatheSword");
   }
@@ -672,7 +678,7 @@ PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, roo
     (tile.isSafeWalkable() && this.canCrossGate(tile)) ||
     ((!tile.isDangerousWalkable() ||
       (tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x && this.opponent.x > tile.x)) &&
-      (this.standsOnTile(tile) || this.opponent.standsOnTile(tile)))
+      this.standsOnTile(tile))
   );
 };
 

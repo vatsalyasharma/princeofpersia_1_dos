@@ -32,7 +32,7 @@ Url parameters are leveraged to save game state automatically
 - `level`: Current Level (1-14, default: 1)
 - `health`: Max Health (3-10, default: 3)
 - `time`: Remaining Minutes (1-60, default: 60)
-- `strength`: Guard Strength in "%" (1-100, default: 100)
+- `strength`: Guard Strength in "%" (0-100, default: 100)
 - `width`: Game Width in "px" (default: 0 (fit to screen))
 - `fullscreen`: Fullscreen mode (=100vh) (default: false)
 
