@@ -34,13 +34,13 @@ PrinceJS.Init = function () {
   PrinceJS.danger = true;
 };
 
-PrinceJS.Restart = function (game) {
-  PrinceJS.Utils.clearQuery(game);
+PrinceJS.Restart = function () {
+  PrinceJS.Utils.clearQuery();
   PrinceJS.Init();
-  PrinceJS.Utils.applyQuery(game);
+  PrinceJS.Utils.applyQuery();
 };
 
-PrinceJS.Boot = function (game) {
+PrinceJS.Boot = function () {
   PrinceJS.Init();
 };
 
@@ -53,8 +53,8 @@ PrinceJS.Boot.prototype = {
     this.world.scale.set(PrinceJS.SCALE_FACTOR);
     this.state.start("Preloader");
 
-    PrinceJS.Utils.applyQuery(this.game);
-    PrinceJS.Utils.applyScreenWidth(this.game);
+    PrinceJS.Utils.applyQuery();
+    PrinceJS.Utils.applyScreenWidth();
 
     PrinceJS.danger = PrinceJS.currentLevel === 1;
   }

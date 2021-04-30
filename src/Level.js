@@ -87,6 +87,7 @@ PrinceJS.Level.prototype = {
     this.front.add(tile.front);
 
     this.exitDoorOpen = false;
+    this.activeGates = [];
   },
 
   addTrob: function (trob) {
@@ -244,8 +245,7 @@ PrinceJS.Level.prototype = {
 
   checkGates: function (room, prevRoom) {
     let gates = this.getGatesAll(room, prevRoom);
-    let prevGates = this.getGatesAll(prevRoom);
-    prevGates.forEach((gate) => {
+    this.activeGates.forEach((gate) => {
       if (!gates.includes(gate)) {
         gate.isVisible(false);
       }
@@ -253,6 +253,7 @@ PrinceJS.Level.prototype = {
     gates.forEach((gate) => {
       gate.isVisible(true);
     });
+    this.activeGates = gates;
   },
 
   getGatesAll: function (room, prevRoom) {
@@ -279,9 +280,9 @@ PrinceJS.Level.prototype = {
             gates.push(tile);
           } else if (edgeX !== undefined && edgeY !== undefined && tile.roomX === edgeX && tile.roomY === edgeY) {
             gates.push(tile);
-          } else if (edgeX !== undefined && tile.roomX === edgeX) {
+          } else if (edgeX !== undefined && edgeY === undefined && tile.roomX === edgeX) {
             gates.push(tile);
-          } else if (edgeY !== undefined && tile.roomY === edgeY) {
+          } else if (edgeX === undefined && edgeY !== undefined && tile.roomY === edgeY) {
             gates.push(tile);
           }
         }

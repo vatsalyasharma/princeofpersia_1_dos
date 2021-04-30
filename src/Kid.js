@@ -573,7 +573,10 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
   ) {
     return;
   }
-  if (this.action.substring(0, 4) === "step" || this.action.substring(0, 4) === "hang") {
+  if (
+    this.action.substring(0, 4) === "step" ||
+    (this.action.substring(0, 4) === "hang" && this.action !== "hangdrop")
+  ) {
     return;
   }
 
@@ -719,6 +722,7 @@ PrinceJS.Kid.prototype.bump = function () {
       }
     }
   }
+  this.crop(null);
 };
 
 PrinceJS.Kid.prototype.setBump = function () {
@@ -803,11 +807,13 @@ PrinceJS.Kid.prototype.checkButton = function () {
     case 7: // turn
       if (checkCharFcheck) {
         let tile = this.level.getTileAt(checkCharBlockX, checkCharBlockY, this.room);
-        switch (tile.element) {
-          case PrinceJS.Level.TILE_RAISE_BUTTON:
-          case PrinceJS.Level.TILE_DROP_BUTTON:
-            tile.push();
-            break;
+        if (tile) {
+          switch (tile.element) {
+            case PrinceJS.Level.TILE_RAISE_BUTTON:
+            case PrinceJS.Level.TILE_DROP_BUTTON:
+              tile.push();
+              break;
+          }
         }
       }
       break;
@@ -1536,11 +1542,11 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isSpace() && tileTF.isWalkable()) {
+  if (tileT.isJumpSpace() && tileTF.isWalkable()) {
     return this.jumphanglong();
   }
 
-  if (tileT.isWalkable() && tileTR.isSpace() && tileR.isWalkable()) {
+  if (tileT.isWalkable() && tileTR.isJumpSpace() && tileR.isWalkable()) {
     if (this.faceL() && PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - this.charX < 11) {
       this.charBlockX++;
       return this.jumphanglong();
@@ -1552,7 +1558,7 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isWalkable() && tileTR.isSpace()) {
+  if (tileT.isWalkable() && tileTR.isJumpSpace()) {
     if (this.faceL() && PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - this.charX < 11) {
       return this.jumpbackhang();
     }
@@ -1562,7 +1568,7 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isSpace()) {
+  if (tileT.isJumpSpace()) {
     return this.highjump();
   }
 
@@ -1583,6 +1589,14 @@ PrinceJS.Kid.prototype.damageLife = function (crouch = false) {
     this.onDamageLife.dispatch(1);
   } else {
     this.die();
+  }
+};
+
+PrinceJS.Kid.prototype.stealLife = function () {
+  if (this.health > 1) {
+    let damage = this.health - 1;
+    this.health = 1;
+    this.onDamageLife.dispatch(damage);
   }
 };
 

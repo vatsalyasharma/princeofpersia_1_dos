@@ -87,7 +87,17 @@
   <body oncontextmenu="return false;">
     <div class="game" id="gameContainer"></div>
     <script type="text/javascript">
-      window.onload = function () {
+      document.onvisibilitychange = () => {
+        switch (document.visibilityState) {
+          case "hidden":
+            PrinceJS.Utils.updateQuery();
+            break;
+          case "visible":
+            PrinceJS.Utils.restoreQuery();
+            break;
+        }
+      };
+      window.onload = () => {
         let game = new Phaser.Game(640, 400, Phaser.AUTO, "gameContainer", null, false, false);
         game.state.add("Boot", PrinceJS.Boot);
         game.state.add("Preloader", PrinceJS.Preloader);

@@ -192,10 +192,10 @@ PrinceJS.Cutscene.prototype = {
     if (PrinceJS.currentLevel === 1) {
       this.state.start("Credits");
     } else if (PrinceJS.currentLevel === 15) {
-      PrinceJS.Restart(this.game);
+      PrinceJS.Restart();
       this.state.start("EndTitle");
     } else if (PrinceJS.currentLevel === 16) {
-      PrinceJS.Restart(this.game);
+      PrinceJS.Restart();
       this.state.start("Title");
     } else {
       this.play();

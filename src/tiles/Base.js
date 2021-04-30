@@ -63,6 +63,10 @@ PrinceJS.Tile.Base.prototype = {
     );
   },
 
+  isJumpSpace: function () {
+    return this.isSpace() && ![PrinceJS.Level.TILE_TAPESTRY_TOP].includes(this.element);
+  },
+
   isSpace: function () {
     return (
       this.element === PrinceJS.Level.TILE_SPACE ||

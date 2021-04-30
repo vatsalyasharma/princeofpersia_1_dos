@@ -184,7 +184,7 @@ PrinceJS.Utils = {
       let date = new Date();
       date.setMinutes(date.getMinutes() - (60 - PrinceJS.Utils.minutes));
       PrinceJS.startTime = date;
-      PrinceJS.Utils.updateQuery(this.game);
+      PrinceJS.Utils.updateQuery();
     }
   },
 
@@ -203,12 +203,12 @@ PrinceJS.Utils = {
 
   getRemainingMinutes: function () {
     let deltaTime = PrinceJS.Utils.getDeltaTime();
-    return Math.max(0, 60 - deltaTime.minutes);
+    return Math.min(60, Math.max(0, 60 - deltaTime.minutes));
   },
 
   getRemainingSeconds: function () {
     let deltaTime = PrinceJS.Utils.getDeltaTime();
-    return Math.max(0, 60 - deltaTime.seconds);
+    return Math.min(60, Math.max(0, 60 - deltaTime.seconds));
   },
 
   applyStrength: function (value) {
@@ -218,7 +218,7 @@ PrinceJS.Utils = {
     return value;
   },
 
-  applyQuery: function (game) {
+  applyQuery: function () {
     let query = new URLSearchParams(window.location.search);
     if (query.get("level")) {
       let queryLevel = parseInt(query.get("level"), 10);
@@ -267,7 +267,7 @@ PrinceJS.Utils = {
     }
   },
 
-  updateQuery: function (game) {
+  updateQuery: function () {
     PrinceJS.minutes = PrinceJS.Utils.getRemainingMinutes();
     PrinceJS.Utils.setHistoryState({
       level: PrinceJS.currentLevel,
@@ -279,7 +279,15 @@ PrinceJS.Utils = {
     });
   },
 
-  clearQuery: function (game) {
+  restoreQuery: function () {
+    if (PrinceJS.Utils.getRemainingMinutes() < PrinceJS.minutes) {
+      let date = new Date();
+      date.setMinutes(date.getMinutes() - (60 - PrinceJS.minutes));
+      PrinceJS.startTime = date;
+    }
+  },
+
+  clearQuery: function () {
     PrinceJS.Utils.setHistoryState({
       strength: PrinceJS.strength,
       width: PrinceJS.screenWidth,

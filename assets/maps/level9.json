@@ -1469,7 +1469,8 @@
             },
             {
                "element":4,
-               "modifier":0
+               "modifier":0,
+               "mute":false
             },
             {
                "element":20,
