@@ -85,6 +85,9 @@ PrinceJS.Game.prototype = {
     }
     this.kid.charX += json.prince.offset || 0;
 
+    this.game.onPause.add(this.onPause, this);
+    this.game.onResume.add(this.onResume, this);
+
     this.kid.onChangeRoom.add(this.changeRoom, this);
     this.kid.onDead.add(this.handleDead, this);
     this.kid.onFlipped.add(this.handleFlipped, this);
@@ -631,6 +634,15 @@ PrinceJS.Game.prototype = {
     } else {
       this.state.start("Game");
     }
+  },
+
+  onPause: function() {
+    PrinceJS.Utils.updateQuery();
+  },
+
+  onResume: function() {
+    PrinceJS.Utils.restoreQuery();
+    this.ui.showRemainingMinutes();
   },
 
   changeRoom: function (room, cameraRoom) {
