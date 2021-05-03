@@ -638,10 +638,12 @@ PrinceJS.Game.prototype = {
 
   onPause: function() {
     PrinceJS.Utils.updateQuery();
+    this.ui.showGamePaused();
   },
 
   onResume: function() {
     PrinceJS.Utils.restoreQuery();
+    this.ui.showTextType = null;
     this.ui.showRemainingMinutes();
   },
 

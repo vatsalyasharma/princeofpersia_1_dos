@@ -27,7 +27,8 @@ PrinceJS.Interface = function (game, delegate) {
   this.oppHPs = [];
   this.oppHPActive = 0;
 
-  this.pressButtonToContinueStep = -1;
+  this.pressButtonToContinueTimer = -1;
+  this.hideTextTimer = -1;
 };
 
 PrinceJS.Interface.prototype = {
@@ -145,15 +146,22 @@ PrinceJS.Interface.prototype = {
       this.oppHPs[0].visible = !this.oppHPs[0].visible;
     }
 
-    if (this.pressButtonToContinueStep > -1) {
-      this.pressButtonToContinueStep--;
-      if (this.pressButtonToContinueStep < 70) {
-        if (this.pressButtonToContinueStep % 7 === 0) {
+    if (this.pressButtonToContinueTimer > -1) {
+      this.pressButtonToContinueTimer--;
+      if (this.pressButtonToContinueTimer < 70) {
+        if (this.pressButtonToContinueTimer % 7 === 0) {
           this.text.visible = !this.text.visible;
           if (this.text.visible) {
             this.game.sound.play("Beep");
           }
         }
+      }
+    }
+
+    if (this.hideTextTimer > -1) {
+      this.hideTextTimer--;
+      if (this.hideTextTimer === 0) {
+        this.hideText();
       }
     }
   },
@@ -163,8 +171,9 @@ PrinceJS.Interface.prototype = {
       return;
     }
     this.showText("LEVEL " + PrinceJS.currentLevel, "level");
+    this.hideTextTimer = 25;
     PrinceJS.Utils.delayed(() => {
-      this.hideText();
+      this.showTextType = null;
       this.showRegularRemainingTime(true);
     }, 2000);
   },
@@ -195,9 +204,7 @@ PrinceJS.Interface.prototype = {
     }
     let minutes = PrinceJS.Utils.getRemainingMinutes();
     this.showText(minutes + (minutes === 1 ? " MINUTE " : " MINUTES ") + "LEFT", "minutes");
-    PrinceJS.Utils.delayed(() => {
-      this.hideText();
-    }, 3000);
+    this.hideTextTimer = 40;
   },
 
   showRemainingSeconds: function () {
@@ -218,14 +225,20 @@ PrinceJS.Interface.prototype = {
     }, 4000);
   },
 
+  showGamePaused: function () {
+    this.showText("GAME PAUSED", "paused");
+  },
+
   showText: function (text, type) {
     this.text.setText(text);
     this.showTextType = type;
+    this.hideTextTimer = -1;
   },
 
   hideText: function () {
     this.text.setText("");
     this.showTextType = null;
+    this.hideTextTimer = -1;
   },
 
   flipped: function () {

@@ -1173,7 +1173,9 @@ PrinceJS.Kid.prototype.runturn = function () {
 
 PrinceJS.Kid.prototype.turnrun = function () {
   if (this.nearBarrier()) {
-    return this.step();
+    this.step();
+    this.charX -= 2 * this.charFace;
+    return;
   }
   this.action = "turnrun";
 };
@@ -1293,7 +1295,7 @@ PrinceJS.Kid.prototype.step = function () {
         return;
       }
     } else {
-      if (tileF.isBarrier() && px - 2 < 0) {
+      if (tileF.isBarrier() && px - 2 <= 0) {
         this.setBump();
         return;
       } else {
