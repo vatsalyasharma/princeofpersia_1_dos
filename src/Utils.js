@@ -170,6 +170,10 @@ PrinceJS.Utils = {
     return document.getElementById("gameContainer");
   },
 
+  resetFlipScreen: function () {
+    PrinceJS.Utils.gameContainer().classList.remove("flipped");
+  },
+
   toggleFlipScreen: function () {
     PrinceJS.Utils.gameContainer().classList.toggle("flipped");
   },

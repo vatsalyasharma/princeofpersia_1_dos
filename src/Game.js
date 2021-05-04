@@ -116,6 +116,7 @@ PrinceJS.Game.prototype = {
 
     this.firstUpdate = true;
 
+    PrinceJS.Utils.resetFlipScreen();
     PrinceJS.Utils.updateQuery();
   },
 

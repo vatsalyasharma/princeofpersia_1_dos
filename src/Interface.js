@@ -173,8 +173,9 @@ PrinceJS.Interface.prototype = {
     this.showText("LEVEL " + PrinceJS.currentLevel, "level");
     this.hideTextTimer = 25;
     PrinceJS.Utils.delayed(() => {
-      this.showTextType = null;
-      this.showRegularRemainingTime(true);
+      if (!this.showTextType || this.showTextType === "level") {
+        this.showRegularRemainingTime(true);
+      }
     }, 2000);
   },
 
