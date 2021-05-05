@@ -195,12 +195,12 @@ PrinceJS.Interface.prototype = {
         PrinceJS.Utils.getRemainingMinutes() % 5 === 0 &&
         PrinceJS.Utils.getDeltaTime().seconds === 0)
     ) {
-      this.showRemainingMinutes();
+      this.showRemainingMinutes(force);
     }
   },
 
-  showRemainingMinutes: function () {
-    if (this.showTextType) {
+  showRemainingMinutes: function (force) {
+    if (this.showTextType && !force) {
       return;
     }
     let minutes = PrinceJS.Utils.getRemainingMinutes();
@@ -209,7 +209,7 @@ PrinceJS.Interface.prototype = {
   },
 
   showRemainingSeconds: function () {
-    if (["level", "continue"].includes(this.showTextType)) {
+    if (["level", "continue", "paused"].includes(this.showTextType)) {
       return;
     }
     let seconds = 0;

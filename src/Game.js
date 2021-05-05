@@ -127,11 +127,11 @@ PrinceJS.Game.prototype = {
       let size = PrinceJS.Utils.effectiveScreenSize(this.game);
       if (PrinceJS.Utils.isScreenFlipped()) {
         if (pos.y >= 0 && pos.y <= 0.04 * size.height) {
-          this.ui.showRemainingMinutes();
+          this.showRemainingMinutes();
         }
       } else {
         if (pos.y >= 0.96 * size.height && pos.y <= size.height) {
-          this.ui.showRemainingMinutes();
+          this.showRemainingMinutes();
         }
       }
     }
@@ -431,7 +431,7 @@ PrinceJS.Game.prototype = {
           }
           if (!jaffar.alive && !PrinceJS.endTime) {
             PrinceJS.endTime = new Date();
-            this.ui.showRemainingMinutes();
+            this.showRemainingMinutes();
           }
           if (!jaffar.alive && !this.level.triggerOpenExitDoor) {
             this.level.triggerOpenExitDoor = true;
@@ -522,8 +522,8 @@ PrinceJS.Game.prototype = {
     }
   },
 
-  showRemainingMinutes: function () {
-    this.ui.showRemainingMinutes();
+  showRemainingMinutes: function (force) {
+    this.ui.showRemainingMinutes(force);
   },
 
   restartGameEvent(event) {
@@ -637,15 +637,14 @@ PrinceJS.Game.prototype = {
     }
   },
 
-  onPause: function() {
+  onPause: function () {
     PrinceJS.Utils.updateQuery();
     this.ui.showGamePaused();
   },
 
-  onResume: function() {
+  onResume: function () {
     PrinceJS.Utils.restoreQuery();
-    this.ui.showTextType = null;
-    this.ui.showRemainingMinutes();
+    this.showRemainingMinutes(true);
   },
 
   changeRoom: function (room, cameraRoom) {
