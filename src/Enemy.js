@@ -172,7 +172,8 @@ PrinceJS.Enemy.prototype.retreat = function () {
   if (
     !this.action.includes("turn") &&
     !this.opponent.action.includes("turn") &&
-    this.charFace === this.opponent.charFace
+    this.charFace === this.opponent.charFace &&
+    this.opponentOnSameLevel()
   ) {
     this.turnengarde();
     return;

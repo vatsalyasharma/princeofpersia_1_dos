@@ -226,7 +226,7 @@ PrinceJS.Utils = {
     let query = new URLSearchParams(window.location.search);
     if (query.get("level")) {
       let queryLevel = parseInt(query.get("level"), 10);
-      if (!isNaN(queryLevel) && queryLevel >= 1 && queryLevel <= 14) {
+      if ((!isNaN(queryLevel) && queryLevel >= 1 && queryLevel <= 14) || queryLevel > 100) {
         PrinceJS.currentLevel = queryLevel;
       }
     }

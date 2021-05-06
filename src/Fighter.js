@@ -888,10 +888,7 @@ PrinceJS.Fighter.prototype.checkFloor = function () {
           case PrinceJS.Level.TILE_SPACE:
           case PrinceJS.Level.TILE_TOP_BIG_PILLAR:
           case PrinceJS.Level.TILE_TAPESTRY_TOP:
-            if (this.actionCode === 5) {
-              return;
-            }
-            if (!this.alive) {
+            if (!this.alive || this.actionCode === 5 || ["strike"].includes(this.action)) {
               return;
             }
             this.startFall();

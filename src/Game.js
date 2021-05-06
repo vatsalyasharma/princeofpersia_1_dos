@@ -43,7 +43,10 @@ PrinceJS.Game.prototype = {
     }
 
     let json = this.game.cache.getJSON("level");
-
+    if (!json) {
+      this.restartGame();
+      return;
+    }
     this.level = new PrinceJS.LevelBuilder(this.game, this).buildFromJSON(json);
 
     this.shadow = null;
@@ -573,7 +576,7 @@ PrinceJS.Game.prototype = {
 
     PrinceJS.maxHealth = this.kid.maxHealth;
     PrinceJS.currentLevel++;
-    if (PrinceJS.currentLevel > 15) {
+    if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel <= 100) {
       this.restartGame();
       return;
     }
