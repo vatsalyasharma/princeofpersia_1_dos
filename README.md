@@ -15,9 +15,13 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 - Add to Home Screen to start as Fullscreen App
 - Reduced difficulty (50%):
   - https://oklemenz.github.io/PrinceJS?strength=50&fullscreen=true
-- Touch Controls:
+- Touch Controls (tap/drag area on screen):
 
   ![Mobile](assets/web/mobile.svg)
+
+  - Dragging can be used to trigger continuous move sequences, e.g.
+    - _Run Jump_: Tap Left / Right -> Hold -> Drag in Left/Right corner
+    - _Jump Grab_: (Run) Jump -> Hold -> Drag to Center (Shift)
 
 ## Play Locally
 
@@ -47,15 +51,27 @@ Manual adjustments of url parameters is possible as preset options.
 ## Custom Levels
 
 Apoplexy (https://www.apoplexy.org) can be used to build custom levels.
+Custom levels can be played performing the following steps.
 
-Custom levels can be played performing the following steps:
+### Single Conversion
 
-- Save level as XML file in Apoplexy
-- Rename XML file to `level` followed by a number greater 100, e.g. `level101.xml`
-- Place the XML file into folder `/converter`
-- Call convert script, e.g. `npm run convert '/converter/level101.xml'`
-- A JSON file is generated next to XML file, e.g. `/converter/level101.json`
-- Place the JSON file into folder `/assets/maps`
-- Start game locally with `npm start`
-- Open game in browser
-- Change URL and set url parameter `level` to the chosen number, e.g. `level=101`
+- Save level as XML file in Apoplexy, e.g. `./xml/level1.xml`
+- Call convert script, e.g. `npm run convert .../xml/level1.xml`
+  - A JSON file is placed at `/assets/maps/`, e.g. `/assets/maps/level101.json`
+- Custom level numbers starts beyond 100, e.g. `level1.xml` gets number `101`, etc.
+  - An optional second parameter can be used to control level offset
+  - e.g. `npm run convert .../xml/level1.xml 200` generates `/assets/maps/level201.json`
+- Start game locally with `npm start` and open game in browser
+- Change Url and set parameter `level` to the respective number, e.g. `level=101`
+- Note: No special events are supported
+
+### Batch Conversion
+
+- Place level files into folder `/converter/<xxx>`, where `<xxx>` stands for the offset (default: 100)
+  - e.g. `/converter/100`: place all levels starting with 100 offset
+- Execute `npm run convert`
+- Corresponding JSON files are placed at `/assets/maps/`
+
+### Level Numbers
+
+101: Deep

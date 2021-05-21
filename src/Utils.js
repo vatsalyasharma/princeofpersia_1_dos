@@ -105,16 +105,9 @@ PrinceJS.Utils = {
   },
 
   pointerPressed: function (game) {
-    if (PrinceJS.Utils._pointerTimer > 0) {
-      PrinceJS.Utils._pointerTimer--;
-    } else {
-      PrinceJS.Utils._pointerTimer = 0;
-    }
-    if (PrinceJS.Utils._pointerTimer === 0 && PrinceJS.Utils.pointerDown(game)) {
-      PrinceJS.Utils._pointerTimer = 25;
-      return true;
-    }
-    return false;
+    let pointerPressed = this._pointerPressed;
+    this._pointerPressed = PrinceJS.Utils.pointerDown(game);
+    return pointerPressed && !this._pointerPressed;
   },
 
   pointerDown: function (game) {

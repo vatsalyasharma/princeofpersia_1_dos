@@ -208,6 +208,10 @@ PrinceJS.Interface.prototype = {
     this.hideTextTimer = 40;
   },
 
+  isRemainingMinutesShown: function () {
+    return this.showTextType === "minutes";
+  },
+
   showRemainingSeconds: function () {
     if (["level", "continue", "paused"].includes(this.showTextType)) {
       return;
@@ -222,7 +226,7 @@ PrinceJS.Interface.prototype = {
   showPressButtonToContinue: function () {
     PrinceJS.Utils.delayed(() => {
       this.showText("Press Button to Continue", "continue");
-      this.pressButtonToContinueStep = 200;
+      this.pressButtonToContinueTimer = 200;
     }, 4000);
   },
 

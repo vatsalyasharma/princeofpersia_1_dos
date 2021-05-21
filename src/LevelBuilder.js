@@ -28,6 +28,7 @@ PrinceJS.LevelBuilder.prototype = {
 
     this.level = new PrinceJS.Level(this.game, json.number, json.name, this.type);
     this.startRoomId = json.prince.room;
+    this.startLocation = json.prince.location;
 
     let y, x, id, tile;
     for (y = 0; y < this.height; y++) {
@@ -74,7 +75,7 @@ PrinceJS.LevelBuilder.prototype = {
           }
         }
 
-        this.buildRoom(id, this.startRoomId);
+        this.buildRoom(id, this.startRoomId, this.startLocation);
 
         if (this.level.rooms[id].links.up === -1) {
           for (let ii = 0; ii < 10; ii++) {
@@ -90,16 +91,16 @@ PrinceJS.LevelBuilder.prototype = {
     return this.level;
   },
 
-  buildRoom: function (id, startId) {
+  buildRoom: function (id, startId, startLocation) {
     for (let y = 2; y >= 0; y--) {
       for (let x = 0; x < 10; x++) {
-        let tile = this.buildTile(x, y, id, startId);
+        let tile = this.buildTile(x, y, id, startId, startLocation);
         this.level.addTile(x, y, id, tile);
       }
     }
   },
 
-  buildTile: function (x, y, id, startId) {
+  buildTile: function (x, y, id, startId, startLocation) {
     let tileNumber = y * 10 + x;
     let t = this.level.rooms[id].tiles[tileNumber];
 
@@ -178,7 +179,7 @@ PrinceJS.LevelBuilder.prototype = {
         break;
 
       case PrinceJS.Level.TILE_EXIT_RIGHT:
-        open = id === startId;
+        open = id === startId && Math.abs(tileNumber - startLocation) <= 1;
         tile = new PrinceJS.Tile.ExitDoor(this.game, t.modifier, this.type, open);
         this.level.addTrob(tile);
         if (open) {

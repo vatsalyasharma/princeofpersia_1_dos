@@ -769,8 +769,11 @@ PrinceJS.Fighter.prototype.checkPathToOpponent = function (x, opponent, charBloc
   let maxCharBlockX = opponent.charBlockX + (room === opponent.room ? 0 : 10);
   let minCharBlockX = opponent.charBlockX - (room === opponent.room ? 0 : 10);
   if (opponent.isHanging()) {
-    maxCharBlockX += 1;
-    minCharBlockX -= 1;
+    if (opponent.faceR()) {
+      maxCharBlockX += 1;
+    } else if (opponent.faceL()) {
+      minCharBlockX -= 1;
+    }
   }
   if (x <= opponent.centerX) {
     if (charBlockX > maxCharBlockX) {

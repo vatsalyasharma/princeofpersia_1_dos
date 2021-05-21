@@ -80,6 +80,9 @@ PrinceJS.Game.prototype = {
     }
 
     this.kid = new PrinceJS.Kid(this.game, this.level, json.prince.location, json.prince.direction, json.prince.room);
+    if (typeof json.prince.sword === "boolean") {
+      this.kid.hasSword = json.prince.sword;
+    }
     if (json.prince.turn !== false) {
       this.kid.charX -= 6;
       PrinceJS.Utils.delayed(() => {
@@ -128,14 +131,20 @@ PrinceJS.Game.prototype = {
       this.buttonPressed();
       let pos = PrinceJS.Utils.effectivePointer(this.game);
       let size = PrinceJS.Utils.effectiveScreenSize(this.game);
-      if (PrinceJS.Utils.isScreenFlipped()) {
-        if (pos.y >= 0 && pos.y <= 0.04 * size.height) {
-          this.showRemainingMinutes();
+      if (
+        (PrinceJS.Utils.isScreenFlipped() && pos.y >= 0 && pos.y <= 0.04 * size.height) ||
+        (!PrinceJS.Utils.isScreenFlipped() && pos.y >= 0.96 * size.height && pos.y <= size.height)
+      ) {
+        if (this.isRemainingMinutesShown()) {
+          if (pos.x <= 0.1 * size.width) {
+            this.previousLevel();
+          } else if (pos.x >= 0.9 * size.width) {
+            this.nextLevel();
+          } else if (pos.x >= 0.4 * size.width && pos.x <= 0.6 * size.width) {
+            this.restartLevel();
+          }
         }
-      } else {
-        if (pos.y >= 0.96 * size.height && pos.y <= size.height) {
-          this.showRemainingMinutes();
-        }
+        this.showRemainingMinutes();
       }
     }
   },
@@ -261,7 +270,7 @@ PrinceJS.Game.prototype = {
           tile = this.level.getTileAt(4, 0, 4);
           tile.hideReflection();
         }
-        if (this.shadow.visible && this.shadow.charBlockY > 0) {
+        if (this.shadow && this.shadow.visible && this.shadow.charBlockY > 0) {
           this.shadow.action = "stand";
           this.shadow.setInvisible();
         }
@@ -269,7 +278,12 @@ PrinceJS.Game.prototype = {
 
       case 5:
         tile = this.level.getTileAt(1, 0, 24);
-        if (tile.state === PrinceJS.Tile.Gate.STATE_RAISING && !this.shadow.visible && this.shadow.faceR()) {
+        if (
+          tile.state === PrinceJS.Tile.Gate.STATE_RAISING &&
+          this.shadow &&
+          !this.shadow.visible &&
+          this.shadow.faceR()
+        ) {
           this.shadow.visible = true;
           this.performProgram(
             [
@@ -286,6 +300,7 @@ PrinceJS.Game.prototype = {
           );
         }
         if (
+          this.shadow &&
           this.shadow.visible &&
           (this.currentCameraRoom === 11 ||
             (this.shadow.room === 11 && this.shadow.charBlockX === 8 && this.shadow.faceL()))
@@ -296,7 +311,7 @@ PrinceJS.Game.prototype = {
         break;
 
       case 6:
-        if (this.firstUpdate) {
+        if (this.firstUpdate && this.shadow) {
           this.shadow.charX += 8;
         }
         if (this.currentCameraRoom === 1) {
@@ -367,6 +382,7 @@ PrinceJS.Game.prototype = {
           }, 1000);
         }
         if (
+          this.shadow &&
           !this.shadow.active &&
           this.kid.opponent &&
           Math.abs(this.kid.opponentDistance()) <= (this.kid.action.includes("jump") ? 15 : 7) &&
@@ -529,6 +545,10 @@ PrinceJS.Game.prototype = {
     this.ui.showRemainingMinutes(force);
   },
 
+  isRemainingMinutesShown: function () {
+    return this.ui.isRemainingMinutesShown();
+  },
+
   restartGameEvent(event) {
     if (!event.ctrlKey) {
       return;
@@ -548,7 +568,7 @@ PrinceJS.Game.prototype = {
       return;
     }
 
-    if (PrinceJS.currentLevel > 3) {
+    if (PrinceJS.currentLevel > 3 && PrinceJS.currentLevel <= 100) {
       return;
     }
 
@@ -589,11 +609,10 @@ PrinceJS.Game.prototype = {
   },
 
   previousLevel: function () {
-    PrinceJS.currentLevel--;
-    if (PrinceJS.currentLevel === 0) {
-      PrinceJS.currentLevel = 14;
+    if (PrinceJS.currentLevel > 1) {
+      PrinceJS.currentLevel--;
+      this.reset();
     }
-    this.reset();
   },
 
   handleDead: function () {

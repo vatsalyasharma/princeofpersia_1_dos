@@ -214,7 +214,7 @@ PrinceJS.Enemy.prototype.oppTooFar = function (distance) {
 };
 
 PrinceJS.Enemy.prototype.oppTooClose = function () {
-  if (this.charFace === this.opponent.charFace) {
+  if (this.charFace === this.opponent.charFace || !["engarde", "advance", "retreat"].includes(this.opponent.action)) {
     this.retreat();
   } else {
     this.advance();
@@ -224,7 +224,7 @@ PrinceJS.Enemy.prototype.oppTooClose = function () {
 PrinceJS.Enemy.prototype.oppInRange = function (distance) {
   if (!this.opponent.swordDrawn) {
     if (this.refracTimer === 0) {
-      if (distance < 25) {
+      if (distance <= 25) {
         this.strike();
       } else {
         this.advance();

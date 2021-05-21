@@ -201,6 +201,7 @@ PrinceJS.Level.prototype = {
     if (floor.element !== PrinceJS.Level.TILE_SPACE) {
       tile.destroy();
       floor.addDebris();
+      this.shakeFloor(tile.roomY, tile.room);
     } else {
       tile.sweep();
     }
@@ -218,11 +219,13 @@ PrinceJS.Level.prototype = {
     }
 
     if (type === PrinceJS.Level.TILE_RAISE_BUTTON) {
-      tile.raise();
-      if ([PrinceJS.Level.TILE_EXIT_LEFT, PrinceJS.Level.TILE_EXIT_RIGHT].includes(tile.element)) {
-        this.exitDoorOpen = true;
+      if (tile.raise) {
+        tile.raise();
+        if ([PrinceJS.Level.TILE_EXIT_LEFT, PrinceJS.Level.TILE_EXIT_RIGHT].includes(tile.element)) {
+          this.exitDoorOpen = true;
+        }
       }
-    } else {
+    } else if (tile.drop) {
       tile.drop();
     }
 

@@ -28,19 +28,92 @@ const PrinceJS = {
 const args = process.argv.slice(2);
 
 (function () {
-  buildLevel(args[0]);
+  const offset = args[1] > 100 ? parseInt(args[1]) : 100;
+  buildLevels(args[0], offset);
 })();
 
-function buildLevel(file) {
-  const filePath = path.join(process.cwd(), file);
-  const dataXML = fs.readFileSync(filePath);
-  const data = JSON.parse(xml2json.toJson(dataXML));
-  const spec = determineSpec(data, file);
-  const level = transformLevel(spec);
-  fs.writeFileSync(filePath.replace(/\.xml$/, ".json"), JSON.stringify(level, undefined, 2));
+function buildLevels(file, offset) {
+  if (file) {
+    buildLevelFile(file, offset);
+  } else {
+    const levels = readLevelDir("converter");
+    for (const offset in levels) {
+      const files = levels[offset];
+      for (const file of files) {
+        buildLevelFile(file, parseInt(offset));
+      }
+    }
+  }
 }
 
-function determineSpec(data, file) {
+function buildLevelFile(file, offset) {
+  const filePath = path.resolve(file);
+  const dataXML = fs.readFileSync(filePath);
+  const data = JSON.parse(xml2json.toJson(dataXML));
+  const spec = determineSpec(data, file, offset);
+  const level = transformLevel(spec);
+  writeLevel(level);
+}
+
+function readLevelDir(rootDir) {
+  let levels = {};
+  const rootPath = path.join(process.cwd(), rootDir);
+  const dirs = fs.readdirSync(rootPath);
+  for (const dir of dirs) {
+    const dirPath = path.join(rootPath, dir);
+    if (fs.statSync(dirPath).isDirectory()) {
+      const files = fs.readdirSync(dirPath);
+      for (const file of files) {
+        if (file.endsWith(".xml")) {
+          levels[dir] = levels[dir] || [];
+          levels[dir].push(path.join(dirPath, file));
+        }
+      }
+    } else {
+      if (dir.endsWith(".xml")) {
+        levels["100"] = levels["100"] || [];
+        levels["100"].push(dirPath);
+      }
+    }
+  }
+  return levels;
+}
+
+function writeLevel(level) {
+  const levelJSONPath = path.join(process.cwd(), `./assets/maps/${level.name}.json`);
+  if (fs.existsSync(levelJSONPath)) {
+    const existingLevel = JSON.parse(fs.readFileSync(levelJSONPath));
+    if (existingLevel.file === level.file) {
+      mergeLevel(level, existingLevel);
+    }
+  }
+  fs.writeFileSync(levelJSONPath, JSON.stringify(level, undefined, 2));
+  // eslint-disable-next-line no-console
+  console.log(`Wrote level file '${levelJSONPath}'`);
+}
+
+function mergeLevel(level, existingLevel) {
+  mergeProperties(level, existingLevel, ["name", "type"]);
+  mergeProperties(level.prince, existingLevel.prince, ["turn", "offset", "sword", "cameraRoom"]);
+  for (let i = 0; i < level.room.length; i++) {
+    for (let j = 0; j < (level.room[i].tile || []).length; j++) {
+      mergeProperties(level.room[i].tile[j], existingLevel.room[i] && existingLevel.room[i].tile[j], ["mute"]);
+    }
+  }
+  for (let i = 0; i < level.guards.length; i++) {
+    mergeProperties(level.guards[i], existingLevel.guards[i], ["type", "active", "visible"]);
+  }
+}
+
+function mergeProperties(data, existingData, properties) {
+  if (data && existingData) {
+    for (const property of properties) {
+      data[property] = existingData[property] !== undefined ? existingData[property] : data[property];
+    }
+  }
+}
+
+function determineSpec(data, file, offset) {
   const matrix = newArray(SIZE * SIZE);
   const rooms = newArray(SIZE);
   if (data.level.rooms.length === 0) {
@@ -115,8 +188,14 @@ function determineSpec(data, file) {
     width: bounds.x2 - bounds.x1 + 1,
     height: bounds.y2 - bounds.y1 + 1
   };
-  const name = path.basename(file).replace(/\.xml$/, "");
-  const num = parseInt(name.match(/\d+/g)[0], 10);
+  let name = path.basename(file).replace(/\.xml$/, "");
+  let num = offset + parseInt(name.match(/\d+/g)[0], 10);
+  if (name === "level12b") {
+    num = 13;
+  } else if (name === "princess") {
+    num = 14;
+  }
+  name = `level${num}`;
   const layoutMatrix = newArray2D(size, -1);
   for (let y = bounds.y1; y <= bounds.y2; y++) {
     for (let x = bounds.x1; x <= bounds.x2; x++) {
@@ -129,11 +208,15 @@ function determineSpec(data, file) {
   const layout = layoutMatrix.reduce((result, line) => {
     return result.concat(line);
   }, []);
+  let type = PrinceJS.Level.TYPE_DUNGEON;
+  if ([4, 5, 6, 10, 11, 14].includes(num)) {
+    type = PrinceJS.Level.TYPE_PALACE;
+  }
   return {
     num,
     name,
     size,
-    type: PrinceJS.Level.TYPE_DUNGEON,
+    type,
     guard: PrinceJS.Level.GUARD_NORMAL,
     layout,
     rooms: data.level.rooms.room,
@@ -145,6 +228,7 @@ function determineSpec(data, file) {
 function transformLevel(spec) {
   const format = {
     number: spec.num,
+    file: spec.name,
     name: spec.name,
     size: spec.size,
     type: spec.type,
@@ -223,16 +307,11 @@ function transformLevel(spec) {
         if (guard.location !== "0") {
           const newGuard = {};
           newGuard.room = format.room[number].id;
-          newGuard.location = parseInt(guard.location, 10);
+          newGuard.location = parseInt(guard.location, 10) - 1;
           newGuard.skill = parseInt(guard.skill, 10);
           newGuard.colors = parseInt(guard.colors, 10);
           newGuard.type = spec.guard;
-          if (guard.direction === 2) {
-            newGuard.direction = 1;
-          } else {
-            newGuard.direction = -1;
-          }
-
+          newGuard.direction = guard.direction ? 1 : -1;
           format.guards.push(newGuard);
         }
       }
@@ -241,11 +320,7 @@ function transformLevel(spec) {
   format.prince = {};
   format.prince.location = parseInt(spec.prince.location, 10);
   format.prince.room = parseInt(spec.prince.room, 10);
-  if (spec.prince.direction === 2) {
-    format.prince.direction = 1;
-  } else {
-    format.prince.direction = -1;
-  }
+  format.prince.direction = spec.prince.direction === 1 ? 1 : -1;
   return format;
 }
 

@@ -1,6 +1,7 @@
 "use strict";
 
 PrinceJS.Tile.Potion = function (game, modifier, type) {
+  modifier = Math.max(1, Math.min(5, modifier));
   PrinceJS.Tile.Base.call(this, game, PrinceJS.Level.TILE_POTION, modifier, type);
 
   let yy = 53;
