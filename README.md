@@ -20,7 +20,7 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
   ![Mobile](assets/web/mobile.svg)
 
   - Dragging can be used to trigger continuous move sequences, e.g.
-    - _Run Jump_: Tap Left / Right -> Hold -> Drag in Left/Right corner
+    - _Run Jump_: Tap Left / Right -> Hold -> Drag in Left / Right corner
     - _Jump Grab_: (Run) Jump -> Hold -> Drag to Center (Shift)
 
 ## Play Locally
@@ -58,11 +58,11 @@ Custom levels can be played performing the following steps.
 - Save level as XML file in Apoplexy, e.g. `./xml/level1.xml`
 - Call convert script, e.g. `npm run convert .../xml/level1.xml`
   - A JSON file is placed at `/assets/maps/`, e.g. `/assets/maps/level101.json`
-- Custom level numbers starts beyond 100, e.g. `level1.xml` gets number `101`, etc.
+- Custom level ids starts beyond 100, e.g. `level1.xml` gets id `101`, etc.
   - An optional second parameter can be used to control level offset
   - e.g. `npm run convert .../xml/level1.xml 200` generates `/assets/maps/level201.json`
 - Start game locally with `npm start` and open game in browser
-- Change Url and set parameter `level` to the respective number, e.g. `level=101`
+- Change Url and set parameter `level` to the respective id, e.g. `level=101`
 - Note: No special events are supported
 
 ### Batch Conversion
@@ -72,6 +72,7 @@ Custom levels can be played performing the following steps.
 - Execute `npm run convert`
 - Corresponding JSON files are placed at `/assets/maps/`
 
-### Level Numbers
+### Level IDs
 
-101: Deep
+- 100: Tower of Revenge
+- 101-114: [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)

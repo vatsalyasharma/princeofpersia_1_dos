@@ -195,7 +195,7 @@ PrinceJS.Kid.prototype.drinkPotion = function () {
         this.flipScreen();
         break;
       case PrinceJS.Level.POTION_DAMAGE:
-        PrinceJS.Utils.flashRedPotion(this.game);
+        PrinceJS.Utils.flashRedDamage(this.game);
         this.game.sound.play("StabbedByOpponent");
         this.damageLife();
         break;
@@ -473,7 +473,7 @@ PrinceJS.Kid.prototype.tryEngarde = function () {
   }
   this.dodgeChoppers();
 
-  if (this.opponent && this.opponent.alive && this.opponentDistance() < 100) {
+  if (this.opponent && this.opponent.alive && this.opponentDistance() <= 100) {
     this.engarde();
     return true;
   }
@@ -1544,11 +1544,11 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isJumpSpace() && tileTF.isWalkable()) {
+  if (this.checkJump(tileT) && tileTF.isWalkable()) {
     return this.jumphanglong();
   }
 
-  if (tileT.isWalkable() && tileTR.isJumpSpace() && tileR.isWalkable()) {
+  if (tileT.isWalkable() && this.checkJump(tileTR) && tileR.isWalkable()) {
     if (this.faceL() && PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - this.charX < 11) {
       this.charBlockX++;
       return this.jumphanglong();
@@ -1560,7 +1560,7 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isWalkable() && tileTR.isJumpSpace()) {
+  if (tileT.isWalkable() && this.checkJump(tileTR)) {
     if (this.faceL() && PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - this.charX < 11) {
       return this.jumpbackhang();
     }
@@ -1570,11 +1570,15 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isJumpSpace()) {
+  if (tileT.isSpace()) {
     return this.highjump();
   }
 
   this.jumpup();
+};
+
+PrinceJS.Kid.prototype.checkJump = function (tile) {
+  return (this.faceL() && tile.isSpace()) || (this.faceR() && tile.isJumpSpace());
 };
 
 PrinceJS.Kid.prototype.damageLife = function (crouch = false) {

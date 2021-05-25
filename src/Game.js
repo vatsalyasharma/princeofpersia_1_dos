@@ -26,7 +26,8 @@ PrinceJS.Game.prototype = {
         this.game.load.audio("HeroicDeath", "assets/music/13_Heroic_Death.mp3");
         break;
     }
-    this.load.json("level", "assets/maps/level" + PrinceJS.currentLevel + ".json");
+    let levelBasePath = PrinceJS.currentLevel < 100 ? "assets/maps/" : "assets/maps/custom/";
+    this.load.json("level", levelBasePath + "level" + PrinceJS.currentLevel + ".json");
   },
 
   create: function () {
@@ -135,7 +136,7 @@ PrinceJS.Game.prototype = {
         (PrinceJS.Utils.isScreenFlipped() && pos.y >= 0 && pos.y <= 0.04 * size.height) ||
         (!PrinceJS.Utils.isScreenFlipped() && pos.y >= 0.96 * size.height && pos.y <= size.height)
       ) {
-        if (this.isRemainingMinutesShown()) {
+        if (this.isRemainingMinutesShown() || this.isLevelShown()) {
           if (pos.x <= 0.1 * size.width) {
             this.previousLevel();
           } else if (pos.x >= 0.9 * size.width) {
@@ -549,6 +550,10 @@ PrinceJS.Game.prototype = {
     return this.ui.isRemainingMinutesShown();
   },
 
+  isLevelShown: function () {
+    return this.ui.isLevelShown();
+  },
+
   restartGameEvent(event) {
     if (!event.ctrlKey) {
       return;
@@ -568,7 +573,7 @@ PrinceJS.Game.prototype = {
       return;
     }
 
-    if (PrinceJS.currentLevel > 3 && PrinceJS.currentLevel <= 100) {
+    if (PrinceJS.currentLevel > 3 && PrinceJS.currentLevel < 100) {
       return;
     }
 
@@ -596,7 +601,7 @@ PrinceJS.Game.prototype = {
 
     PrinceJS.maxHealth = this.kid.maxHealth;
     PrinceJS.currentLevel++;
-    if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel <= 100) {
+    if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel < 100) {
       this.restartGame();
       return;
     }

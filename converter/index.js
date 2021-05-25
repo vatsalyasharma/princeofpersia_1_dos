@@ -52,7 +52,13 @@ function buildLevelFile(file, offset) {
   const data = JSON.parse(xml2json.toJson(dataXML));
   const spec = determineSpec(data, file, offset);
   const level = transformLevel(spec);
-  writeLevel(level);
+  if (level.id >= 100) {
+    writeLevel(level);
+  } else {
+    // eslint-disable-next-line no-console
+    console.log("Level with id lower 100 is not (over)written: " + level.id);
+    process.exit(-1);
+  }
 }
 
 function readLevelDir(rootDir) {
@@ -60,27 +66,32 @@ function readLevelDir(rootDir) {
   const rootPath = path.join(process.cwd(), rootDir);
   const dirs = fs.readdirSync(rootPath);
   for (const dir of dirs) {
+    const offset = parseInt(dir, 10);
     const dirPath = path.join(rootPath, dir);
     if (fs.statSync(dirPath).isDirectory()) {
       const files = fs.readdirSync(dirPath);
       for (const file of files) {
         if (file.endsWith(".xml")) {
-          levels[dir] = levels[dir] || [];
-          levels[dir].push(path.join(dirPath, file));
+          levels[offset] = levels[offset] || [];
+          levels[offset].push(path.join(dirPath, file));
         }
       }
     } else {
       if (dir.endsWith(".xml")) {
-        levels["100"] = levels["100"] || [];
-        levels["100"].push(dirPath);
+        const offset = 100;
+        levels[offset] = levels[offset] || [];
+        levels[offset].push(dirPath);
       }
     }
   }
+  Object.keys(levels).forEach((key) => {
+    levels[key].sort();
+  });
   return levels;
 }
 
 function writeLevel(level) {
-  const levelJSONPath = path.join(process.cwd(), `./assets/maps/${level.name}.json`);
+  const levelJSONPath = path.join(process.cwd(), `./assets/maps/custom/${level.file}.json`);
   if (fs.existsSync(levelJSONPath)) {
     const existingLevel = JSON.parse(fs.readFileSync(levelJSONPath));
     if (existingLevel.file === level.file) {
@@ -94,7 +105,7 @@ function writeLevel(level) {
 
 function mergeLevel(level, existingLevel) {
   mergeProperties(level, existingLevel, ["name", "type"]);
-  mergeProperties(level.prince, existingLevel.prince, ["turn", "offset", "sword", "cameraRoom"]);
+  mergeProperties(level.prince, existingLevel.prince, ["direction", "turn", "offset", "sword", "cameraRoom"]);
   for (let i = 0; i < level.room.length; i++) {
     for (let j = 0; j < (level.room[i].tile || []).length; j++) {
       mergeProperties(level.room[i].tile[j], existingLevel.room[i] && existingLevel.room[i].tile[j], ["mute"]);
@@ -188,14 +199,9 @@ function determineSpec(data, file, offset) {
     width: bounds.x2 - bounds.x1 + 1,
     height: bounds.y2 - bounds.y1 + 1
   };
-  let name = path.basename(file).replace(/\.xml$/, "");
-  let num = offset + parseInt(name.match(/\d+/g)[0], 10);
-  if (name === "level12b") {
-    num = 13;
-  } else if (name === "princess") {
-    num = 14;
-  }
-  name = `level${num}`;
+  const number = parseInt(data.level.number, 10);
+  const id = offset + number;
+  const name = `level${id}`;
   const layoutMatrix = newArray2D(size, -1);
   for (let y = bounds.y1; y <= bounds.y2; y++) {
     for (let x = bounds.x1; x <= bounds.x2; x++) {
@@ -209,11 +215,12 @@ function determineSpec(data, file, offset) {
     return result.concat(line);
   }, []);
   let type = PrinceJS.Level.TYPE_DUNGEON;
-  if ([4, 5, 6, 10, 11, 14].includes(num)) {
+  if ([4, 5, 6, 10, 11, 14].includes(number)) {
     type = PrinceJS.Level.TYPE_PALACE;
   }
   return {
-    num,
+    id,
+    number,
     name,
     size,
     type,
@@ -227,7 +234,8 @@ function determineSpec(data, file, offset) {
 
 function transformLevel(spec) {
   const format = {
-    number: spec.num,
+    id: spec.id,
+    number: spec.number,
     file: spec.name,
     name: spec.name,
     size: spec.size,
@@ -239,54 +247,54 @@ function transformLevel(spec) {
 
   for (let j = 0; j < format.size.height; j++) {
     for (let i = 0; i < format.size.width; i++) {
-      const number = j * format.size.width + i;
-      format.room[number] = {};
-      format.room[number].id = spec.layout[number];
+      const n = j * format.size.width + i;
+      format.room[n] = {};
+      format.room[n].id = spec.layout[n];
       let next = 1;
       let eventID;
-      if (spec.layout[number] !== -1) {
+      if (spec.layout[n] !== -1) {
         // Copy tiles
-        format.room[number].tile = [];
+        format.room[n].tile = [];
         for (let l = 0; l < 30; l++) {
-          format.room[number].tile[l] = {};
-          format.room[number].tile[l].element = parseInt(spec.rooms[spec.layout[number] - 1].tile[l].element, 10);
-          format.room[number].tile[l].modifier = parseInt(spec.rooms[spec.layout[number] - 1].tile[l].modifier, 10);
-          switch (format.room[number].tile[l].element & 0x1f) {
+          format.room[n].tile[l] = {};
+          format.room[n].tile[l].element = parseInt(spec.rooms[spec.layout[n] - 1].tile[l].element, 10);
+          format.room[n].tile[l].modifier = parseInt(spec.rooms[spec.layout[n] - 1].tile[l].modifier, 10);
+          switch (format.room[n].tile[l].element & 0x1f) {
             case PrinceJS.Level.TILE_WALL:
-              if (format.room[number].tile[l].modifier > 1) {
-                format.room[number].tile[l].modifier = 0;
+              if (format.room[n].tile[l].modifier > 1) {
+                format.room[n].tile[l].modifier = 0;
               }
               break;
             case PrinceJS.Level.TILE_SPACE:
-              if (format.room[number].tile[l].modifier === 255) {
-                format.room[number].tile[l].modifier = 0;
+              if (format.room[n].tile[l].modifier === 255) {
+                format.room[n].tile[l].modifier = 0;
               }
               break;
             case PrinceJS.Level.TILE_FLOOR:
-              if (format.room[number].tile[l].modifier === 3) {
-                format.room[number].tile[l].modifier = 2;
+              if (format.room[n].tile[l].modifier === 3) {
+                format.room[n].tile[l].modifier = 2;
                 break;
               }
-              if (format.room[number].tile[l].modifier === 255) {
+              if (format.room[n].tile[l].modifier === 255) {
                 if (format.type === PrinceJS.Level.TYPE_DUNGEON) {
-                  format.room[number].tile[l].modifier = 0;
+                  format.room[n].tile[l].modifier = 0;
                 } else {
-                  format.room[number].tile[l].modifier = 2;
+                  format.room[n].tile[l].modifier = 2;
                 }
               }
               break;
             case PrinceJS.Level.TILE_LOOSE_BOARD:
               // Put modifier 1 for stuck board loose (modifier bit m: rrmccccc) Pag. 11 pdf POP Spec File format
-              format.room[number].tile[l].modifier = (format.room[number].tile[l].element & 0x20) >> 5;
+              format.room[n].tile[l].modifier = (format.room[n].tile[l].element & 0x20) >> 5;
               break;
             case PrinceJS.Level.TILE_GATE:
-              if (format.room[number].tile[l].modifier === 2) {
-                format.room[number].tile[l].modifier = 0;
+              if (format.room[n].tile[l].modifier === 2) {
+                format.room[n].tile[l].modifier = 0;
               }
               break;
             case PrinceJS.Level.TILE_DROP_BUTTON:
             case PrinceJS.Level.TILE_RAISE_BUTTON:
-              eventID = format.room[number].tile[l].modifier;
+              eventID = format.room[n].tile[l].modifier;
               if (typeof format.events[eventID] === "undefined") {
                 next = 1;
                 while (next) {
@@ -300,14 +308,15 @@ function transformLevel(spec) {
               }
               break;
           }
-          format.room[number].tile[l].element &= 0x1f;
+          format.room[n].tile[l].element &= 0x1f;
         }
         // Push guards if any
-        const guard = spec.rooms[spec.layout[number] - 1].guard;
-        if (guard.location !== "0") {
+        const guard = spec.rooms[spec.layout[n] - 1].guard;
+        const location = parseInt(guard.location, 10);
+        if (location > 0 && location <= 30) {
           const newGuard = {};
-          newGuard.room = format.room[number].id;
-          newGuard.location = parseInt(guard.location, 10) - 1;
+          newGuard.room = format.room[n].id;
+          newGuard.location = location - 1;
           newGuard.skill = parseInt(guard.skill, 10);
           newGuard.colors = parseInt(guard.colors, 10);
           newGuard.type = spec.guard;

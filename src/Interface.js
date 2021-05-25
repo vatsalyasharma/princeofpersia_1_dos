@@ -212,6 +212,10 @@ PrinceJS.Interface.prototype = {
     return this.showTextType === "minutes";
   },
 
+  isLevelShown: function () {
+    return this.showTextType === "level";
+  },
+
   showRemainingSeconds: function () {
     if (["level", "continue", "paused"].includes(this.showTextType)) {
       return;

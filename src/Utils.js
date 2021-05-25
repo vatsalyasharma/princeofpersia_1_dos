@@ -219,7 +219,7 @@ PrinceJS.Utils = {
     let query = new URLSearchParams(window.location.search);
     if (query.get("level")) {
       let queryLevel = parseInt(query.get("level"), 10);
-      if ((!isNaN(queryLevel) && queryLevel >= 1 && queryLevel <= 14) || queryLevel > 100) {
+      if ((!isNaN(queryLevel) && queryLevel >= 1 && queryLevel <= 14) || queryLevel >= 100) {
         PrinceJS.currentLevel = queryLevel;
       }
     }
@@ -260,7 +260,7 @@ PrinceJS.Utils = {
 
   applyScreenWidth() {
     if (PrinceJS.screenWidth > 0) {
-      PrinceJS.Utils.gameContainer().style["max-width"] = `${PrinceJS.screenWidth}px`;
+      PrinceJS.Utils.gameContainer().style["max-width"] = PrinceJS.screenWidth + "px";
     }
   },
 
@@ -298,7 +298,7 @@ PrinceJS.Utils = {
       null,
       "?" +
         Object.keys(state)
-          .map((key) => `${key}=${state[key]}`)
+          .map((key) => key + "=" + state[key])
           .join("&")
     );
   }

@@ -1,0 +1,145 @@
+{
+  "id": 105,
+  "number": 5,
+  "file": "level105",
+  "name": "level105",
+  "size": {
+    "width": 1,
+    "height": 1
+  },
+  "type": 1,
+  "room": [
+    {
+      "id": 1,
+      "tile": [
+        {
+          "element": 0,
+          "modifier": 1
+        },
+        {
+          "element": 0,
+          "modifier": 1
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 0,
+          "modifier": 0
+        },
+        {
+          "element": 0,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 19,
+          "modifier": 0
+        },
+        {
+          "element": 1,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        },
+        {
+          "element": 20,
+          "modifier": 0
+        }
+      ]
+    }
+  ],
+  "guards": [],
+  "events": [],
+  "prince": {
+    "location": 25,
+    "room": 6,
+    "direction": -1
+  }
+}
