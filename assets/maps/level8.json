@@ -2818,8 +2818,8 @@
     }
   ],
   "prince": {
-    "location": 19,
+    "location": 18,
     "room": 1,
-    "direction": 1
+    "direction": -1
   }
 }

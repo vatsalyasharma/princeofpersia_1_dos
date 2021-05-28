@@ -512,6 +512,30 @@
       "sourceSize": { "w": 60, "h": 79 },
       "pivot": { "x": 0.5, "y": 0.5 }
     },
+    "palace_10_fg_3": {
+      "frame": { "x": 64, "y": 213, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "palace_10_fg_4": {
+      "frame": { "x": 64, "y": 213, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "palace_10_fg_5": {
+      "frame": { "x": 2, "y": 213, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
     "palace_11": {
       "frame": { "x": 528, "y": 132, "w": 64, "h": 79 },
       "rotated": false,

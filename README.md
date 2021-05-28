@@ -74,5 +74,5 @@ Custom levels can be played performing the following steps.
 
 ### Level IDs
 
-- 100: Tower of Revenge
-- 101-114: [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
+- [100](https://oklemenz.github.io/PrinceJS?level=100): Tower of Revenge
+- [101-114](<(https://oklemenz.github.io/PrinceJS?level=100)>): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)

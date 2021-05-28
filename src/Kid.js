@@ -115,7 +115,7 @@ PrinceJS.Kid.prototype.CMD_NEXTLEVEL = function (data) {
   if (PrinceJS.currentLevel === 4) {
     this.game.sound.play("TheShadow");
     waitTime = 9000;
-  } else if (PrinceJS.currentLevel < 13) {
+  } else if (PrinceJS.currentLevel < 13 || PrinceJS.currentLevel >= 100) {
     this.game.sound.play("Prince");
     waitTime = 13000;
   }
@@ -1335,7 +1335,7 @@ PrinceJS.Kid.prototype.startFall = function () {
     this.checkFloorStepFall = true;
   }
 
-  this.fallingBlocks = 0;
+  this.fallingBlocks = Math.min(0, this.fallingBlocks);
   this.inFallDown = true;
   this.backwardsFall = this.swordDrawn ? -1 : 1;
 
@@ -1544,11 +1544,11 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (this.checkJump(tileT) && tileTF.isWalkable()) {
+  if (this.checkJump(tileT) && this.checkClimbable(tileTF)) {
     return this.jumphanglong();
   }
 
-  if (tileT.isWalkable() && this.checkJump(tileTR) && tileR.isWalkable()) {
+  if (this.checkClimbable(tileT) && this.checkJump(tileTR) && tileR.isWalkable()) {
     if (this.faceL() && PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - this.charX < 11) {
       this.charBlockX++;
       return this.jumphanglong();
@@ -1560,7 +1560,7 @@ PrinceJS.Kid.prototype.jump = function () {
     return this.jumpup();
   }
 
-  if (tileT.isWalkable() && this.checkJump(tileTR)) {
+  if (this.checkClimbable(tileT) && this.checkJump(tileTR)) {
     if (this.faceL() && PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - this.charX < 11) {
       return this.jumpbackhang();
     }
@@ -1579,6 +1579,10 @@ PrinceJS.Kid.prototype.jump = function () {
 
 PrinceJS.Kid.prototype.checkJump = function (tile) {
   return (this.faceL() && tile.isSpace()) || (this.faceR() && tile.isJumpSpace());
+};
+
+PrinceJS.Kid.prototype.checkClimbable = function (tile) {
+  return tile.isWalkable() && (this.faceR() || ![PrinceJS.Level.TILE_TAPESTRY].includes(tile.element));
 };
 
 PrinceJS.Kid.prototype.damageLife = function (crouch = false) {

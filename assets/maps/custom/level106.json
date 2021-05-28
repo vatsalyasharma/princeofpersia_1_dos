@@ -1283,16 +1283,16 @@
       "room": 18,
       "location": 14,
       "skill": 3,
-      "colors": 1,
-      "type": "guard",
+      "colors": 0,
+      "type": "fatguard",
       "direction": 1
     },
     {
       "room": 2,
       "location": 14,
       "skill": 3,
-      "colors": 2,
-      "type": "guard",
+      "colors": 0,
+      "type": "fatguard",
       "direction": 1
     }
   ],
@@ -1319,8 +1319,9 @@
     }
   ],
   "prince": {
-    "location": 16,
+    "location": 15,
     "room": 10,
-    "direction": -1
+    "direction": -1,
+    "specialEvents": true
   }
 }

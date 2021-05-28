@@ -694,11 +694,16 @@ PrinceJS.Fighter.prototype.canCrossGate = function (tile) {
 
 PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, room) {
   let tile = this.level.getTileAt(charBlockX, charBlockY, room);
+  if (!this.canCrossGate(tile)) {
+    return false;
+  }
+  if (tile.isSafeWalkable()) {
+    return true;
+  }
   return (
-    (tile.isSafeWalkable() && this.canCrossGate(tile)) ||
-    ((!tile.isDangerousWalkable() ||
-      (tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x && this.opponent.x > tile.x)) &&
-      this.standsOnTile(tile))
+    this.standsOnTile(tile) &&
+    (!tile.isDangerousWalkable() ||
+      (tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x && this.opponent.x > tile.x))
   );
 };
 
@@ -903,9 +908,6 @@ PrinceJS.Fighter.prototype.checkFloor = function () {
 
           case PrinceJS.Level.TILE_SPIKES:
             tile.raise();
-            this.game.sound.play("SpikedBySpikes"); // HardLandingSplat
-            this.alignToTile(tile);
-            this.dieSpikes();
             break;
         }
       }
@@ -1065,7 +1067,7 @@ PrinceJS.Fighter.prototype.chopDistance = function (tile) {
 };
 
 PrinceJS.Fighter.prototype.inChopDistance = function (tile) {
-  return Math.abs(this.chopDistance(tile)) <= 6 + (this.swordDrawn ? 10 : 0);
+  return Math.abs(this.chopDistance(tile)) < 6 + (this.swordDrawn ? 10 : 0);
 };
 
 PrinceJS.Fighter.prototype.nearChopDistance = function (tile) {
@@ -1219,7 +1221,9 @@ PrinceJS.Fighter.prototype.alignToTile = function (tile) {
 
 PrinceJS.Fighter.prototype.alignToFloor = function () {
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-  this.charY = PrinceJS.Utils.convertBlockYtoY(tile.roomY);
+  if (tile.roomY) {
+    this.charY = PrinceJS.Utils.convertBlockYtoY(tile.roomY);
+  }
   this.inJumpUp = false;
   this.maskAndCrop();
 };

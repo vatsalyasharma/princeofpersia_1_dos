@@ -93,7 +93,14 @@ function readLevelDir(rootDir) {
 function writeLevel(level) {
   const levelJSONPath = path.join(process.cwd(), `./assets/maps/custom/${level.file}.json`);
   if (fs.existsSync(levelJSONPath)) {
-    const existingLevel = JSON.parse(fs.readFileSync(levelJSONPath));
+    let existingLevel;
+    try {
+      existingLevel = JSON.parse(fs.readFileSync(levelJSONPath));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log("Error reading file: " + levelJSONPath);
+      throw err;
+    }
     if (existingLevel.file === level.file) {
       mergeLevel(level, existingLevel);
     }
@@ -105,10 +112,21 @@ function writeLevel(level) {
 
 function mergeLevel(level, existingLevel) {
   mergeProperties(level, existingLevel, ["name", "type"]);
-  mergeProperties(level.prince, existingLevel.prince, ["direction", "turn", "offset", "sword", "cameraRoom"]);
+  mergeProperties(level.prince, existingLevel.prince, [
+    "turn",
+    "offset",
+    "sword",
+    "cameraRoom",
+    "specialEvents",
+    "falling"
+  ]);
   for (let i = 0; i < level.room.length; i++) {
     for (let j = 0; j < (level.room[i].tile || []).length; j++) {
-      mergeProperties(level.room[i].tile[j], existingLevel.room[i] && existingLevel.room[i].tile[j], ["mute"]);
+      mergeProperties(
+        level.room[i].tile[j],
+        existingLevel.room[i] && existingLevel.room[i].tile && existingLevel.room[i].tile[j],
+        ["mute"]
+      );
     }
   }
   for (let i = 0; i < level.guards.length; i++) {
@@ -133,7 +151,14 @@ function determineSpec(data, file, offset) {
     process.exit(-1);
   }
   let start = convert2Pos(SIZE / 2, SIZE / 2);
-  let room = data.level.rooms.room[0];
+  let room = data.level.rooms.room.find((room) => {
+    return room.number === data.level.prince.room;
+  });
+  if (!room) {
+    // eslint-disable-next-line no-console
+    console.log("Start room not found: " + data.level.prince.room);
+    process.exit(-1);
+  }
   const current = [room.number];
   while (current.length > 0) {
     const number = current.pop();
@@ -218,13 +243,19 @@ function determineSpec(data, file, offset) {
   if ([4, 5, 6, 10, 11, 14].includes(number)) {
     type = PrinceJS.Level.TYPE_PALACE;
   }
+  let guard = PrinceJS.Level.GUARD_NORMAL;
+  if ([6].includes(number)) {
+    guard = PrinceJS.Level.GUARD_FAT;
+  } else if ([12].includes(number)) {
+    guard = PrinceJS.Level.GUARD_JAFFAR;
+  }
   return {
     id,
     number,
     name,
     size,
     type,
-    guard: PrinceJS.Level.GUARD_NORMAL,
+    guard,
     layout,
     rooms: data.level.rooms.room,
     events: data.level.events.event,
@@ -318,18 +349,21 @@ function transformLevel(spec) {
           newGuard.room = format.room[n].id;
           newGuard.location = location - 1;
           newGuard.skill = parseInt(guard.skill, 10);
-          newGuard.colors = parseInt(guard.colors, 10);
+          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? parseInt(guard.colors, 10) : 0;
           newGuard.type = spec.guard;
-          newGuard.direction = guard.direction ? 1 : -1;
+          newGuard.direction = parseInt(guard.direction, 10) === 1 ? 1 : -1;
           format.guards.push(newGuard);
         }
       }
     }
   }
   format.prince = {};
-  format.prince.location = parseInt(spec.prince.location, 10);
+  format.prince.location = parseInt(spec.prince.location, 10) - 1;
   format.prince.room = parseInt(spec.prince.room, 10);
-  format.prince.direction = spec.prince.direction === 1 ? 1 : -1;
+  format.prince.direction = parseInt(spec.prince.direction, 10) === 1 ? 1 : -1;
+  if ([1, 13].includes(spec.number)) {
+    format.prince.direction = -format.prince.direction;
+  }
   return format;
 }
 

@@ -56,11 +56,7 @@ PrinceJS.Tile.Base.prototype = {
   },
 
   isDangerousWalkable: function () {
-    return (
-      this.element === PrinceJS.Level.TILE_LOOSE_BOARD ||
-      this.element === PrinceJS.Level.TILE_SPIKES ||
-      this.element === PrinceJS.Level.TILE_CHOPPER
-    );
+    return this.element === PrinceJS.Level.TILE_LOOSE_BOARD || this.element === PrinceJS.Level.TILE_CHOPPER;
   },
 
   isJumpSpace: function () {

@@ -16,7 +16,7 @@ PrinceJS.Tile.Button.prototype = Object.create(PrinceJS.Tile.Base.prototype);
 PrinceJS.Tile.Button.prototype.constructor = PrinceJS.Tile.Button;
 
 PrinceJS.Tile.Button.prototype.update = function () {
-  if (this.active && this.element === PrinceJS.Level.TILE_RAISE_BUTTON) {
+  if (this.active && this.element === PrinceJS.Level.TILE_RAISE_BUTTON && this.step === 0) {
     this.trigger();
   }
 

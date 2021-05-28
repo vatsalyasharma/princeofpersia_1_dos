@@ -932,8 +932,9 @@
     }
   ],
   "prince": {
-    "location": 28,
+    "location": 27,
     "room": 2,
-    "direction": -1
+    "direction": -1,
+    "turn": false
   }
 }

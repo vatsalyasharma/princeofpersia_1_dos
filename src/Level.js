@@ -118,31 +118,61 @@ PrinceJS.Level.prototype = {
     if (!this.rooms[room]) {
       return this.dummyWall;
     }
-
     let newRoom = room;
+    let newX = x;
+    let newY = y;
 
-    if (x < 0) {
-      newRoom = this.rooms[room].links.left;
-      x += 10;
+    let result = this.getRoomX(room, x);
+    if (result.room !== -1) {
+      newRoom = result.room;
+      newX = result.x;
+      result = this.getRoomY(newRoom, y);
+      newRoom = result.room;
+      newY = result.y;
+    } else {
+      result = this.getRoomY(room, y);
+      newRoom = result.room;
+      newY = result.y;
+      if (result.room !== -1) {
+        result = this.getRoomX(newRoom, x);
+        newRoom = result.room;
+        newX = result.x;
+      }
     }
-    if (x > 9) {
-      newRoom = this.rooms[room].links.right;
-      x -= 10;
-    }
-    if (y < 0) {
-      newRoom = this.rooms[room].links.up;
-      y += 3;
-    }
-    if (y > 2) {
-      newRoom = this.rooms[room].links.down;
-      y -= 3;
-    }
-
     if (newRoom === -1) {
       return this.dummyWall;
     }
+    return this.rooms[newRoom].tiles[newX + newY * 10];
+  },
 
-    return this.rooms[newRoom].tiles[x + y * 10];
+  getRoomX: function (room, x) {
+    if (x < 0) {
+      room = this.rooms[room].links.left;
+      x += 10;
+    }
+    if (x > 9) {
+      room = this.rooms[room].links.right;
+      x -= 10;
+    }
+    return {
+      room,
+      x
+    };
+  },
+
+  getRoomY: function (room, y) {
+    if (y < 0) {
+      room = this.rooms[room].links.up;
+      y += 3;
+    }
+    if (y > 2) {
+      room = this.rooms[room].links.down;
+      y -= 3;
+    }
+    return {
+      room,
+      y
+    };
   },
 
   shakeFloor: function (y, room) {

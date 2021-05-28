@@ -3035,7 +3035,7 @@
       "skill": 3,
       "colors": 7,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     },
     {
       "room": 3,
@@ -3043,7 +3043,7 @@
       "skill": 0,
       "colors": 2,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     },
     {
       "room": 21,
@@ -3051,7 +3051,7 @@
       "skill": 0,
       "colors": 2,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     },
     {
       "room": 1,
@@ -3075,7 +3075,7 @@
       "skill": 2,
       "colors": 7,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     }
   ],
   "events": [
@@ -3119,8 +3119,8 @@
     }
   ],
   "prince": {
-    "location": 2,
+    "location": 1,
     "room": 1,
-    "direction": -1
+    "direction": 1
   }
 }

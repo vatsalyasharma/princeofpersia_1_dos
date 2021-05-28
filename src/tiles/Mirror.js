@@ -16,9 +16,11 @@ PrinceJS.Tile.Mirror = function (game, modifier, type) {
   this.reflection.anchor.setTo(0, 1);
   this.reflection.visible = false;
   this.reflectionGroup.addChild(this.reflection);
+  this.reflectionGroup.visible = false;
   this.back.addChild(this.reflectionGroup);
 
   this.reflectionCover = this.game.make.sprite(-105, -5, this.key, this.key + "_" + this.element + "_mirror_cover");
+  this.reflectionCover.visible = false;
   this.back.addChild(this.reflectionCover);
 };
 
@@ -34,6 +36,8 @@ PrinceJS.Tile.Mirror.prototype.addObject = function () {
   this.element = PrinceJS.Level.TILE_MIRROR;
   this.mirrorBack.visible = true;
   this.mirrorFront.visible = true;
+  this.reflectionGroup.visible = true;
+  this.reflectionCover.visible = true;
 };
 
 PrinceJS.Tile.Mirror.prototype.toggleMask = function () {

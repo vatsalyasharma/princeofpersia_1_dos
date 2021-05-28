@@ -3089,7 +3089,7 @@
       "skill": 1,
       "colors": 1,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     },
     {
       "room": 22,
@@ -3105,7 +3105,7 @@
       "skill": 1,
       "colors": 1,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     }
   ],
   "events": [
@@ -3166,8 +3166,8 @@
     }
   ],
   "prince": {
-    "location": 16,
+    "location": 15,
     "room": 8,
-    "direction": -1
+    "direction": 1
   }
 }

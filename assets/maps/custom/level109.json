@@ -3041,7 +3041,7 @@
       "skill": 4,
       "colors": 1,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     },
     {
       "room": 19,
@@ -3049,7 +3049,7 @@
       "skill": 4,
       "colors": 7,
       "type": "guard",
-      "direction": 1
+      "direction": -1
     },
     {
       "room": 7,
@@ -3168,7 +3168,7 @@
     }
   ],
   "prince": {
-    "location": 16,
+    "location": 15,
     "room": 20,
     "direction": -1
   }
