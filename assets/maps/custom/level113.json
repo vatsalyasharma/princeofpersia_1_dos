@@ -905,8 +905,8 @@
       "room": 1,
       "location": 4,
       "skill": 4,
-      "colors": 1,
-      "type": "guard",
+      "colors": 0,
+      "type": "jaffar",
       "direction": 1
     }
   ],

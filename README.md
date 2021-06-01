@@ -74,5 +74,16 @@ Custom levels can be played performing the following steps.
 
 ### Level IDs
 
-- [100](https://oklemenz.github.io/PrinceJS?level=100): Tower of Revenge
-- [101-114](<(https://oklemenz.github.io/PrinceJS?level=100)>): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
+Converted levels from https://www.popot.org/custom_levels.php:
+
+- [100](https://oklemenz.github.io/PrinceJS?level=100): Tower of Revenge (own)
+- [101-114](https://oklemenz.github.io/PrinceJS?level=101): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
+- [115-128](https://oklemenz.github.io/PrinceJS?level=115): [Jaffar's House](https://www.popot.org/custom_levels.php?mod=0000220)
+- [129-142](https://oklemenz.github.io/PrinceJS?level=129): [Ipank's Levels](https://www.popot.org/custom_levels.php?mod=0000151)
+- [143-156](https://oklemenz.github.io/PrinceJS?level=143): [Barre's Alternative](https://www.popot.org/custom_levels.php?mod=0000189)
+- [157-170](https://oklemenz.github.io/PrinceJS?level=157): [Miracles Don't Exist](https://www.popot.org/custom_levels.php?mod=0000098)
+- [171-184](https://oklemenz.github.io/PrinceJS?level=171): [Babylon Tower Climb](https://www.popot.org/custom_levels.php?mod=0000109)
+- [185-198](https://oklemenz.github.io/PrinceJS?level=185): [Lost in Errors](https://www.popot.org/custom_levels.php?mod=0000144)
+- [199-212](https://oklemenz.github.io/PrinceJS?level=199): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
+- [213-226](https://oklemenz.github.io/PrinceJS?level=213): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
+- [227-240](https://oklemenz.github.io/PrinceJS?level=227): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)

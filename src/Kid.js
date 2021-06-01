@@ -894,7 +894,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 };
 
 PrinceJS.Kid.prototype.moveR = function () {
-  if (["stoop", "bump", "stand", "turn", "turnengarde", "engarde"].includes(this.action)) {
+  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
     return false;
   }
   return (
@@ -904,7 +904,7 @@ PrinceJS.Kid.prototype.moveR = function () {
 };
 
 PrinceJS.Kid.prototype.moveL = function () {
-  if (["stoop", "bump", "stand", "turn", "turnengarde", "engarde"].includes(this.action)) {
+  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
     return false;
   }
   return (

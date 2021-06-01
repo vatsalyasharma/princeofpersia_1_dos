@@ -246,7 +246,7 @@ function determineSpec(data, file, offset) {
   let guard = PrinceJS.Level.GUARD_NORMAL;
   if ([6].includes(number)) {
     guard = PrinceJS.Level.GUARD_FAT;
-  } else if ([12].includes(number)) {
+  } else if ([13].includes(number)) {
     guard = PrinceJS.Level.GUARD_JAFFAR;
   }
   return {
@@ -297,16 +297,16 @@ function transformLevel(spec) {
               }
               break;
             case PrinceJS.Level.TILE_SPACE:
-              if (format.room[n].tile[l].modifier === 255) {
+              if ([124, 255].includes(format.room[n].tile[l].modifier)) {
                 format.room[n].tile[l].modifier = 0;
               }
               break;
             case PrinceJS.Level.TILE_FLOOR:
-              if (format.room[n].tile[l].modifier === 3) {
+              if ([3].includes(format.room[n].tile[l].modifier)) {
                 format.room[n].tile[l].modifier = 2;
                 break;
               }
-              if (format.room[n].tile[l].modifier === 255) {
+              if ([124, 255].includes(format.room[n].tile[l].modifier)) {
                 if (format.type === PrinceJS.Level.TYPE_DUNGEON) {
                   format.room[n].tile[l].modifier = 0;
                 } else {
@@ -319,7 +319,7 @@ function transformLevel(spec) {
               format.room[n].tile[l].modifier = (format.room[n].tile[l].element & 0x20) >> 5;
               break;
             case PrinceJS.Level.TILE_GATE:
-              if (format.room[n].tile[l].modifier === 2) {
+              if ([2].includes(format.room[n].tile[l].modifier)) {
                 format.room[n].tile[l].modifier = 0;
               }
               break;
@@ -349,7 +349,7 @@ function transformLevel(spec) {
           newGuard.room = format.room[n].id;
           newGuard.location = location - 1;
           newGuard.skill = parseInt(guard.skill, 10);
-          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? parseInt(guard.colors, 10) : 0;
+          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? parseInt(guard.colors, 10) || 1 : 0;
           newGuard.type = spec.guard;
           newGuard.direction = parseInt(guard.direction, 10) === 1 ? 1 : -1;
           format.guards.push(newGuard);
@@ -363,6 +363,19 @@ function transformLevel(spec) {
   format.prince.direction = parseInt(spec.prince.direction, 10) === 1 ? 1 : -1;
   if ([1, 13].includes(spec.number)) {
     format.prince.direction = -format.prince.direction;
+  }
+  if ([1, 7, 13].includes(spec.number)) {
+    format.prince.turn = false;
+  }
+  if ([1].includes(spec.number)) {
+    format.prince.offset = 7;
+  }
+  if ([7].includes(spec.number)) {
+    format.prince.cameraRoom = 1;
+    format.prince.falling = true;
+  }
+  if ([6, 14].includes(spec.number)) {
+    format.prince.specialEvents = true;
   }
   return format;
 }
