@@ -349,7 +349,7 @@ function transformLevel(spec) {
           newGuard.room = format.room[n].id;
           newGuard.location = location - 1;
           newGuard.skill = parseInt(guard.skill, 10);
-          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? parseInt(guard.colors, 10) || 1 : 0;
+          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? (parseInt(guard.colors, 10) || 1) : 0;
           newGuard.type = spec.guard;
           newGuard.direction = parseInt(guard.direction, 10) === 1 ? 1 : -1;
           format.guards.push(newGuard);

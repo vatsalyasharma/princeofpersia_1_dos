@@ -3141,8 +3141,8 @@
     "room": 17,
     "direction": -1,
     "turn": false,
-    "falling": true,
     "cameraRoom": 1,
+    "falling": true,
     "offset": 2
   }
 }

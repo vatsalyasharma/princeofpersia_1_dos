@@ -3121,6 +3121,8 @@
   "prince": {
     "location": 1,
     "room": 1,
-    "direction": 1
+    "direction": 1,
+    "turn": true,
+    "offset": 0
   }
 }
