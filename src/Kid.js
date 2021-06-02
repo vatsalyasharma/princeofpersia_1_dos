@@ -569,7 +569,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
     return;
   }
   if (
-    ["jumpup", "highjump", "jumphanglong", "climbup", "climbdown", "climbfail", "stand", "turn"].includes(this.action)
+    ["jumpup", "highjump", "jumphanglong", "jumpbackhang", "climbup", "climbdown", "climbfail", "stand", "turn"].includes(this.action)
   ) {
     return;
   }

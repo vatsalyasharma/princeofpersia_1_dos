@@ -139,9 +139,9 @@ PrinceJS.Game.prototype = {
         (!PrinceJS.Utils.isScreenFlipped() && pos.y >= 0.96 * size.height && pos.y <= size.height)
       ) {
         if (this.isRemainingMinutesShown() || this.isLevelShown()) {
-          if (pos.x >= 0 && pos.x <= 0.1 * size.width) {
+          if (pos.x >= 0 && pos.x <= 0.2 * size.width) {
             this.previousLevel();
-          } else if (pos.x >= 0.9 * size.width && pos.x <= size.width) {
+          } else if (pos.x >= 0.8 * size.width && pos.x <= size.width) {
             this.nextLevel();
           } else if (pos.x >= 0.4 * size.width && pos.x <= 0.6 * size.width) {
             this.restartLevel();

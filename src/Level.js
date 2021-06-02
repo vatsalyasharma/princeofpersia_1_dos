@@ -238,6 +238,9 @@ PrinceJS.Level.prototype = {
   },
 
   fireEvent: function (event, type) {
+    if (!this.events[event]) {
+      return;
+    }
     let room = this.events[event].room;
     let x = (this.events[event].location - 1) % 10;
     let y = Math.floor((this.events[event].location - 1) / 10);

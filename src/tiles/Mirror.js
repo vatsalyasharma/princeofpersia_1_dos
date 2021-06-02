@@ -3,25 +3,27 @@
 PrinceJS.Tile.Mirror = function (game, modifier, type) {
   PrinceJS.Tile.Base.call(this, game, PrinceJS.Level.TILE_FLOOR, modifier, type);
 
-  this.mirrorBack = this.game.make.sprite(3, -3, this.key, this.key + "_" + this.element + "_mirror");
-  this.mirrorBack.visible = false;
-  this.back.addChild(this.mirrorBack);
-  this.mirrorFront = this.game.make.sprite(3, -3, this.key, this.key + "_" + this.element + "_fg_mirror");
-  this.mirrorFront.visible = false;
-  this.front.addChild(this.mirrorFront);
+  if (this.type === PrinceJS.Level.TYPE_PALACE) {
+    this.mirrorBack = this.game.make.sprite(3, -3, this.key, this.key + "_" + this.element + "_mirror");
+    this.mirrorBack.visible = false;
+    this.back.addChild(this.mirrorBack);
+    this.mirrorFront = this.game.make.sprite(3, -3, this.key, this.key + "_" + this.element + "_fg_mirror");
+    this.mirrorFront.visible = false;
+    this.front.addChild(this.mirrorFront);
 
-  this.reflectionGroup = this.game.add.group();
-  this.reflectionGroup.scale.x *= -1;
-  this.reflection = this.game.make.sprite(0, 0, "kid", "kid-1");
-  this.reflection.anchor.setTo(0, 1);
-  this.reflection.visible = false;
-  this.reflectionGroup.addChild(this.reflection);
-  this.reflectionGroup.visible = false;
-  this.back.addChild(this.reflectionGroup);
+    this.reflectionGroup = this.game.add.group();
+    this.reflectionGroup.scale.x *= -1;
+    this.reflection = this.game.make.sprite(0, 0, "kid", "kid-1");
+    this.reflection.anchor.setTo(0, 1);
+    this.reflection.visible = false;
+    this.reflectionGroup.addChild(this.reflection);
+    this.reflectionGroup.visible = false;
+    this.back.addChild(this.reflectionGroup);
 
-  this.reflectionCover = this.game.make.sprite(-105, -5, this.key, this.key + "_" + this.element + "_mirror_cover");
-  this.reflectionCover.visible = false;
-  this.back.addChild(this.reflectionCover);
+    this.reflectionCover = this.game.make.sprite(-105, -5, this.key, this.key + "_" + this.element + "_mirror_cover");
+    this.reflectionCover.visible = false;
+    this.back.addChild(this.reflectionCover);
+  }
 };
 
 PrinceJS.Tile.Mirror.prototype = Object.create(PrinceJS.Tile.Base.prototype);

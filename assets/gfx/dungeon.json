@@ -2176,6 +2176,38 @@
       "sourceSize": { "w": 60, "h": 79 },
       "pivot": { "x": 0.5, "y": 0.5 }
     },
+    "dungeon_5": {
+      "frame": { "x": 436, "y": 812, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_5_down": {
+      "frame": { "x": 498, "y": 812, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_5_down_fg": {
+      "frame": { "x": 560, "y": 812, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_5_fg": {
+      "frame": { "x": 622, "y": 812, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
     "dungeon_6": {
       "frame": { "x": 436, "y": 812, "w": 60, "h": 79 },
       "rotated": false,
@@ -2250,6 +2282,118 @@
     },
     "dungeon_9_fg": {
       "frame": { "x": 870, "y": 812, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_23": {
+      "frame": { "x": 375, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_23_fg": {
+      "frame": { "x": 437, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_24": {
+      "frame": { "x": 375, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_24_fg": {
+      "frame": { "x": 437, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_25": {
+      "frame": { "x": 375, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_25_fg": {
+      "frame": { "x": 437, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_26": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_26_fg": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_27": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_27_fg": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_28": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_28_fg": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_29": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
+      "sourceSize": { "w": 60, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "dungeon_29_fg": {
+      "frame": { "x": 126, "y": 650, "w": 60, "h": 79 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },

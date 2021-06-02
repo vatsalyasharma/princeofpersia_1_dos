@@ -3199,7 +3199,6 @@
     "room": 17,
     "direction": -1,
     "turn": false,
-    "cameraRoom": 1,
-    "falling": true
+    "cameraRoom": 1
   }
 }

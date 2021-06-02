@@ -3192,7 +3192,6 @@
     "offset": 2,
     "room": 17,
     "cameraRoom": 1,
-    "direction": -1,
-    "falling": true
+    "direction": -1
   }
 }

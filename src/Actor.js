@@ -122,6 +122,9 @@ PrinceJS.Actor.prototype.changeFace = function () {
 };
 
 PrinceJS.Actor.prototype.updateCharPosition = function () {
+  if (this.charFrame === undefined) {
+    return;
+  }
   this.frameName = this.charName + "-" + this.charFrame;
 
   let tempx = this.charX + this.charFdx * this.charFace;

@@ -57,7 +57,6 @@ function buildLevelFile(file, offset) {
   } else {
     // eslint-disable-next-line no-console
     console.log("Level with id lower 100 is not (over)written: " + level.id);
-    process.exit(-1);
   }
 }
 
@@ -328,7 +327,7 @@ function transformLevel(spec) {
               eventID = format.room[n].tile[l].modifier;
               if (typeof format.events[eventID] === "undefined") {
                 next = 1;
-                while (next) {
+                while (next && eventID < 256) {
                   format.events[eventID] = {};
                   format.events[eventID].number = parseInt(spec.events[eventID].number, 10);
                   format.events[eventID].room = parseInt(spec.events[eventID].room, 10);
@@ -369,10 +368,10 @@ function transformLevel(spec) {
   }
   if ([1].includes(spec.number)) {
     format.prince.offset = 7;
+    format.prince.sword = false;
   }
   if ([7].includes(spec.number)) {
     format.prince.cameraRoom = 1;
-    format.prince.falling = true;
   }
   if ([6, 14].includes(spec.number)) {
     format.prince.specialEvents = true;

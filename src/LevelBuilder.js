@@ -155,6 +155,7 @@ PrinceJS.LevelBuilder.prototype = {
         tile.back.addChild(tileChild);
         break;
 
+      case PrinceJS.Level.TILE_STUCK_BUTTON:
       case PrinceJS.Level.TILE_RAISE_BUTTON:
       case PrinceJS.Level.TILE_DROP_BUTTON:
         tile = new PrinceJS.Tile.Button(this.game, t.element, t.modifier, this.type);
@@ -255,8 +256,10 @@ PrinceJS.LevelBuilder.prototype = {
 
       case PrinceJS.Level.TILE_BALCONY_RIGHT:
         tile = new PrinceJS.Tile.Base(this.game, t.element, t.modifier, this.type);
-        tileChild = this.game.make.sprite(0, -4, tile.key, tile.key + "_balcony");
-        tile.back.addChild(tileChild);
+        if (this.type === PrinceJS.Level.TYPE_PALACE) {
+          tileChild = this.game.make.sprite(0, -4, tile.key, tile.key + "_balcony");
+          tile.back.addChild(tileChild);
+        }
         break;
 
       default:

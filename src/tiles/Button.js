@@ -10,6 +10,11 @@ PrinceJS.Tile.Button = function (game, element, modifier, type) {
 
   this.active = false;
   this.mute = false;
+
+  if (element === PrinceJS.Level.TILE_STUCK_BUTTON) {
+    this.debris = true;
+    this.mute = true;
+  }
 };
 
 PrinceJS.Tile.Button.prototype = Object.create(PrinceJS.Tile.Base.prototype);
