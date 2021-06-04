@@ -1399,11 +1399,12 @@
     },
     {
       "room": 1,
-      "location": 5,
+      "location": 4,
       "skill": 0,
       "colors": 2,
       "type": "guard",
-      "direction": -1
+      "direction": -1,
+      "bias": 1
     },
     {
       "room": 7,

@@ -31,7 +31,7 @@ PrinceJS.Tile.Base.prototype = {
       this.frame = null;
     } else {
       this.frame = this.front.frameName;
-      if (![25].includes(this.element)) {
+      if (![10, 25].includes(this.element)) {
         this.front.frameName = this.back.frameName;
       }
       this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height));

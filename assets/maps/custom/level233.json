@@ -955,6 +955,8 @@
   "prince": {
     "location": 11,
     "room": 1,
-    "direction": 1
+    "direction": 1,
+    "turn": true,
+    "cameraRoom": 1
   }
 }

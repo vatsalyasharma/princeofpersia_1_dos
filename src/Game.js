@@ -51,8 +51,8 @@ PrinceJS.Game.prototype = {
       let enemy = new PrinceJS.Enemy(
         this.game,
         this.level,
-        data.location,
-        data.direction,
+        data.location + (data.bias || 0),
+        data.direction * (data.reverse || 1),
         data.room,
         data.skill,
         data.colors,
@@ -74,12 +74,12 @@ PrinceJS.Game.prototype = {
       }
     }
     let turn = json.prince.turn !== false;
-    let direction = json.prince.direction;
+    let direction = json.prince.direction * (json.prince.reverse || 1);
     if (turn) {
       direction = -direction;
     }
 
-    this.kid = new PrinceJS.Kid(this.game, this.level, json.prince.location, direction, json.prince.room);
+    this.kid = new PrinceJS.Kid(this.game, this.level, json.prince.location + (json.prince.bias || 0), direction, json.prince.room);
     if (typeof json.prince.sword === "boolean") {
       this.kid.hasSword = json.prince.sword;
     }

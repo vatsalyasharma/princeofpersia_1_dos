@@ -824,10 +824,10 @@ PrinceJS.Kid.prototype.checkFloor = function () {
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
-  if (this.action === "climbdown" && ![PrinceJS.Level.TILE_LOOSE_BOARD].includes(tile.element)) {
+  if (["climbup", "climbdown"].includes(this.action) && ![PrinceJS.Level.TILE_LOOSE_BOARD].includes(tile.element)) {
     return;
   }
-  if (this.action === "climbup" && ![PrinceJS.Level.TILE_LOOSE_BOARD].includes(tile.element)) {
+  if (["stoop"].includes(this.action)) {
     return;
   }
 
@@ -1401,7 +1401,7 @@ PrinceJS.Kid.prototype.stoop = function () {
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
   if (
-    [PrinceJS.Level.TILE_SPACE, PrinceJS.Level.TILE_TOP_BIG_PILLAR, PrinceJS.Level.TILE_TAPESTRY_TOP].includes(
+    [PrinceJS.Level.TILE_SPACE, PrinceJS.Level.TILE_TOP_BIG_PILLAR].includes(
       tileR.element
     )
   ) {

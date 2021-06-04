@@ -28,7 +28,7 @@ PrinceJS.LevelBuilder.prototype = {
 
     this.level = new PrinceJS.Level(this.game, json.number, json.name, this.type);
     this.startRoomId = json.prince.room;
-    this.startLocation = json.prince.location;
+    this.startLocation = json.prince.location + (json.prince.bias || 0);
 
     let y, x, id, tile;
     for (y = 0; y < this.height; y++) {

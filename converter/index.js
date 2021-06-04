@@ -117,7 +117,9 @@ function mergeLevel(level, existingLevel) {
     "sword",
     "cameraRoom",
     "specialEvents",
-    "falling"
+    "falling",
+    "bias",
+    "reverse"
   ]);
   for (let i = 0; i < level.room.length; i++) {
     for (let j = 0; j < (level.room[i].tile || []).length; j++) {
@@ -129,7 +131,7 @@ function mergeLevel(level, existingLevel) {
     }
   }
   for (let i = 0; i < level.guards.length; i++) {
-    mergeProperties(level.guards[i], existingLevel.guards[i], ["type", "active", "visible"]);
+    mergeProperties(level.guards[i], existingLevel.guards[i], ["type", "active", "visible", "bias", "reverse"]);
   }
 }
 
