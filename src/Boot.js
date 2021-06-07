@@ -31,7 +31,7 @@ PrinceJS.Init = function () {
   PrinceJS.strength = 100;
   PrinceJS.screenWidth = 0;
   PrinceJS.screenFull = false;
-  PrinceJS.danger = true;
+  PrinceJS.danger = null;
 };
 
 PrinceJS.Restart = function () {
@@ -55,7 +55,5 @@ PrinceJS.Boot.prototype = {
 
     PrinceJS.Utils.applyQuery();
     PrinceJS.Utils.applyScreenWidth();
-
-    PrinceJS.danger = PrinceJS.currentLevel === 1;
   }
 };

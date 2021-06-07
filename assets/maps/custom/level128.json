@@ -527,7 +527,6 @@
   "prince": {
     "location": 16,
     "room": 6,
-    "direction": -1,
-    "specialEvents": true
+    "direction": -1
   }
 }

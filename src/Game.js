@@ -42,7 +42,7 @@ PrinceJS.Game.prototype = {
       return;
     }
     this.level = new PrinceJS.LevelBuilder(this.game, this).buildFromJSON(json);
-    this.specialEvents = PrinceJS.currentLevel < 100 || json.prince.specialEvents;
+    this.specialEvents = json.prince.specialEvents !== false;
 
     this.shadow = null;
     this.mouse = null;
@@ -79,7 +79,13 @@ PrinceJS.Game.prototype = {
       direction = -direction;
     }
 
-    this.kid = new PrinceJS.Kid(this.game, this.level, json.prince.location + (json.prince.bias || 0), direction, json.prince.room);
+    this.kid = new PrinceJS.Kid(
+      this.game,
+      this.level,
+      json.prince.location + (json.prince.bias || 0),
+      direction,
+      json.prince.room
+    );
     if (typeof json.prince.sword === "boolean") {
       this.kid.hasSword = json.prince.sword;
     }
@@ -124,7 +130,9 @@ PrinceJS.Game.prototype = {
     this.input.keyboard.onDownCallback = this.buttonPressed.bind(this);
 
     this.firstUpdate = true;
-
+    if (PrinceJS.danger === null) {
+      PrinceJS.danger = this.level.number === 1;
+    }
     PrinceJS.Utils.resetFlipScreen();
     PrinceJS.Utils.updateQuery();
   },
@@ -147,7 +155,9 @@ PrinceJS.Game.prototype = {
             this.restartLevel();
           }
         }
-        this.showRemainingMinutes();
+        if (pos.x >= 0 && pos.x <= size.width) {
+          this.showRemainingMinutes();
+        }
       }
     }
   },
@@ -168,12 +178,12 @@ PrinceJS.Game.prototype = {
   },
 
   checkLevelLogic: function () {
-    let jaffar;
-    let skeleton;
-    let tile;
     if (!this.specialEvents) {
       return;
     }
+    let jaffar;
+    let skeleton;
+    let tile;
     switch (this.level.number) {
       case 1:
         if (this.firstUpdate) {
@@ -190,7 +200,7 @@ PrinceJS.Game.prototype = {
         if (this.firstUpdate) {
           for (let i = 0; i < this.enemies.length; i++) {
             let enemy = this.enemies[i];
-            if (enemy && enemy.room === 24) {
+            if (enemy && enemy.room === 24 && enemy.charBlockX === 0 && enemy.charBlockY === 1) {
               enemy.charX -= 12;
               enemy.updateBlockXY();
             }
@@ -285,57 +295,55 @@ PrinceJS.Game.prototype = {
         break;
 
       case 5:
-        tile = this.level.getTileAt(1, 0, 24);
-        if (
-          tile.state === PrinceJS.Tile.Gate.STATE_RAISING &&
-          this.shadow &&
-          !this.shadow.visible &&
-          this.shadow.faceR()
-        ) {
-          this.shadow.visible = true;
-          this.performProgram(
-            [
-              { i: "ACTION", p1: 2600, p2: "running" },
-              { i: "ACTION", p1: 700, p2: "runstop" },
-              { i: "ACTION", p1: 0, p2: "drinkpotion" },
-              { i: "SOUND", p1: 0, p2: "DrinkPotionGlugGlug" },
-              { i: "REM_OBJECT" },
-              { i: "WAIT", p1: 1500 },
-              { i: "ACTION", p1: 500, p2: "turn" },
-              { i: "ACTION", p1: 3000, p2: "running" }
-            ],
-            this.shadow
-          );
-        }
-        if (
-          this.shadow &&
-          this.shadow.visible &&
-          (this.currentCameraRoom === 11 ||
-            (this.shadow.room === 11 && this.shadow.charBlockX === 8 && this.shadow.faceL()))
-        ) {
-          this.shadow.action = "stand";
-          this.shadow.setInvisible();
+        if (this.shadow) {
+          tile = this.level.getTileAt(1, 0, 24);
+          if (tile.state === PrinceJS.Tile.Gate.STATE_RAISING && !this.shadow.visible && this.shadow.faceR()) {
+            this.shadow.visible = true;
+            this.performProgram(
+              [
+                { i: "ACTION", p1: 2600, p2: "running" },
+                { i: "ACTION", p1: 700, p2: "runstop" },
+                { i: "ACTION", p1: 0, p2: "drinkpotion" },
+                { i: "SOUND", p1: 0, p2: "DrinkPotionGlugGlug" },
+                { i: "REM_OBJECT" },
+                { i: "WAIT", p1: 1500 },
+                { i: "ACTION", p1: 500, p2: "turn" },
+                { i: "ACTION", p1: 3000, p2: "running" }
+              ],
+              this.shadow
+            );
+          }
+          if (
+            this.shadow.visible &&
+            (this.currentCameraRoom === 11 ||
+              (this.shadow.room === 11 && this.shadow.charBlockX === 8 && this.shadow.faceL()))
+          ) {
+            this.shadow.action = "stand";
+            this.shadow.setInvisible();
+          }
         }
         break;
 
       case 6:
-        if (this.firstUpdate && this.shadow) {
-          this.shadow.charX += 8;
+        if (this.shadow) {
+          if (this.firstUpdate) {
+            this.shadow.charX += 8;
+          }
+          if (this.currentCameraRoom === 1) {
+            if (!this.level.shadowDetected) {
+              this.level.shadowDetected = true;
+              this.game.sound.play("Danger");
+            }
+            if (this.kid.charBlockX === 6) {
+              this.shadow.action = "step11";
+            }
+          }
         }
-        if (this.currentCameraRoom === 1) {
-          if (!this.level.shadowDetected) {
-            this.level.shadowDetected = true;
-            this.game.sound.play("Danger");
-          }
-          if (this.kid.charBlockX === 6 && this.shadow) {
-            this.shadow.action = "step11";
-          }
-          if (this.kid.charBlockY === 2 && this.kid.charY >= 185) {
-            this.blockCamera = true;
-            PrinceJS.Utils.delayed(() => {
-              this.nextLevel(PrinceJS.currentLevel);
-            }, 100);
-          }
+        if (this.kid.charBlockY === 2 && this.kid.charY >= 185) {
+          this.blockCamera = true;
+          PrinceJS.Utils.delayed(() => {
+            this.nextLevel(PrinceJS.currentLevel);
+          }, 100);
         }
         break;
 
@@ -372,65 +380,68 @@ PrinceJS.Game.prototype = {
           this.level.getTileAt(1, 0, 15).element === PrinceJS.Level.TILE_SWORD
         ) {
           this.level.removeObject(1, 0, 15);
-        } else if (
-          this.kid.room === 15 &&
-          (this.kid.charBlockX === 5 || this.kid.charBlockX === 6) &&
-          this.shadow &&
-          !this.shadow.visible &&
-          !this.level.shadowMerge
-        ) {
-          this.shadow.charX = PrinceJS.Utils.convertBlockXtoX(1);
-          this.shadow.charY = PrinceJS.Utils.convertBlockYtoY(1);
-          this.shadow.setVisible();
-          this.shadow.setActive();
-          PrinceJS.Utils.delayed(() => {
-            this.shadow.refracTimer = 9;
-            this.shadow.opponent = this.kid;
-            this.kid.opponent = this.shadow;
-            this.kid.opponentSync = true;
-          }, 1000);
         }
-        if (
-          this.shadow &&
-          !this.shadow.active &&
-          this.kid.opponent &&
-          Math.abs(this.kid.opponentDistance()) <= (this.kid.action.includes("jump") ? 15 : 7) &&
-          !this.level.shadowMerge
-        ) {
-          this.level.shadowMerge = true;
-          this.ui.resetOpponentLive();
-          this.kid.addLife();
-          this.kid.mergeShadowPosition();
-          this.kid.showShadowOverlay();
-          this.kid.flashShadowOverlay();
-          PrinceJS.Utils.flashWhiteShadowMerge(this.game);
-          PrinceJS.Utils.delayed(() => {
-            if (this.level.shadowMerge) {
-              this.game.sound.play("Prince");
-            }
+        if (!this.shadow) {
+          this.level.leapOfFaith = true;
+        } else {
+          if (
+            this.kid.room === 15 &&
+            (this.kid.charBlockX === 5 || this.kid.charBlockX === 6) &&
+            !this.shadow.visible &&
+            !this.level.shadowMerge
+          ) {
+            this.shadow.charX = PrinceJS.Utils.convertBlockXtoX(1);
+            this.shadow.charY = PrinceJS.Utils.convertBlockYtoY(1);
+            this.shadow.setVisible();
+            this.shadow.setActive();
             PrinceJS.Utils.delayed(() => {
-              this.level.leapOfFaith = true;
-            }, 13000);
-          }, 2000);
+              this.shadow.refracTimer = 9;
+              this.shadow.opponent = this.kid;
+              this.kid.opponent = this.shadow;
+              this.kid.opponentSync = true;
+            }, 1000);
+          }
+          if (
+            !this.shadow.active &&
+            this.kid.opponent &&
+            Math.abs(this.kid.opponentDistance()) <= (this.kid.action.includes("jump") ? 15 : 7) &&
+            !this.level.shadowMerge
+          ) {
+            this.level.shadowMerge = true;
+            this.ui.resetOpponentLive();
+            this.kid.addLife();
+            this.kid.mergeShadowPosition();
+            this.kid.showShadowOverlay();
+            this.kid.flashShadowOverlay();
+            PrinceJS.Utils.flashWhiteShadowMerge(this.game);
+            PrinceJS.Utils.delayed(() => {
+              if (this.level.shadowMerge) {
+                this.game.sound.play("Prince");
+              }
+              PrinceJS.Utils.delayed(() => {
+                this.level.leapOfFaith = true;
+              }, 13000);
+            }, 2000);
+          }
         }
-        if (this.level.leapOfFaith && !this.level.leapOfFaithSetup) {
+        if (this.level.leapOfFaith && !this.level.leapOfFaithSetup && this.level.rooms[2]) {
           this.level.leapOfFaithSetup = true;
           for (let i = 0; i < 10; i++) {
             tile = this.level.getTileAt(i, 0, 2);
-            if (tile.element === PrinceJS.Level.TILE_SPACE) {
+            if (tile && tile.element === PrinceJS.Level.TILE_SPACE) {
               tile.element = PrinceJS.Level.TILE_FLOOR;
               tile.hidden = true;
             }
             if (i >= 6) {
               tile = this.level.getTileAt(i, 0, this.level.rooms[2].links.left);
-              if (tile.element === PrinceJS.Level.TILE_SPACE) {
+              if (tile && tile.element === PrinceJS.Level.TILE_SPACE) {
                 tile.element = PrinceJS.Level.TILE_FLOOR;
                 tile.hidden = true;
               }
             }
           }
         }
-        if (this.currentCameraRoom === 23 && this.kid.charBlockY === 1) {
+        if (this.currentCameraRoom === 23) {
           this.nextLevel(PrinceJS.currentLevel);
         }
         break;
@@ -449,14 +460,8 @@ PrinceJS.Game.prototype = {
             }
           }
         }
-        jaffar = this.enemies[0];
+        jaffar = this.kid.opponent && this.kid.opponent.baseCharName === "jaffar" ? this.kid.opponent : null;
         if (jaffar) {
-          if (this.currentCameraRoom === 1 && this.enemies.length) {
-            if (jaffar.alive && !jaffar.meet) {
-              this.game.sound.play("Jaffar2");
-              jaffar.meet = true;
-            }
-          }
           if (!jaffar.alive && !PrinceJS.endTime) {
             PrinceJS.endTime = new Date();
             this.showRemainingMinutes();
@@ -605,6 +610,7 @@ PrinceJS.Game.prototype = {
       return;
     }
 
+    PrinceJS.danger = null;
     PrinceJS.maxHealth = this.kid.maxHealth;
     PrinceJS.currentLevel++;
     if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel < 100) {
@@ -620,6 +626,7 @@ PrinceJS.Game.prototype = {
   },
 
   previousLevel: function () {
+    PrinceJS.danger = null;
     if (PrinceJS.currentLevel > 1) {
       PrinceJS.currentLevel--;
       this.reset();
@@ -751,11 +758,15 @@ PrinceJS.Game.prototype = {
       }
     }
     if (currentEnemy) {
+      if (currentEnemy.baseCharName === "jaffar" && currentEnemy.alive && !currentEnemy.meet) {
+        this.game.sound.play("Jaffar2");
+      }
       if (this.kid.opponent !== currentEnemy) {
         this.kid.opponent = currentEnemy;
         this.kid.flee = false;
       }
       currentEnemy.opponent = this.kid;
+      currentEnemy.meet = true;
     }
     let opponentSameRoom = false;
     let opponentNextRoom = false;

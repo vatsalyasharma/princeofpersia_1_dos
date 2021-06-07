@@ -3070,7 +3070,6 @@
   "prince": {
     "location": 13,
     "room": 15,
-    "direction": 1,
-    "specialEvents": true
+    "direction": 1
   }
 }

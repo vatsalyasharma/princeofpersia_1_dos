@@ -226,6 +226,17 @@ PrinceJS.Fighter.prototype.checkFight = function () {
   if (this.opponent == null) {
     return;
   }
+
+  if (
+    this.charName !== "kid" &&
+    this.action === "stand" &&
+    this.isOpponentInSameRoom() &&
+    !this.facingOpponent() &&
+    Math.abs(this.x - this.opponent.x) >= 20
+  ) {
+    this.turn();
+  }
+
   if (!this.startFight) {
     return;
   }
@@ -285,17 +296,6 @@ PrinceJS.Fighter.prototype.checkFight = function () {
         this.action = "blockedstrike";
         this.processCommand();
         this.onStrikeBlocked.dispatch();
-      }
-      break;
-
-    case "stand":
-      if (
-        this.charName !== "kid" &&
-        this.isOpponentInSameRoom() &&
-        !this.facingOpponent() &&
-        Math.abs(this.x - this.opponent.x) >= 20
-      ) {
-        this.turn();
       }
       break;
   }
@@ -700,11 +700,10 @@ PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, roo
   if (tile.isSafeWalkable()) {
     return true;
   }
-  return (
-    this.standsOnTile(tile) &&
-    (!tile.isDangerousWalkable() ||
-      (tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x && this.opponent.x > tile.x))
-  );
+  if (this.standsOnTile(tile)) {
+    return true;
+  }
+  return tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x + 10 && this.opponent.x > tile.x + 15;
 };
 
 PrinceJS.Fighter.prototype.canWalkOnNextTile = function () {

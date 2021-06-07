@@ -168,6 +168,9 @@ PrinceJS.Enemy.prototype.retreat = function () {
   if (!this.canReachOpponent(this.lookBelow)) {
     return;
   }
+  if (this.nearBarrier(this.charBlockX, this.charBlockY)) {
+    return;
+  }
 
   if (
     !this.action.includes("turn") &&

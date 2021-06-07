@@ -104,7 +104,7 @@ function writeLevel(level) {
       mergeLevel(level, existingLevel);
     }
   }
-  fs.writeFileSync(levelJSONPath, JSON.stringify(level, undefined, 2));
+  fs.writeFileSync(levelJSONPath, JSON.stringify(level, undefined, 2) + "\n");
   // eslint-disable-next-line no-console
   console.log(`Wrote level file '${levelJSONPath}'`);
 }
@@ -350,7 +350,7 @@ function transformLevel(spec) {
           newGuard.room = format.room[n].id;
           newGuard.location = location - 1;
           newGuard.skill = parseInt(guard.skill, 10);
-          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? (parseInt(guard.colors, 10) || 1) : 0;
+          newGuard.colors = spec.guard === PrinceJS.Level.GUARD_NORMAL ? parseInt(guard.colors, 10) || 1 : 0;
           newGuard.type = spec.guard;
           newGuard.direction = parseInt(guard.direction, 10) === 1 ? 1 : -1;
           format.guards.push(newGuard);
@@ -374,9 +374,6 @@ function transformLevel(spec) {
   }
   if ([7].includes(spec.number)) {
     format.prince.cameraRoom = 1;
-  }
-  if ([6, 14].includes(spec.number)) {
-    format.prince.specialEvents = true;
   }
   return format;
 }
