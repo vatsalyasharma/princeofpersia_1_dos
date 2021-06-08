@@ -217,44 +217,48 @@ PrinceJS.Utils = {
 
   applyQuery: function () {
     let query = new URLSearchParams(window.location.search);
-    if (query.get("level")) {
-      let queryLevel = parseInt(query.get("level"), 10);
+    if (query.get("level") || query.get("l")) {
+      let queryLevel = parseInt(query.get("level") || query.get("l"), 10);
       if ((!isNaN(queryLevel) && queryLevel >= 1 && queryLevel <= 14) || queryLevel >= 100) {
         PrinceJS.currentLevel = queryLevel;
       }
     }
-    if (query.get("health")) {
-      let queryHealth = parseInt(query.get("health"), 10);
+    if (query.get("health") || query.get("h")) {
+      let queryHealth = parseInt(query.get("health") || query.get("h"), 10);
       if (!isNaN(queryHealth) && queryHealth >= 3 && queryHealth <= 10) {
         PrinceJS.maxHealth = queryHealth;
       }
     }
-    if (query.get("time")) {
-      let queryTime = parseInt(query.get("time"), 10);
+    if (query.get("time") || query.get("t")) {
+      let queryTime = parseInt(query.get("time") || query.get("t"), 10);
       if (!isNaN(queryTime) && queryTime >= 1 && queryTime <= 60) {
         PrinceJS.minutes = queryTime;
       }
     }
-    if (query.get("strength")) {
-      let queryStrength = parseInt(query.get("strength"), 10);
+    if (query.get("strength") || query.get("s")) {
+      let queryStrength = parseInt(query.get("strength") || query.get("s"), 10);
       if (!isNaN(queryStrength) && queryStrength >= 0 && queryStrength <= 100) {
         PrinceJS.strength = queryStrength;
       }
     }
-    if (query.get("width")) {
-      let queryWidth = parseInt(query.get("width"), 10);
+    if (query.get("width") || query.get("w")) {
+      let queryWidth = parseInt(query.get("width") || query.get("w"), 10);
       if (!isNaN(queryWidth) && queryWidth > 0) {
         PrinceJS.screenWidth = queryWidth;
       }
     }
 
-    if (query.get("fullscreen")) {
-      PrinceJS.screenFull = query.get("fullscreen") === "true";
+    if (query.get("fullscreen") || query.get("f")) {
+      PrinceJS.screenFull = (query.get("fullscreen") || query.get("f")) === "true";
       if (PrinceJS.screenFull) {
         PrinceJS.Utils.gameContainer().classList.add("fullscreen");
       } else {
         PrinceJS.Utils.gameContainer().classList.remove("fullscreen");
       }
+    }
+
+    if (query.get("shortcut") || query.get("_")) {
+      PrinceJS.shortcut = (query.get("shortcut") || query.get("_")) === "true";
     }
   },
 
@@ -266,14 +270,26 @@ PrinceJS.Utils = {
 
   updateQuery: function () {
     PrinceJS.minutes = PrinceJS.Utils.getRemainingMinutes();
-    PrinceJS.Utils.setHistoryState({
-      level: PrinceJS.currentLevel,
-      health: PrinceJS.maxHealth,
-      time: PrinceJS.minutes,
-      strength: PrinceJS.strength,
-      width: PrinceJS.screenWidth,
-      fullscreen: PrinceJS.screenFull
-    });
+    if (PrinceJS.shortcut) {
+      PrinceJS.Utils.setHistoryState({
+        l: PrinceJS.currentLevel,
+        h: PrinceJS.maxHealth,
+        t: PrinceJS.minutes,
+        s: PrinceJS.strength,
+        w: PrinceJS.screenWidth,
+        f: PrinceJS.screenFull,
+        _: true
+      });
+    } else {
+      PrinceJS.Utils.setHistoryState({
+        level: PrinceJS.currentLevel,
+        health: PrinceJS.maxHealth,
+        time: PrinceJS.minutes,
+        strength: PrinceJS.strength,
+        width: PrinceJS.screenWidth,
+        fullscreen: PrinceJS.screenFull
+      });
+    }
   },
 
   restoreQuery: function () {
@@ -285,11 +301,20 @@ PrinceJS.Utils = {
   },
 
   clearQuery: function () {
-    PrinceJS.Utils.setHistoryState({
-      strength: PrinceJS.strength,
-      width: PrinceJS.screenWidth,
-      fullscreen: PrinceJS.screenFull
-    });
+    if (PrinceJS.shortcut) {
+      PrinceJS.Utils.setHistoryState({
+        s: PrinceJS.strength,
+        w: PrinceJS.screenWidth,
+        f: PrinceJS.screenFull,
+        _: true
+      });
+    } else {
+      PrinceJS.Utils.setHistoryState({
+        strength: PrinceJS.strength,
+        width: PrinceJS.screenWidth,
+        fullscreen: PrinceJS.screenFull
+      });
+    }
   },
 
   setHistoryState(state) {

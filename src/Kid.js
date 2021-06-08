@@ -228,10 +228,6 @@ PrinceJS.Kid.prototype.updateTimer = function () {
 };
 
 PrinceJS.Kid.prototype.updateBehaviour = function () {
-  if (this.danger) {
-    return;
-  }
-
   if (!this.keyL() && this.faceL()) {
     this.allowCrawl = this.allowAdvance = true;
   }
@@ -689,23 +685,6 @@ PrinceJS.Kid.prototype.getCharBoundsAbs = function () {
   return new Phaser.Rectangle(this.x, this.y - this.height, this.width, this.height);
 };
 
-PrinceJS.Kid.prototype.getCharBounds = function () {
-  let f = this.game.cache.getFrameData("kid").getFrameByName("kid-" + this.charFrame);
-
-  let x = PrinceJS.Utils.convertX(this.charX + this.charFdx * this.charFace);
-  let y = this.charY + this.charFdy - f.height;
-
-  if (this.faceR()) {
-    x -= f.width - 5;
-  }
-
-  if ((this.charFood && this.faceL()) || (!this.charFood && this.faceR())) {
-    x += 1;
-  }
-
-  return new Phaser.Rectangle(x, y, f.width, f.height);
-};
-
 PrinceJS.Kid.prototype.bump = function () {
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
 
@@ -883,6 +862,8 @@ PrinceJS.Kid.prototype.checkFloor = function () {
               tileR.shake(true);
             } else if (tileR.element === PrinceJS.Level.TILE_SPIKES) {
               tileR.raise();
+            } else if ([PrinceJS.Level.TILE_RAISE_BUTTON, PrinceJS.Level.TILE_DROP_BUTTON].includes(tileR.element)) {
+              tileR.push();
             }
             break;
 
@@ -918,28 +899,13 @@ PrinceJS.Kid.prototype.checkFloor = function () {
   }
 };
 
-PrinceJS.Kid.prototype.moveR = function () {
-  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
-    return false;
-  }
-  return (
-    (this.faceL() && ["retreat", "stabbed", "strike"].includes(this.action)) ||
-    (this.faceR() && !["retreat", "stabbed", "strike"].includes(this.action))
-  );
-};
-
-PrinceJS.Kid.prototype.moveL = function () {
-  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
-    return false;
-  }
-  return (
-    (this.faceR() && ["retreat", "stabbed", "strike"].includes(this.action)) ||
-    (this.faceL() && !["retreat", "stabbed", "strike"].includes(this.action))
-  );
-};
-
 PrinceJS.Kid.prototype.checkRoomChange = function () {
-  if ([16, 17, 28, 50].includes(this.charFrame)) {
+  // Ignore frames around alternating chx (+/-)
+  if (
+    [16, 17, 27, 28, 47, 48, 49, 50, 51, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128].includes(
+      this.charFrame
+    )
+  ) {
     return;
   }
   let footX = this.charX + this.charFdx * this.charFace;

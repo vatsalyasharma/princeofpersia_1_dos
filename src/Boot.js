@@ -31,6 +31,7 @@ PrinceJS.Init = function () {
   PrinceJS.strength = 100;
   PrinceJS.screenWidth = 0;
   PrinceJS.screenFull = false;
+  PrinceJS.shortcut = false;
   PrinceJS.danger = null;
 };
 

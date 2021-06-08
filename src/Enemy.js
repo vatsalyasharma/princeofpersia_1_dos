@@ -58,8 +58,9 @@ PrinceJS.Enemy.prototype.updateActor = function () {
   this.checkFight();
   this.checkSpikes();
   this.checkChoppers();
-  this.checkFloor();
+  this.checkBarrier();
   this.checkButton();
+  this.checkFloor();
   this.checkRoomChange();
   this.updateCharPosition();
   this.updateSwordPosition();
@@ -350,6 +351,47 @@ PrinceJS.Enemy.prototype.setInactive = function () {
   if (this.charName === "skeleton") {
     this.action = "laydown";
   }
+};
+
+PrinceJS.Enemy.prototype.checkBarrier = function () {
+  if (!this.alive || this.charName === "shadow") {
+    return;
+  }
+  let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+  if (this.moveR() && tile.isBarrier()) {
+    if (tile.intersects(this.getCharBounds())) {
+      this.bump();
+    }
+  } else {
+    let blockX = PrinceJS.Utils.convertXtoBlockX(this.charX + this.charFdx * this.charFace);
+    let tileNext = this.level.getTileAt(blockX, this.charBlockY, this.room);
+    if (tileNext.isBarrier()) {
+      switch (tileNext.element) {
+        case PrinceJS.Level.TILE_WALL:
+          this.bump();
+          break;
+        case PrinceJS.Level.TILE_GATE:
+        case PrinceJS.Level.TILE_TAPESTRY:
+        case PrinceJS.Level.TILE_TAPESTRY_TOP:
+          if (this.moveL() && tileNext.intersects(this.getCharBounds())) {
+            this.bump();
+          }
+          break;
+      }
+    }
+  }
+};
+
+PrinceJS.Enemy.prototype.bump = function () {
+  if (this.moveR()) {
+    this.charX -= 2;
+  } else if (this.moveL()) {
+    this.charX += 10;
+  } else {
+    this.charX += 5 * this.charFace;
+  }
+  this.updateBlockXY();
+  this.action = "bump";
 };
 
 PrinceJS.Enemy.prototype.appearOutOfMirror = function (mirror) {

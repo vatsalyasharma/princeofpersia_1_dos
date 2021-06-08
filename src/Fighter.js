@@ -229,6 +229,7 @@ PrinceJS.Fighter.prototype.checkFight = function () {
 
   if (
     this.charName !== "kid" &&
+    this.active &&
     this.action === "stand" &&
     this.isOpponentInSameRoom() &&
     !this.facingOpponent() &&
@@ -703,7 +704,7 @@ PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, roo
   if (this.standsOnTile(tile)) {
     return true;
   }
-  return tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x + 10 && this.opponent.x > tile.x + 15;
+  return tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x + 15 && this.opponent.x > tile.x + 15;
 };
 
 PrinceJS.Fighter.prototype.canWalkOnNextTile = function () {
@@ -1204,6 +1205,39 @@ PrinceJS.Fighter.prototype.checkLooseFloor = function (tile) {};
 
 PrinceJS.Fighter.prototype.proceedOnDead = function () {
   this.onDead.dispatch();
+};
+
+PrinceJS.Fighter.prototype.moveR = function () {
+  if (["stoop", "bump", "stand", "turn", "turnengarde", "engarde"].includes(this.action)) {
+    return false;
+  }
+  return (
+    (this.faceL() && ["retreat", "stabbed", "strike"].includes(this.action)) ||
+    (this.faceR() && !["retreat", "stabbed", "strike"].includes(this.action))
+  );
+};
+
+PrinceJS.Fighter.prototype.moveL = function () {
+  if (["stoop", "bump", "stand", "turn", "turnengarde", "engarde"].includes(this.action)) {
+    return false;
+  }
+  return (
+    (this.faceR() && ["retreat", "stabbed", "strike"].includes(this.action)) ||
+    (this.faceL() && !["retreat", "stabbed", "strike"].includes(this.action))
+  );
+};
+
+PrinceJS.Fighter.prototype.getCharBounds = function () {
+  let f = this.game.cache.getFrameData(this.charName).getFrameByName(this.charName + "-" + this.charFrame);
+  let x = PrinceJS.Utils.convertX(this.charX + this.charFdx * this.charFace);
+  let y = this.charY + this.charFdy - f.height;
+  if (this.faceR()) {
+    x -= f.width - 5;
+  }
+  if ((this.charFood && this.faceL()) || (!this.charFood && this.faceR())) {
+    x += 1;
+  }
+  return new Phaser.Rectangle(x, y, f.width, f.height);
 };
 
 PrinceJS.Fighter.prototype.alignToTile = function (tile) {

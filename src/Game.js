@@ -262,7 +262,7 @@ PrinceJS.Game.prototype = {
           this.level.mirrorDetected = true;
           PrinceJS.Utils.delayed(() => {
             this.game.sound.play("Danger");
-          }, 400);
+          }, 100);
         }
         tile = this.level.getTileAt(this.kid.charBlockX - this.kid.charFace, this.kid.charBlockY, this.kid.room);
         if (
