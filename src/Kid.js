@@ -902,7 +902,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
   if (
-    [16, 17, 27, 28, 47, 48, 49, 50, 51, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128].includes(
+    [16, 17, 27, 28, 47, 48, 49, 50, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128, 157].includes(
       this.charFrame
     )
   ) {
@@ -911,7 +911,7 @@ PrinceJS.Kid.prototype.checkRoomChange = function () {
   let footX = this.charX + this.charFdx * this.charFace;
   let footBlockX = PrinceJS.Utils.convertXtoBlockX(footX);
 
-  if (footBlockX >= 9 && this.moveR()) {
+  if (footBlockX >= 9 && this.moveR(false)) {
     let cameraRoom = this.room;
     if (footX > 142 || (this.swordDrawn && (footX > 130 || footX < 0))) {
       // Camera check
@@ -924,7 +924,7 @@ PrinceJS.Kid.prototype.checkRoomChange = function () {
     }
   }
 
-  if (this.moveL() && (footBlockX === 8 || (footBlockX === 9 && footX < 135))) {
+  if (this.moveL(false) && (footBlockX === 8 || (footBlockX === 9 && footX < 135))) {
     if (!["climbup", "climbdown", "stand", "jumpup"].includes(this.action)) {
       this.onChangeRoom.dispatch(this.room);
     }

@@ -661,7 +661,7 @@ PrinceJS.Fighter.prototype.isOpponentInSameRoom = function () {
   return this.opponentInSameRoom(this.opponent, this.room);
 };
 
-PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY) {
+PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY, walk = false) {
   charBlockX = charBlockX || this.charBlockX;
   charBlockY = charBlockY || this.charBlockY;
 
@@ -670,11 +670,24 @@ PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY) {
 
   return (
     tileF.element === PrinceJS.Level.TILE_WALL ||
-    (tileF.element === PrinceJS.Level.TILE_GATE && this.faceL() && !tileF.canCross(this.height)) ||
-    (tile.element === PrinceJS.Level.TILE_GATE && this.faceR() && !tile.canCross(this.height)) ||
+    !this.canCrossGate(tile, walk) ||
     (tile.element === PrinceJS.Level.TILE_TAPESTRY && this.faceR()) ||
     (tileF.element === PrinceJS.Level.TILE_TAPESTRY && this.faceL()) ||
     (tileF.element === PrinceJS.Level.TILE_TAPESTRY_TOP && this.faceL())
+  );
+};
+
+PrinceJS.Fighter.prototype.canCrossGate = function (tile, walk = false) {
+  let tileF = this.level.getTileAt(tile.roomX + this.charFace, tile.roomY, this.room);
+  return !(
+    (tileF.element === PrinceJS.Level.TILE_GATE &&
+      this.faceL() &&
+      !tileF.canCross(this.height) &&
+      (!walk || this.centerX > tile.centerX)) ||
+    (tile.element === PrinceJS.Level.TILE_GATE &&
+      this.faceR() &&
+      !tile.canCross(this.height) &&
+      (!walk || this.centerX < tile.centerX))
   );
 };
 
@@ -684,18 +697,9 @@ PrinceJS.Fighter.prototype.standsOnTile = function (tile) {
   return floorTile === fighterTile;
 };
 
-PrinceJS.Fighter.prototype.canCrossGate = function (tile) {
-  let tileF = this.level.getTileAt(tile.roomX + this.charFace, tile.roomY, this.room);
-
-  return !(
-    (tileF.element === PrinceJS.Level.TILE_GATE && this.faceL() && !tileF.canCross(this.height)) ||
-    (tile.element === PrinceJS.Level.TILE_GATE && this.faceR() && !tile.canCross(this.height))
-  );
-};
-
 PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, room) {
   let tile = this.level.getTileAt(charBlockX, charBlockY, room);
-  if (!this.canCrossGate(tile)) {
+  if (!this.canCrossGate(tile, true)) {
     return false;
   }
   if (tile.isSafeWalkable()) {
@@ -1207,8 +1211,11 @@ PrinceJS.Fighter.prototype.proceedOnDead = function () {
   this.onDead.dispatch();
 };
 
-PrinceJS.Fighter.prototype.moveR = function () {
-  if (["stoop", "bump", "stand", "turn", "turnengarde", "engarde"].includes(this.action)) {
+PrinceJS.Fighter.prototype.moveR = function (extended = true) {
+  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
+    return false;
+  }
+  if (extended && ["engarde"].includes(this.action)) {
     return false;
   }
   return (
@@ -1217,8 +1224,11 @@ PrinceJS.Fighter.prototype.moveR = function () {
   );
 };
 
-PrinceJS.Fighter.prototype.moveL = function () {
-  if (["stoop", "bump", "stand", "turn", "turnengarde", "engarde"].includes(this.action)) {
+PrinceJS.Fighter.prototype.moveL = function (extended = true) {
+  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
+    return false;
+  }
+  if (extended && ["engarde"].includes(this.action)) {
     return false;
   }
   return (

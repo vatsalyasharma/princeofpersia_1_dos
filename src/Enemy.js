@@ -169,7 +169,7 @@ PrinceJS.Enemy.prototype.retreat = function () {
   if (!this.canReachOpponent(this.lookBelow)) {
     return;
   }
-  if (this.nearBarrier(this.charBlockX, this.charBlockY)) {
+  if (this.nearBarrier(this.charBlockX, this.charBlockY, true)) {
     return;
   }
 
@@ -193,7 +193,7 @@ PrinceJS.Enemy.prototype.advance = function () {
   if (!this.canReachOpponent(this.lookBelow)) {
     return;
   }
-  if (this.nearBarrier(this.charBlockX, this.charBlockY)) {
+  if (this.nearBarrier(this.charBlockX, this.charBlockY, true)) {
     return;
   }
 
@@ -357,13 +357,17 @@ PrinceJS.Enemy.prototype.checkBarrier = function () {
   if (!this.alive || this.charName === "shadow") {
     return;
   }
+  if (["stand", "turn", "stepfall", "freefall"].includes(this.action)) {
+    return;
+  }
+
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
   if (this.moveR() && tile.isBarrier()) {
     if (tile.intersects(this.getCharBounds())) {
       this.bump();
     }
   } else {
-    let blockX = PrinceJS.Utils.convertXtoBlockX(this.charX + this.charFdx * this.charFace);
+    let blockX = PrinceJS.Utils.convertXtoBlockX(this.charX + this.charFdx * this.charFace - 12);
     let tileNext = this.level.getTileAt(blockX, this.charBlockY, this.room);
     if (tileNext.isBarrier()) {
       switch (tileNext.element) {
@@ -373,7 +377,7 @@ PrinceJS.Enemy.prototype.checkBarrier = function () {
         case PrinceJS.Level.TILE_GATE:
         case PrinceJS.Level.TILE_TAPESTRY:
         case PrinceJS.Level.TILE_TAPESTRY_TOP:
-          if (this.moveL() && tileNext.intersects(this.getCharBounds())) {
+          if (tileNext.intersects(this.getCharBounds())) {
             this.bump();
           }
           break;
