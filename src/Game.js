@@ -622,6 +622,10 @@ PrinceJS.Game.prototype = {
       PrinceJS.Utils.setRemainingMinutesTo15();
     }
 
+    if (PrinceJS.currentLevel >= 100 && this.level.number === 14) {
+      PrinceJS.Utils.resetRemainingMinutesTo60();
+    }
+
     this.reset();
   },
 

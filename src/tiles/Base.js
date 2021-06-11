@@ -34,7 +34,7 @@ PrinceJS.Tile.Base.prototype = {
       if (![10, 25].includes(this.element)) {
         this.front.frameName = this.back.frameName;
       }
-      this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height));
+      this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, 33, this.front.height));
     }
   },
 
@@ -94,6 +94,14 @@ PrinceJS.Tile.Base.prototype = {
       this.element === PrinceJS.Level.TILE_GATE ||
       this.element === PrinceJS.Level.TILE_TAPESTRY ||
       this.element === PrinceJS.Level.TILE_TAPESTRY_TOP
+    );
+  },
+
+  isSeeBarrier: function() {
+    return (
+      this.element !== PrinceJS.Level.TILE_WALL &&
+      this.element !== PrinceJS.Level.TILE_TAPESTRY &&
+      this.element !== PrinceJS.Level.TILE_TAPESTRY_TOP
     );
   },
 

@@ -787,10 +787,14 @@ PrinceJS.Kid.prototype.checkButton = function () {
   let checkCharBlockY = this.charBlockY;
   let checkCharFcheck = this.charFcheck;
 
+  // skip charBlockY switch frame
+  if (this.charFrame === 141) {
+    return;
+  }
   if (
     ["hang", "hangstraight"].includes(this.action) ||
-    (this.action === "climbup" && this.frameID(135, 141)) ||
-    (this.action === "climbdown" && this.frameID(91, 141))
+    (this.action === "climbup" && this.frameID(135, 140)) ||
+    (this.action === "climbdown" && this.frameID(91, 140))
   ) {
     checkCharBlockY = checkCharBlockY - 1;
   }
@@ -902,7 +906,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
   if (
-    [16, 17, 27, 28, 47, 48, 49, 50, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128, 157].includes(
+    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128, 157].includes(
       this.charFrame
     )
   ) {

@@ -340,8 +340,8 @@ PrinceJS.Fighter.prototype.opponentDistance = function () {
   }
 
   let inSameRoom = this.opponentInSameRoom(this.opponent, this.room);
-  let inRoomLeft = this.opponentNearRoomLeft(this.opponent, this.room);
-  let inRoomRight = this.opponentNearRoomRight(this.opponent, this.room);
+  let inRoomLeft = this.opponentNearRoomLeft(this.opponent, this.room, true);
+  let inRoomRight = this.opponentNearRoomRight(this.opponent, this.room, true);
   if (!(inSameRoom || inRoomLeft || inRoomRight)) {
     return 999;
   }
@@ -609,33 +609,55 @@ PrinceJS.Fighter.prototype.opponentCloseRoomRight = function (opponent, room) {
   );
 };
 
-PrinceJS.Fighter.prototype.opponentNearRoom = function (opponent, room) {
+PrinceJS.Fighter.prototype.opponentNearRoom = function (opponent, room, full = false) {
   return (
     this.opponentInSameRoom(opponent, room) ||
-    this.opponentNearRoomLeft(opponent, room) ||
-    this.opponentNearRoomRight(opponent, room)
+    this.opponentNearRoomLeft(opponent, room, full) ||
+    this.opponentNearRoomRight(opponent, room, full)
   );
 };
 
-PrinceJS.Fighter.prototype.opponentNearRoomLeft = function (opponent, room) {
+PrinceJS.Fighter.prototype.opponentNearRoomLeft = function (opponent, room, full = false) {
   return (
     this.level.rooms[room] &&
     this.level.rooms[room].links.left > 0 &&
+    this.canSeeRoomLeft(room) &&
     opponent &&
     opponent.room === this.level.rooms[room].links.left &&
-    (opponent.charBlockX >= 8 || this.charBlockX <= 0)
+    (full || (opponent.charBlockX >= 8 || this.charBlockX <= 0))
   );
 };
 
-PrinceJS.Fighter.prototype.opponentNearRoomRight = function (opponent, room) {
+PrinceJS.Fighter.prototype.opponentNearRoomRight = function (opponent, room, full = false) {
   return (
     this.level.rooms[room] &&
     this.level.rooms[room].links.right > 0 &&
+    this.canSeeRoomRight(room) &&
     opponent &&
     opponent.room === this.level.rooms[room].links.right &&
-    (opponent.charBlockX <= 0 || this.charBlockX >= 8)
+    (full || (opponent.charBlockX <= 0 || this.charBlockX >= 8))
   );
 };
+
+PrinceJS.Fighter.prototype.canSeeRoomRight = function (room) {
+  let rightRoom = this.level.rooms[room] && this.level.rooms[room].links.right;
+  if (rightRoom > 0) {
+    let tile = this.level.getTileAt(9, this.charBlockY, room);
+    let tileR = this.level.getTileAt(0, this.charBlockY, rightRoom);
+    return !tile.isSeeBarrier() && !tileR.isSeeBarrier();
+  }
+  return false;
+}
+
+PrinceJS.Fighter.prototype.canSeeRoomLeft = function (room) {
+  let leftRoom = this.level.rooms[room] && this.level.rooms[room].links.left;
+  if (leftRoom > 0) {
+    let tile = this.level.getTileAt(0, this.charBlockY, room);
+    let tileL = this.level.getTileAt(9, this.charBlockY, leftRoom);
+    return !tile.isSeeBarrier() && !tileL.isSeeBarrier();
+  }
+  return false;
+}
 
 PrinceJS.Fighter.prototype.facingOpponent = function () {
   return (this.faceL() && this.opponent.x <= this.x) || (this.faceR() && this.opponent.x >= this.x);

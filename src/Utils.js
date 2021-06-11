@@ -185,6 +185,12 @@ PrinceJS.Utils = {
     }
   },
 
+  resetRemainingMinutesTo60() {
+    PrinceJS.Utils.minutes = 60;
+    PrinceJS.startTime = undefined;
+    PrinceJS.Utils.updateQuery();
+  },
+
   getDeltaTime: function () {
     if (!PrinceJS.startTime) {
       return {

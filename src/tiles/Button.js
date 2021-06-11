@@ -43,6 +43,7 @@ PrinceJS.Tile.Button.prototype.update = function () {
 
       this.back.frameName = this.key + "_" + this.element;
       this.active = false;
+      this.offsetY = 0;
     }
     this.step++;
   }
@@ -51,8 +52,9 @@ PrinceJS.Tile.Button.prototype.update = function () {
 PrinceJS.Tile.Button.prototype.push = function () {
   if (!this.active) {
     this.active = true;
+    this.offsetY = 1;
     this.frontOriginalY = this.front.y;
-    this.front.y += 1;
+    this.front.y += this.offsetY;
 
     this.back.frameName += "_down";
     this.trigger();
