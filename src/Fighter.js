@@ -948,7 +948,7 @@ PrinceJS.Fighter.prototype.checkFloor = function () {
 
 PrinceJS.Fighter.prototype.checkFall = function (tile) {
   let charBlockY = this.charBlockY;
-  if (this.charY >= PrinceJS.Utils.convertBlockYtoY(charBlockY)) {
+  if (this.charY + 6 >= PrinceJS.Utils.convertBlockYtoY(charBlockY)) {
     tile = this.level.getTileAt(this.charBlockX, charBlockY, this.room);
     if (tile.isWalkable()) {
       this.land();
