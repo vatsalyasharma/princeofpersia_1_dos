@@ -99,9 +99,9 @@ PrinceJS.Tile.Base.prototype = {
 
   isSeeBarrier: function() {
     return (
-      this.element !== PrinceJS.Level.TILE_WALL &&
-      this.element !== PrinceJS.Level.TILE_TAPESTRY &&
-      this.element !== PrinceJS.Level.TILE_TAPESTRY_TOP
+      this.element === PrinceJS.Level.TILE_WALL ||
+      this.element === PrinceJS.Level.TILE_TAPESTRY ||
+      this.element === PrinceJS.Level.TILE_TAPESTRY_TOP
     );
   },
 

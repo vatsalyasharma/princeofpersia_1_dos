@@ -67,7 +67,7 @@ PrinceJS.LevelBuilder.prototype = {
         this.level.rooms[id].links.up = this.getRoomId(x, y - 1);
         this.level.rooms[id].links.down = this.getRoomId(x, y + 1);
 
-        if (this.level.rooms[id].links.left === -1) {
+        if (this.level.rooms[id].links.left <= 0) {
           for (let jj = 2; jj >= 0; jj--) {
             tile = new PrinceJS.Tile.Base(this.game, PrinceJS.Level.TILE_WALL, 0, this.type);
             tile.back.frameName = tile.key + "_wall_0";
@@ -77,7 +77,7 @@ PrinceJS.LevelBuilder.prototype = {
 
         this.buildRoom(id, this.startRoomId, this.startLocation);
 
-        if (this.level.rooms[id].links.up === -1) {
+        if (this.level.rooms[id].links.up <= 0) {
           for (let ii = 0; ii < 10; ii++) {
             tile = new PrinceJS.Tile.Base(this.game, PrinceJS.Level.TILE_FLOOR, 0, this.type);
             this.level.addTile(ii, -1, id, tile);

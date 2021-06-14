@@ -169,7 +169,7 @@ PrinceJS.Fighter.prototype.updateBlockXY = function () {
     }
     if (this.level.rooms[this.room]) {
       let leftRoom = this.level.rooms[this.room].links.left;
-      if (leftRoom > -1) {
+      if (leftRoom > 0) {
         this.charX += 140;
         this.baseX -= 320;
         this.charBlockX = 9;
@@ -185,7 +185,7 @@ PrinceJS.Fighter.prototype.updateBlockXY = function () {
     }
     if (this.level.rooms[this.room]) {
       let rightRoom = this.level.rooms[this.room].links.right;
-      if (rightRoom > -1) {
+      if (rightRoom > 0) {
         this.charX -= 140;
         this.baseX += 320;
         this.charBlockX = 0;
@@ -753,6 +753,10 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
     return false;
   }
 
+  if (this.opponentDistance() <= 50) {
+    return true;
+  }
+
   return this.checkPathToOpponent(
     this.centerX,
     this.opponent,
@@ -906,10 +910,21 @@ PrinceJS.Fighter.prototype.checkFloor = function () {
     return;
   }
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+  let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
+  let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
   let checkCharFcheck = this.charFcheck;
   if (["advance", "retreat"].includes(this.action)) {
     checkCharFcheck = true;
+    if (this.action === "advance" && !tileF.isSpace()) {
+      checkCharFcheck = false;
+    } else if (this.action === "retreat" && !tileR.isSpace()) {
+      checkCharFcheck = false;
+    }
+  }
+
+  if ([PrinceJS.Level.TILE_WALL].includes(tile.element)) {
+    tile = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
   }
 
   switch (this.actionCode) {
@@ -982,7 +997,11 @@ PrinceJS.Fighter.prototype.startFall = function () {
 
   let act = "stepfall";
   if (["retreat"].includes(this.action) || this.swordDrawn) {
-    this.charX += 10 * this.charFace * (this.action === "advance" ? 1 : -1);
+    if (this.action === "advance") {
+      this.charX += 10 * this.charFace;
+    } else if (this.action === "retreat") {
+      this.charX -= 10 * this.charFace;
+    }
     this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room);
   } else {
     this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room);

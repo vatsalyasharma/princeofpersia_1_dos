@@ -28,6 +28,7 @@ PrinceJS.Tile.Button.prototype.update = function () {
   if (this.debris) {
     if (!this.active) {
       this.active = true;
+      this.step = 0;
       this.trigger();
       if (!this.mute) {
         this.game.sound.play("FloorButton");

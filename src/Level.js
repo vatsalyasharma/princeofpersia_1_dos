@@ -123,7 +123,7 @@ PrinceJS.Level.prototype = {
     let newY = y;
 
     let result = this.getRoomX(room, x);
-    if (result.room !== -1) {
+    if (result.room > 0) {
       newRoom = result.room;
       newX = result.x;
       result = this.getRoomY(newRoom, y);
@@ -133,13 +133,13 @@ PrinceJS.Level.prototype = {
       result = this.getRoomY(room, y);
       newRoom = result.room;
       newY = result.y;
-      if (result.room !== -1) {
+      if (result.room > 0) {
         result = this.getRoomX(newRoom, x);
         newRoom = result.room;
         newX = result.x;
       }
     }
-    if (newRoom === -1) {
+    if (newRoom <= 0) {
       return this.dummyWall;
     }
     return this.rooms[newRoom].tiles[newX + newY * 10];

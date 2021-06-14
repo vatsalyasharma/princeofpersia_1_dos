@@ -188,6 +188,7 @@ PrinceJS.Utils = {
   resetRemainingMinutesTo60() {
     PrinceJS.Utils.minutes = 60;
     PrinceJS.startTime = undefined;
+    PrinceJS.endTime = undefined;
     PrinceJS.Utils.updateQuery();
   },
 

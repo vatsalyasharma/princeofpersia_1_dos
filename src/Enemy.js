@@ -148,11 +148,14 @@ PrinceJS.Enemy.prototype.enemyAdvance = function () {
   }
 
   let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
+  let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
   if (tileF.isSafeWalkable()) {
     this.advance();
   } else {
-    this.retreat();
+    if (tileR.isSafeWalkable()) {
+      this.retreat();
+    }
   }
 };
 
@@ -364,7 +367,7 @@ PrinceJS.Enemy.prototype.checkBarrier = function () {
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
   if (this.moveR() && tile.isBarrier()) {
     if (tile.intersects(this.getCharBounds())) {
-      this.bump();
+      this.bump(tile);
     }
   } else {
     let blockX = PrinceJS.Utils.convertXtoBlockX(this.charX + this.charFdx * this.charFace - 12);
@@ -372,13 +375,13 @@ PrinceJS.Enemy.prototype.checkBarrier = function () {
     if (tileNext.isBarrier()) {
       switch (tileNext.element) {
         case PrinceJS.Level.TILE_WALL:
-          this.bump();
+          this.bump(tileNext);
           break;
         case PrinceJS.Level.TILE_GATE:
         case PrinceJS.Level.TILE_TAPESTRY:
         case PrinceJS.Level.TILE_TAPESTRY_TOP:
           if (tileNext.intersects(this.getCharBounds())) {
-            this.bump();
+            this.bump(tileNext);
           }
           break;
       }
@@ -386,13 +389,13 @@ PrinceJS.Enemy.prototype.checkBarrier = function () {
   }
 };
 
-PrinceJS.Enemy.prototype.bump = function () {
+PrinceJS.Enemy.prototype.bump = function (tile) {
   if (this.moveR()) {
     this.charX -= 2;
   } else if (this.moveL()) {
     this.charX += 10;
   } else {
-    this.charX += 5 * this.charFace;
+    this.charX += 5 * (this.centerX > tile.centerX ? 1 : -1);
   }
   this.updateBlockXY();
   this.action = "bump";

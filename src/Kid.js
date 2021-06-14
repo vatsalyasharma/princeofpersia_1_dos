@@ -620,7 +620,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
       if (this.swordDrawn) {
         this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) + 2 * (this.moveL() ? 1 : -1);
       } else {
-        this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) + 10;
+        this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) + 5;
       }
       this.updateBlockXY();
       this.bump();
@@ -831,7 +831,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
   if (["climbup", "climbdown"].includes(this.action) && ![PrinceJS.Level.TILE_LOOSE_BOARD].includes(tile.element)) {
     return;
   }
-  if (["stoop"].includes(this.action)) {
+  if (["stoop", "strike"].includes(this.action)) {
     return;
   }
 
