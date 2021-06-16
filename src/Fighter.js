@@ -705,11 +705,11 @@ PrinceJS.Fighter.prototype.canCrossGate = function (tile, walk = false) {
     (tileF.element === PrinceJS.Level.TILE_GATE &&
       this.faceL() &&
       !tileF.canCross(this.height) &&
-      (!walk || this.centerX > tile.centerX)) ||
+      (!walk || this.centerX + 5 > tile.centerX)) ||
     (tile.element === PrinceJS.Level.TILE_GATE &&
       this.faceR() &&
       !tile.canCross(this.height) &&
-      (!walk || this.centerX < tile.centerX))
+      (!walk || this.centerX - 5 < tile.centerX))
   );
 };
 
@@ -753,7 +753,20 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
     return false;
   }
 
-  if (this.opponentDistance() <= 50) {
+  const hasNoBarrier = this.checkPathToOpponent(
+    this.centerX,
+    this.opponent,
+    this.charBlockX,
+    this.charBlockY,
+    this.room,
+    (charBlockX, charBlockY, room) => {
+      let tile = this.level.getTileAt(charBlockX, charBlockY, room);
+      return {
+        value: !tile.isBarrier() || this.canCrossGate(tile, true)
+      };
+    });
+
+  if (hasNoBarrier && Math.abs(this.opponentDistance()) <= 50) {
     return true;
   }
 
@@ -771,7 +784,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
       }
       let tile = this.level.getTileAt(charBlockX, charBlockY, room);
       if (
-        tile.element === PrinceJS.Level.TILE_SPACE &&
+        tile.isSpace() &&
         below &&
         charBlockY < 2 &&
         this.opponent.charBlockY === charBlockY + 1
@@ -997,11 +1010,7 @@ PrinceJS.Fighter.prototype.startFall = function () {
 
   let act = "stepfall";
   if (["retreat"].includes(this.action) || this.swordDrawn) {
-    if (this.action === "advance") {
-      this.charX += 10 * this.charFace;
-    } else if (this.action === "retreat") {
-      this.charX -= 10 * this.charFace;
-    }
+    this.charX += 10 * this.charFace * (this.action === "advance" ? 1 : -1);
     this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room);
   } else {
     this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room);

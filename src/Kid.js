@@ -588,9 +588,11 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
     return;
   }
 
+  let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
   let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
+  let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
-  if (this.action === "freefall" && tileT.isBarrier()) {
+  if (this.action === "freefall" && tile.isBarrier() && tileT.isBarrier()) {
     if (this.moveL()) {
       this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - 1;
     } else if (this.moveR()) {
@@ -600,9 +602,6 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
     this.bump();
     return;
   }
-
-  let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-  let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
   if (
     this.moveR() &&

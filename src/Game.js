@@ -340,7 +340,7 @@ PrinceJS.Game.prototype = {
             }
           }
         }
-        if (this.kid.charBlockY === 2 && this.kid.charY >= 185) {
+        if (this.currentCameraRoom === 1 && this.kid.charBlockY === 2 && this.kid.charY >= 185) {
           this.blockCamera = true;
           PrinceJS.Utils.delayed(() => {
             this.nextLevel(PrinceJS.currentLevel);
