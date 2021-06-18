@@ -89,9 +89,6 @@ PrinceJS.Game.prototype = {
     if (typeof json.prince.sword === "boolean") {
       this.kid.hasSword = json.prince.sword;
     }
-    if (json.prince.falling) {
-      this.kid.fallingBlocks = -1;
-    }
     if (turn) {
       this.kid.charX += 7;
       PrinceJS.Utils.delayed(() => {

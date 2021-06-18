@@ -506,7 +506,7 @@ PrinceJS.Kid.prototype.inGrabDistance = function (tile, distance = 30) {
 
 PrinceJS.Kid.prototype.tryGrabEdge = function () {
   this.updateBlockXY();
-  if (this.fallingBlocks > 2) {
+  if (this.fallingBlocks > 3) {
     return;
   }
   let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
@@ -1615,7 +1615,9 @@ PrinceJS.Kid.prototype.recoverLife = function () {
 };
 
 PrinceJS.Kid.prototype.addLife = function () {
-  this.maxHealth++;
+  if (this.maxHealth < 10) {
+    this.maxHealth++;
+  }
   this.health = this.maxHealth;
   this.onAddLive.dispatch();
 };

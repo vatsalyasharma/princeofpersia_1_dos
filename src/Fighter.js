@@ -204,10 +204,9 @@ PrinceJS.Fighter.prototype.updateFallingBlocks = function (charBlockY, charBlock
   }
   if (charBlockY !== charBlockYBefore) {
     this.fallingBlocks++;
-  }
-
-  if (this.charName === "kid" && this.fallingBlocks === 5) {
-    this.game.sound.play("FallingFloorLands");
+    if (this.charName === "kid" && this.fallingBlocks === 5) {
+      this.game.sound.play("FallingFloorLands");
+    }
   }
 };
 
