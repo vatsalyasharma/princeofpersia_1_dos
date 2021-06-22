@@ -64,6 +64,7 @@ PrinceJS.Enemy.prototype.updateActor = function () {
   this.checkRoomChange();
   this.updateCharPosition();
   this.updateSwordPosition();
+  this.maskAndCrop();
 };
 
 PrinceJS.Enemy.prototype.CMD_TAP = function (data) {
@@ -81,7 +82,7 @@ PrinceJS.Enemy.prototype.CMD_TAP = function (data) {
 };
 
 PrinceJS.Enemy.prototype.updateBehaviour = function () {
-  if (this.opponent == null || !this.alive) {
+  if (this.opponent === null || !this.alive) {
     return;
   }
   if (!this.opponent.alive) {
@@ -147,9 +148,14 @@ PrinceJS.Enemy.prototype.enemyAdvance = function () {
     return;
   }
 
+  let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+  if (tile.isSpace()) {
+    this.startFall();
+    return;
+  }
+
   let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
-
   if (tileF.isSafeWalkable()) {
     this.advance();
   } else {

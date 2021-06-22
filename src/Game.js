@@ -57,7 +57,7 @@ PrinceJS.Game.prototype = {
         data.skill,
         data.colors,
         data.type,
-        i
+        i + 1
       );
       if (data.visible === false) {
         enemy.setInvisible();
@@ -644,6 +644,10 @@ PrinceJS.Game.prototype = {
 
   handleFlipped: function () {
     this.ui.flipped();
+  },
+
+  handleChop: function (tile) {
+    tile.chop(tile.room === this.currentCameraRoom);
   },
 
   timeUp() {

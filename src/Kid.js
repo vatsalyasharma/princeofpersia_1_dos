@@ -3,6 +3,7 @@
 PrinceJS.Kid = function (game, level, location, direction, room) {
   PrinceJS.Fighter.call(this, game, level, location, direction, room, "kid");
 
+  this.id = 0;
   this.onLevelFinished = new Phaser.Signal();
   this.onNextLevel = new Phaser.Signal();
   this.onRecoverLive = new Phaser.Signal();
@@ -904,11 +905,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
-  if (
-    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128, 157].includes(
-      this.charFrame
-    )
-  ) {
+  if ([16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)) {
     return;
   }
   let footX = this.charX + this.charFdx * this.charFace;
@@ -951,18 +948,18 @@ PrinceJS.Kid.prototype.maskAndCrop = function () {
 
   // Mask hanging
   if (this.faceR() && this.action.substring(0, 4) === "hang") {
-    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room, this);
   } else if (this.faceR() && this.action.substring(0, 4) === "jumphanglong" && this.frameID(79)) {
-    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room, this);
   } else if (this.faceR() && this.action.substring(0, 4) === "jumpbackhang" && this.frameID(79)) {
-    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room, this);
   } else if (this.faceR() && this.action === "climbdown" && this.frameID(91)) {
-    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room, this);
   }
 
-  // Unmask falling / hangdroping
+  // Unmask falling / hangdrop
   if (this.frameID(15) || this.frameID(158) || (this.faceL() && this.action === "hang")) {
-    this.level.unMaskTile();
+    this.level.unMaskTile(this);
   }
 
   // Crop in jumpup
@@ -1134,9 +1131,9 @@ PrinceJS.Kid.prototype.flashShadowOverlay = function () {
 };
 
 PrinceJS.Kid.prototype.turn = function () {
-  if (!this.hasSword || !this.canReachOpponent()) {
+  if (!this.hasSword || !this.canReachOpponent(false, true)) {
     this.action = "turn";
-  } else if (!this.facingOpponent() && !this.nearBarrier()) {
+  } else if (!this.facingOpponent() && this.canReachOpponent(false, true) && !this.nearBarrier()) {
     this.action = "turndraw";
     this.flee = false;
     if (!this.swordDrawn) {
@@ -1225,7 +1222,7 @@ PrinceJS.Kid.prototype.land = function () {
   }
   this.alignToFloor();
   this.processCommand();
-  this.level.unMaskTile();
+  this.level.unMaskTile(this);
   PrinceJS.danger = false;
 };
 
@@ -1360,7 +1357,7 @@ PrinceJS.Kid.prototype.startFall = function () {
         this.charX -= 7 * this.charFace;
       }
       this.action = "hangfall";
-      this.level.maskTile(this.charBlockX - this.charFace, this.charBlockY, this.room);
+      this.level.maskTile(this.charBlockX - this.charFace, this.charBlockY, this.room, this);
       this.processCommand();
     }
   } else {
@@ -1383,11 +1380,11 @@ PrinceJS.Kid.prototype.startFall = function () {
       this.charX -= 7 * this.charFace;
     }
 
-    if (["retreat"].includes(this.action) || (this.swordDrawn && !["engarde"].includes(this.action))) {
+    if (["retreat"].includes(this.action) || this.swordDrawn) {
       this.charX += 10 * this.charFace * (this.action === "advance" ? 1 : -1);
-      this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room);
+      this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room, this);
     } else {
-      this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room);
+      this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room, this);
     }
     this.swordDrawn = false;
     this.action = act;
@@ -1451,7 +1448,7 @@ PrinceJS.Kid.prototype.climbup = function () {
   } else {
     this.action = "climbup";
     if (this.faceR()) {
-      this.level.unMaskTile();
+      this.level.unMaskTile(this);
     }
   }
 
@@ -1470,7 +1467,7 @@ PrinceJS.Kid.prototype.highjump = function () {
 
   this.action = "highjump";
   if (this.faceL() && tileTR.isWalkable()) {
-    this.level.maskTile(this.charBlockX + 1, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX + 1, this.charBlockY - 1, this.room, this);
   }
 };
 
@@ -1482,7 +1479,7 @@ PrinceJS.Kid.prototype.jumpbackhang = function () {
   }
   this.action = "jumpbackhang";
   if (this.faceR()) {
-    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX, this.charBlockY - 1, this.room, this);
   }
 };
 
@@ -1494,7 +1491,7 @@ PrinceJS.Kid.prototype.jumphanglong = function () {
   }
   this.action = "jumphanglong";
   if (this.faceR()) {
-    this.level.maskTile(this.charBlockX + 1, this.charBlockY - 1, this.room);
+    this.level.maskTile(this.charBlockX + 1, this.charBlockY - 1, this.room, this);
   }
 };
 

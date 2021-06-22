@@ -18,7 +18,7 @@ PrinceJS.Level = function (game, number, name, type) {
 
   this.trobs = [];
 
-  this.maskedTile = null;
+  this.maskedTiles = {};
 
   this.dummyWall = new PrinceJS.Tile.Base(this.game, PrinceJS.Level.TILE_WALL, 0, this.type);
 };
@@ -185,25 +185,25 @@ PrinceJS.Level.prototype = {
     }
   },
 
-  unMaskTile: function () {
-    if (this.maskedTile != null) {
-      this.maskedTile.toggleMask();
-      this.maskedTile = null;
+  unMaskTile: function (actor) {
+    if (this.maskedTiles[actor.id]) {
+      this.maskedTiles[actor.id].toggleMask();
+      delete this.maskedTiles[actor.id];
     }
   },
 
-  maskTile: function (x, y, room) {
+  maskTile: function (x, y, room, actor) {
     let tile = this.getTileAt(x, y, room);
 
-    if (this.maskedTile === tile) {
+    if (this.maskedTiles[actor.id] === tile) {
       return;
     }
-    if (this.maskedTile != null) {
-      this.unMaskTile();
+    if (this.maskedTiles[actor.id]) {
+      this.unMaskTile(actor);
     }
 
     if (tile.isWalkable()) {
-      this.maskedTile = tile;
+      this.maskedTiles[actor.id] = tile;
       tile.toggleMask();
     }
   },
@@ -275,7 +275,7 @@ PrinceJS.Level.prototype = {
     } while (x < 9 && tile.element !== PrinceJS.Level.TILE_CHOPPER);
 
     if (tile.element === PrinceJS.Level.TILE_CHOPPER) {
-      tile.chop();
+      this.delegate.handleChop(tile);
     }
   },
 

@@ -20,21 +20,37 @@ PrinceJS.Tile.Base = function (game, element, modifier, type) {
   this.roomY;
 
   this.frame = null;
+  this.crop = false;
   this.debris = false;
 };
 
 PrinceJS.Tile.Base.prototype = {
   toggleMask: function () {
-    if (this.frame != null) {
+    if (this.frame !== null) {
       this.front.frameName = this.frame;
+      if (this.debrisBack) {
+        this.back.addChild(this.debrisBack);
+      }
+      if (this.decoration) {
+        this.front.removeChild(this.decoration);
+      }
       this.front.crop(null);
       this.frame = null;
+      this.crop = false;
     } else {
       this.frame = this.front.frameName;
-      if (![10, 25].includes(this.element)) {
+      if (![25].includes(this.element)) {
         this.front.frameName = this.back.frameName;
+        if (this.debrisBack) {
+          this.front.addChild(this.debrisBack);
+        }
+        if ([10].includes(this.element)) {
+          this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.frame);
+          this.front.addChild(this.decoration);
+        }
       }
       this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, 33, this.front.height));
+      this.crop = true;
     }
   },
 
@@ -97,7 +113,7 @@ PrinceJS.Tile.Base.prototype = {
     );
   },
 
-  isSeeBarrier: function() {
+  isSeeBarrier: function () {
     return (
       this.element === PrinceJS.Level.TILE_WALL ||
       this.element === PrinceJS.Level.TILE_TAPESTRY ||

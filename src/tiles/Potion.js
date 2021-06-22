@@ -38,4 +38,7 @@ PrinceJS.Tile.Potion.prototype.removeObject = function () {
   this.back.frameName = this.key + "_" + this.element;
   let tileChild = this.game.make.sprite(0, 0, this.key, this.key + "_" + this.element + "_" + this.modifier);
   this.back.addChild(tileChild);
+  if (this.decoration) {
+    this.decoration.destroy();
+  }
 };

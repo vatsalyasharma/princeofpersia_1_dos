@@ -78,22 +78,11 @@ PrinceJS.Utils = {
   },
 
   flashWhiteShadowMerge: function (game) {
-    PrinceJS.Utils.flashPattern(game, PrinceJS.Level.FLASH_WHITE, [
-      50,
-      25,
-      25,
-      50,
-      25,
-      25,
-      25,
-      50,
-      25,
-      25,
-      50,
-      25,
-      25,
-      25
-    ]);
+    PrinceJS.Utils.flashPattern(
+      game,
+      PrinceJS.Level.FLASH_WHITE,
+      [50, 25, 25, 50, 25, 25, 25, 50, 25, 25, 50, 25, 25, 25]
+    );
   },
 
   flashWhiteVizierVictory: function (game) {

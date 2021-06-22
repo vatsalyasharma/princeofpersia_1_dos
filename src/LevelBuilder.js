@@ -27,6 +27,7 @@ PrinceJS.LevelBuilder.prototype = {
     this.game.world.setBounds(0, 0, PrinceJS.WORLD_WIDTH * this.width, PrinceJS.WORLD_HEIGHT * this.height);
 
     this.level = new PrinceJS.Level(this.game, json.number, json.name, this.type);
+    this.level.delegate = this.delegate;
     this.startRoomId = json.prince.room;
     this.startLocation = json.prince.location + (json.prince.bias || 0);
 

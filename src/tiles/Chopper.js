@@ -18,6 +18,7 @@ PrinceJS.Tile.Chopper = function (game, modifier, type) {
   this.onChopped = new Phaser.Signal();
 
   this.active = false;
+  this.sound = false;
 };
 
 PrinceJS.Tile.Chopper.prototype = Object.create(PrinceJS.Tile.Base.prototype);
@@ -37,15 +38,18 @@ PrinceJS.Tile.Chopper.prototype.update = function () {
 
         if (this.step === 3) {
           this.onChopped.dispatch(this.roomX, this.roomY, this.room);
-          this.game.sound.play("SlicerBladesClash");
+          if (this.sound) {
+            this.game.sound.play("SlicerBladesClash");
+          }
         }
       }
     }
   }
 };
 
-PrinceJS.Tile.Chopper.prototype.chop = function () {
+PrinceJS.Tile.Chopper.prototype.chop = function (sound) {
   this.active = true;
+  this.sound = sound;
 };
 
 PrinceJS.Tile.Chopper.prototype.showBlood = function () {

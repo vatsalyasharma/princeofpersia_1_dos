@@ -25,6 +25,15 @@ PrinceJS.Tile.Loose.frames = Phaser.Animation.generateFrameNames("_loose_", 1, 8
 PrinceJS.Tile.Loose.prototype = Object.create(PrinceJS.Tile.Base.prototype);
 PrinceJS.Tile.Loose.prototype.constructor = PrinceJS.Tile.Loose;
 
+PrinceJS.Tile.Loose.prototype.toggleMask = function () {
+  PrinceJS.Tile.Base.prototype.toggleMask.call(this);
+  if (this.crop) {
+    this.front.visible = true;
+  } else {
+    this.front.visible = false;
+  }
+};
+
 PrinceJS.Tile.Loose.prototype.update = function () {
   let value;
   switch (this.state) {
@@ -74,7 +83,7 @@ PrinceJS.Tile.Loose.prototype.shake = function (fall) {
   if (this.state === PrinceJS.Tile.Loose.STATE_INACTIVE) {
     this.state = PrinceJS.Tile.Loose.STATE_SHAKING;
     this.step = 0;
-    this.front.visible = false;
+    this.front.visible = this.crop;
   }
   this.fall = fall;
 };

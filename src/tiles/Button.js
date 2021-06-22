@@ -34,20 +34,26 @@ PrinceJS.Tile.Button.prototype.update = function () {
         this.game.sound.play("FloorButton");
       }
     }
+    if (this.frontOriginalY !== undefined) {
+      this.reset();
+    }
     return;
   }
 
   if (this.active) {
     if (this.step === this.stepMax) {
-      this.front.y = this.frontOriginalY;
-      delete this.frontOriginalY;
-
-      this.back.frameName = this.key + "_" + this.element;
+      this.reset();
       this.active = false;
-      this.offsetY = 0;
     }
     this.step++;
   }
+};
+
+PrinceJS.Tile.Button.prototype.reset = function () {
+  this.front.y = this.frontOriginalY;
+  delete this.frontOriginalY;
+  this.back.frameName = this.key + "_" + this.element;
+  this.offsetY = 0;
 };
 
 PrinceJS.Tile.Button.prototype.push = function () {

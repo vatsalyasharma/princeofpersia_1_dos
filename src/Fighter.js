@@ -219,10 +219,11 @@ PrinceJS.Fighter.prototype.updateActor = function () {
   this.checkRoomChange();
   this.updateCharPosition();
   this.updateSwordPosition();
+  this.maskAndCrop();
 };
 
 PrinceJS.Fighter.prototype.checkFight = function () {
-  if (this.opponent == null) {
+  if (this.opponent === null) {
     return;
   }
 
@@ -623,7 +624,7 @@ PrinceJS.Fighter.prototype.opponentNearRoomLeft = function (opponent, room, full
     this.canSeeRoomLeft(room) &&
     opponent &&
     opponent.room === this.level.rooms[room].links.left &&
-    (full || (opponent.charBlockX >= 8 || this.charBlockX <= 0))
+    (full || opponent.charBlockX >= 8 || this.charBlockX <= 0)
   );
 };
 
@@ -634,7 +635,7 @@ PrinceJS.Fighter.prototype.opponentNearRoomRight = function (opponent, room, ful
     this.canSeeRoomRight(room) &&
     opponent &&
     opponent.room === this.level.rooms[room].links.right &&
-    (full || (opponent.charBlockX <= 0 || this.charBlockX >= 8))
+    (full || opponent.charBlockX <= 0 || this.charBlockX >= 8)
   );
 };
 
@@ -646,7 +647,7 @@ PrinceJS.Fighter.prototype.canSeeRoomRight = function (room) {
     return !tile.isSeeBarrier() && !tileR.isSeeBarrier();
   }
   return false;
-}
+};
 
 PrinceJS.Fighter.prototype.canSeeRoomLeft = function (room) {
   let leftRoom = this.level.rooms[room] && this.level.rooms[room].links.left;
@@ -656,14 +657,14 @@ PrinceJS.Fighter.prototype.canSeeRoomLeft = function (room) {
     return !tile.isSeeBarrier() && !tileL.isSeeBarrier();
   }
   return false;
-}
+};
 
 PrinceJS.Fighter.prototype.facingOpponent = function () {
   return (this.faceL() && this.opponent.x <= this.x) || (this.faceR() && this.opponent.x >= this.x);
 };
 
 PrinceJS.Fighter.prototype.canSeeOpponent = function (below = false) {
-  if (this.opponent == null || !this.opponent.alive || !this.opponent.active) {
+  if (this.opponent === null || !this.opponent.alive || !this.opponent.active) {
     return false;
   }
 
@@ -682,7 +683,7 @@ PrinceJS.Fighter.prototype.isOpponentInSameRoom = function () {
   return this.opponentInSameRoom(this.opponent, this.room);
 };
 
-PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY, walk = false) {
+PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY, walk = false, turn = false) {
   charBlockX = charBlockX || this.charBlockX;
   charBlockY = charBlockY || this.charBlockY;
 
@@ -691,22 +692,22 @@ PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY, walk 
 
   return (
     tileF.element === PrinceJS.Level.TILE_WALL ||
-    !this.canCrossGate(tile, walk) ||
+    !this.canCrossGate(tile, walk, turn) ||
     (tile.element === PrinceJS.Level.TILE_TAPESTRY && this.faceR()) ||
     (tileF.element === PrinceJS.Level.TILE_TAPESTRY && this.faceL()) ||
     (tileF.element === PrinceJS.Level.TILE_TAPESTRY_TOP && this.faceL())
   );
 };
 
-PrinceJS.Fighter.prototype.canCrossGate = function (tile, walk = false) {
+PrinceJS.Fighter.prototype.canCrossGate = function (tile, walk = false, turn = false) {
   let tileF = this.level.getTileAt(tile.roomX + this.charFace, tile.roomY, this.room);
   return !(
     (tileF.element === PrinceJS.Level.TILE_GATE &&
-      this.faceL() &&
+      ((!turn && this.faceL()) || (turn && this.faceR())) &&
       !tileF.canCross(this.height) &&
       (!walk || this.centerX + 5 > tile.centerX)) ||
     (tile.element === PrinceJS.Level.TILE_GATE &&
-      this.faceR() &&
+      ((!turn && this.faceR()) || (turn && this.faceL())) &&
       !tile.canCross(this.height) &&
       (!walk || this.centerX - 5 < tile.centerX))
   );
@@ -718,9 +719,9 @@ PrinceJS.Fighter.prototype.standsOnTile = function (tile) {
   return floorTile === fighterTile;
 };
 
-PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, room) {
+PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, room, turn = false) {
   let tile = this.level.getTileAt(charBlockX, charBlockY, room);
-  if (!this.canCrossGate(tile, true)) {
+  if (!this.canCrossGate(tile, true, turn)) {
     return false;
   }
   if (tile.isSafeWalkable()) {
@@ -747,7 +748,7 @@ PrinceJS.Fighter.prototype.canWalkOnNextTile = function () {
   return false;
 };
 
-PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
+PrinceJS.Fighter.prototype.canReachOpponent = function (below = false, turn = false) {
   if (!this.canSeeOpponent(below)) {
     return false;
   }
@@ -760,10 +761,12 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
     this.room,
     (charBlockX, charBlockY, room) => {
       let tile = this.level.getTileAt(charBlockX, charBlockY, room);
+      let tileF = this.level.getTileAt(tile.roomX + this.charFace * (turn ? -1 : 1), tile.roomY, this.room);
       return {
-        value: !tile.isBarrier() || this.canCrossGate(tile, true)
+        value: this.canCrossGate(tile, true, turn) || (!tile.isBarrier() && !tileF.isBarrier())
       };
-    });
+    }
+  );
 
   if (hasNoBarrier && Math.abs(this.opponentDistance()) <= 50) {
     return true;
@@ -776,18 +779,13 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
     this.charBlockY,
     this.room,
     (charBlockX, charBlockY, room) => {
-      if (this.canWalkOnTile(charBlockX, charBlockY, room)) {
+      if (this.canWalkOnTile(charBlockX, charBlockY, room, turn)) {
         return {
           value: true
         };
       }
       let tile = this.level.getTileAt(charBlockX, charBlockY, room);
-      if (
-        tile.isSpace() &&
-        below &&
-        charBlockY < 2 &&
-        this.opponent.charBlockY === charBlockY + 1
-      ) {
+      if (tile.isSpace() && below && charBlockY < 2 && this.opponent.charBlockY === charBlockY + 1) {
         return {
           value: this.checkPathToOpponent(
             tile.centerX,
@@ -797,7 +795,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false) {
             room,
             (charBlockX, charBlockY, room) => {
               return {
-                value: this.canWalkOnTile(charBlockX, charBlockY, room)
+                value: this.canWalkOnTile(charBlockX, charBlockY, room, turn)
               };
             }
           ),
@@ -980,7 +978,7 @@ PrinceJS.Fighter.prototype.checkFall = function (tile) {
     if (tile.isWalkable()) {
       this.land();
     } else {
-      this.level.maskTile(this.charBlockX + 1, charBlockY, this.room);
+      this.level.maskTile(this.charBlockX + 1, charBlockY, this.room, this);
       if (tile.isBarrier()) {
         this.charX -= (tile.isBarrierLeft() ? 10 : 5) * this.charFace;
         this.updateBlockXY();
@@ -1010,9 +1008,9 @@ PrinceJS.Fighter.prototype.startFall = function () {
   let act = "stepfall";
   if (["retreat"].includes(this.action) || this.swordDrawn) {
     this.charX += 10 * this.charFace * (this.action === "advance" ? 1 : -1);
-    this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room);
+    this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room, this);
   } else {
-    this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room);
+    this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room, this);
   }
   this.swordDrawn = false;
   this.action = act;
@@ -1323,6 +1321,6 @@ PrinceJS.Fighter.prototype.alignToFloor = function () {
 
 PrinceJS.Fighter.prototype.maskAndCrop = function () {
   if (this.frameID(16) || this.frameID(21)) {
-    this.level.unMaskTile();
+    this.level.unMaskTile(this);
   }
 };
