@@ -1380,8 +1380,10 @@ PrinceJS.Kid.prototype.startFall = function () {
       this.charX -= 7 * this.charFace;
     }
 
+    let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+    let dx = tile.isWalkable() ? 10 : 5;
     if (["retreat"].includes(this.action) || this.swordDrawn) {
-      this.charX += 10 * this.charFace * (this.action === "advance" ? 1 : -1);
+      this.charX += dx * this.charFace * (this.action === "advance" ? 1 : -1);
       this.level.maskTile(this.charBlockX + this.charFace, this.charBlockY, this.room, this);
     } else {
       this.level.maskTile(this.charBlockX + 1, this.charBlockY, this.room, this);

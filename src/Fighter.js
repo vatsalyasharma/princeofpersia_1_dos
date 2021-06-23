@@ -753,7 +753,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false, turn = fa
     return false;
   }
 
-  const hasNoBarrier = this.checkPathToOpponent(
+  let hasNoBarrier = this.checkPathToOpponent(
     this.centerX,
     this.opponent,
     this.charBlockX,
