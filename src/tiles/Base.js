@@ -101,6 +101,10 @@ PrinceJS.Tile.Base.prototype = {
     );
   },
 
+  isBarrierWalk: function () {
+    return this.isBarrier() || this.isDangerousWalkable();
+  },
+
   isBarrierLeft: function () {
     return this.element === PrinceJS.Level.TILE_WALL || this.element === PrinceJS.Level.TILE_MIRROR;
   },

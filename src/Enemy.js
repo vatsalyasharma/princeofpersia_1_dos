@@ -149,7 +149,7 @@ PrinceJS.Enemy.prototype.enemyAdvance = function () {
   }
 
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-  if (tile.isSpace()) {
+  if (tile.isSpace() && !["advance", "retreat", "strike"].includes(this.action)) {
     this.startFall();
     return;
   }

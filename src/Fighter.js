@@ -701,6 +701,9 @@ PrinceJS.Fighter.prototype.nearBarrier = function (charBlockX, charBlockY, walk 
 
 PrinceJS.Fighter.prototype.canCrossGate = function (tile, walk = false, turn = false) {
   let tileF = this.level.getTileAt(tile.roomX + this.charFace, tile.roomY, this.room);
+  if (!tileF) {
+    return false;
+  }
   return !(
     (tileF.element === PrinceJS.Level.TILE_GATE &&
       ((!turn && this.faceL()) || (turn && this.faceR())) &&
@@ -724,13 +727,13 @@ PrinceJS.Fighter.prototype.canWalkOnTile = function (charBlockX, charBlockY, roo
   if (!this.canCrossGate(tile, true, turn)) {
     return false;
   }
-  if (tile.isSafeWalkable()) {
-    return true;
+  if (tile.element === PrinceJS.Level.TILE_CHOPPER) {
+    if (this.faceR()) {
+      return this.x > tile.x + 15 && this.opponent.x > tile.x + 15;
+    }
+    return false;
   }
-  if (this.standsOnTile(tile)) {
-    return true;
-  }
-  return tile.element === PrinceJS.Level.TILE_CHOPPER && this.x > tile.x + 15 && this.opponent.x > tile.x + 15;
+  return tile.isSafeWalkable() || this.standsOnTile(tile);
 };
 
 PrinceJS.Fighter.prototype.canWalkOnNextTile = function () {
@@ -763,7 +766,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false, turn = fa
       let tile = this.level.getTileAt(charBlockX, charBlockY, room);
       let tileF = this.level.getTileAt(tile.roomX + this.charFace * (turn ? -1 : 1), tile.roomY, this.room);
       return {
-        value: this.canCrossGate(tile, true, turn) || (!tile.isBarrier() && !tileF.isBarrier())
+        value: this.canCrossGate(tile, true, turn) && !(tile.isBarrierWalk() || tileF.isBarrierWalk())
       };
     }
   );

@@ -507,7 +507,7 @@ PrinceJS.Kid.prototype.inGrabDistance = function (tile, distance = 30) {
 
 PrinceJS.Kid.prototype.tryGrabEdge = function () {
   this.updateBlockXY();
-  if (this.fallingBlocks > 3) {
+  if (this.fallingBlocks > 3 && !this.inFloat) {
     return;
   }
   let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
@@ -1631,7 +1631,8 @@ PrinceJS.Kid.prototype.floatFall = function () {
   this.game.sound.play("Float");
   PrinceJS.Utils.delayed(() => {
     this.inFloat = false;
-  }, 20000);
+    this.fallingBlocks = 0;
+  }, 18000);
 };
 
 PrinceJS.Kid.prototype.damageStruck = function () {

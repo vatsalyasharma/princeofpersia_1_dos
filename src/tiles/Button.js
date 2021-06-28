@@ -11,6 +11,9 @@ PrinceJS.Tile.Button = function (game, element, modifier, type) {
   this.active = false;
   this.mute = false;
 
+  this.frontBevel = this.game.make.sprite(0, 0, this.key, this.key + "_" + element + "_fg");
+  this.front.addChild(this.frontBevel);
+
   if (element === PrinceJS.Level.TILE_STUCK_BUTTON) {
     this.debris = true;
     this.mute = true;
