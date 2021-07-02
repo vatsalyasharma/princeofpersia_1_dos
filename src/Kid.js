@@ -909,7 +909,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
   if (
-    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 106, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
+    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
   ) {
     return;
   }
