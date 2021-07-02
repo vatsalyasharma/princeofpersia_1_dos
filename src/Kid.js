@@ -520,7 +520,7 @@ PrinceJS.Kid.prototype.tryGrabEdge = function () {
   let isInDistance =
     this.distanceToEdge() <= 10 + (["stepfall"].includes(this.action) ? 3 : 0) &&
     (this.distanceToTopFloor() >= -50 ||
-      (["jumpfall", "freefall"].includes(this.action) && this.distanceToFloor() >= -3));
+      (["jumpfall", "freefall"].includes(this.action) && this.distanceToFloor() > -3));
 
   if (
     tileTF.isWalkable() &&
@@ -909,7 +909,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
   if (
-    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 103, 104, 105, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
+    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 106, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
   ) {
     return;
   }
