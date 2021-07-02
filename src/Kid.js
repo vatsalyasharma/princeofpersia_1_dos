@@ -462,6 +462,9 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
       } else if (this.frameID(142) && tile.element === PrinceJS.Level.TILE_SPACE) {
         this.startFall();
       }
+      if ((this.action === "climbup" && this.frameID(142)) || (this.action === "climbdown" && this.frameID(140))) {
+        this.level.recheckCurrentRoom();
+      }
       break;
   }
 };
@@ -905,7 +908,9 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
-  if ([16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 103, 104, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)) {
+  if (
+    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 103, 104, 105, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
+  ) {
     return;
   }
   let footX = this.charX + this.charFdx * this.charFace;
@@ -1224,6 +1229,7 @@ PrinceJS.Kid.prototype.land = function () {
   this.processCommand();
   this.level.unMaskTile(this);
   PrinceJS.danger = false;
+  this.level.recheckCurrentRoom();
 };
 
 PrinceJS.Kid.prototype.crawl = function () {

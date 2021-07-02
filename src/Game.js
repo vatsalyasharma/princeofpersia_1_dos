@@ -727,6 +727,10 @@ PrinceJS.Game.prototype = {
     }
   },
 
+  recheckCurrentRoom: function () {
+    this.checkForOpponent(this.currentCameraRoom);
+  },
+
   checkForOpponent: function (room) {
     let currentEnemy;
     // Same Room / Same BlockY

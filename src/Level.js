@@ -377,6 +377,10 @@ PrinceJS.Level.prototype = {
       }
     }
     return gates;
+  },
+
+  recheckCurrentRoom: function () {
+    this.delegate.recheckCurrentRoom();
   }
 };
 
