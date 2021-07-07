@@ -170,6 +170,11 @@ PrinceJS.Tile.Base.prototype = {
       return;
     }
 
+    if (this.element === PrinceJS.Level.TILE_SPIKES) {
+      this.element = PrinceJS.Level.TILE_FLOOR;
+      this.revalidate();
+    }
+
     if (this.element === PrinceJS.Level.TILE_TORCH) {
       this.debrisElement = PrinceJS.Level.TILE_TORCH_WITH_DEBRIS;
     } else if (this.element === PrinceJS.Level.TILE_FLOOR) {

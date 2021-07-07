@@ -233,6 +233,8 @@ PrinceJS.Fighter.prototype.checkFight = function () {
     this.action === "stand" &&
     this.isOpponentInSameRoom() &&
     !this.facingOpponent() &&
+    this.x > 0 &&
+    this.opponent.x > 0 &&
     Math.abs(this.x - this.opponent.x) >= 20
   ) {
     this.turn();
@@ -393,7 +395,7 @@ PrinceJS.Fighter.prototype.stand = function () {
 
 PrinceJS.Fighter.prototype.turn = function () {
   this.action = "turn";
-  this.charX -= this.charFace * 10;
+  this.charX -= this.charFace * 12;
   this.processCommand();
 };
 
