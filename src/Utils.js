@@ -35,6 +35,26 @@ PrinceJS.Utils = {
     });
   },
 
+  delayedCancelable: function (fn, millis) {
+    let timeout;
+    return {
+      cancel: () => {
+        clearTimeout(timeout);
+      },
+      promise: new Promise((resolve) => {
+        timeout = setTimeout(() => {
+          Promise.resolve()
+            .then(() => {
+              return fn && fn();
+            })
+            .then((result) => {
+              resolve(result);
+            });
+        }, millis);
+      })
+    };
+  },
+
   perform: function (fn, millis) {
     return new Promise((resolve) => {
       let result = fn && fn();

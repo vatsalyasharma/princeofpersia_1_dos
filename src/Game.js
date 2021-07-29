@@ -110,13 +110,13 @@ PrinceJS.Game.prototype = {
     this.visitedRooms = {};
     this.currentRoom = json.prince.room;
     this.blockCamera = false;
-    this.setupCamera(json.prince.room, json.prince.cameraRoom);
 
     this.world.sort("z");
     this.world.alpha = 1;
 
     this.ui = new PrinceJS.Interface(this.game, this);
     this.ui.setPlayerLive(this.kid);
+    this.setupCamera(json.prince.room, json.prince.cameraRoom);
 
     this.game.time.events.loop(80, this.updateWorld, this);
 
@@ -488,8 +488,8 @@ PrinceJS.Game.prototype = {
     }
   },
 
-  fireEvent: function (event, type) {
-    this.level.fireEvent(event, type);
+  fireEvent: function (event, type, stuck) {
+    this.level.fireEvent(event, type, stuck);
   },
 
   performProgram: function (program, actor) {

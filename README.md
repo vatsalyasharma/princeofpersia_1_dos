@@ -4,17 +4,17 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 
 ## Play Online
 
-- Browser: https://oklemenz.github.io/PrinceJS
+- Browser: http://princejs.com
 - Keyboard / Mouse Controls
 
 ## Play Mobile
 
-- Browser: https://oklemenz.github.io/PrinceJS
+- Browser: http://princejs.com
   - Use Landscape Mode (single Browser Tab)
-  - Force Fullscreen: https://oklemenz.github.io/PrinceJS?fullscreen=true
+  - Force Fullscreen: http://princejs.com?fullscreen=true
 - Add to Home Screen to start as Fullscreen App
 - Reduced difficulty (50%):
-  - https://oklemenz.github.io/PrinceJS?strength=50&fullscreen=true
+  - http://princejs.com?strength=50&fullscreen=true
 - Touch Controls (tap/drag area on screen):
 
   ![Mobile](assets/web/mobile.svg)
@@ -23,9 +23,14 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
     - _Run Jump_: Tap Left / Right -> Hold -> Drag in Left / Right corner
     - _Jump Grab_: (Run) Jump -> Hold -> Drag to Center (Shift)
 
+## Play GitHub Version
+
+- Browser: https://oklemenz.github.io/PrinceJS
+
 ## Play Locally
 
 - Install [Node.js](https://nodejs.org)
+- Clone: `https://github.com/oklemenz/PrinceJS.git`
 - Terminal:
   - `npm install`
   - `npm start`
@@ -45,11 +50,11 @@ Url parameters are leveraged to save game state automatically (shortcut in brack
 
 Default url looks as follows:
 
-https://oklemenz.github.io/PrinceJS?level=1&health=3&time=60&strength=100&width=0&fullscreen=false
+http://princejs.com?level=1&health=3&time=60&strength=100&width=0&fullscreen=false
 
 Default shortcut url looks as follows:
 
-https://oklemenz.github.io/PrinceJS?l=1&h=3&t=60&s=100&w=0&f=false&_=true
+http://princejs.com?l=1&h=3&t=60&s=100&w=0&f=false&_=true
 
 Manual adjustments of url parameters is possible as preset options.
 
@@ -81,14 +86,14 @@ Custom levels can be played performing the following steps.
 
 Converted levels from https://www.popot.org/custom_levels.php:
 
-- [100](https://oklemenz.github.io/PrinceJS?level=100): Tower of Revenge (own)
-- [101-114](https://oklemenz.github.io/PrinceJS?level=101): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
-- [115-128](https://oklemenz.github.io/PrinceJS?level=115): [Jaffar's House](https://www.popot.org/custom_levels.php?mod=0000220)
-- [129-142](https://oklemenz.github.io/PrinceJS?level=129): [Ipank's Levels](https://www.popot.org/custom_levels.php?mod=0000151)
-- [143-156](https://oklemenz.github.io/PrinceJS?level=143): [Barre's Alternative](https://www.popot.org/custom_levels.php?mod=0000189)
-- [157-170](https://oklemenz.github.io/PrinceJS?level=157): [Miracles Don't Exist](https://www.popot.org/custom_levels.php?mod=0000098)
-- [171-184](https://oklemenz.github.io/PrinceJS?level=171): [Babylon Tower Climb](https://www.popot.org/custom_levels.php?mod=0000109)
-- [185-198](https://oklemenz.github.io/PrinceJS?level=185): [Lost in Errors](https://www.popot.org/custom_levels.php?mod=0000144)
-- [199-212](https://oklemenz.github.io/PrinceJS?level=199): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
-- [213-226](https://oklemenz.github.io/PrinceJS?level=213): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
-- [227-240](https://oklemenz.github.io/PrinceJS?level=227): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)
+- [100](http://princejs.com?level=100): Tower of Revenge (own)
+- [101-114](http://princejs.com?level=101): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
+- [115-128](http://princejs.com?level=115): [Jaffar's House](https://www.popot.org/custom_levels.php?mod=0000220)
+- [129-142](http://princejs.com?level=129): [Ipank's Levels](https://www.popot.org/custom_levels.php?mod=0000151)
+- [143-156](http://princejs.com?level=143): [Barre's Alternative](https://www.popot.org/custom_levels.php?mod=0000189)
+- [157-170](http://princejs.com?level=157): [Miracles Don't Exist](https://www.popot.org/custom_levels.php?mod=0000098)
+- [171-184](http://princejs.com?level=171): [Babylon Tower Climb](https://www.popot.org/custom_levels.php?mod=0000109)
+- [185-198](http://princejs.com?level=185): [Lost in Errors](https://www.popot.org/custom_levels.php?mod=0000144)
+- [199-212](http://princejs.com?level=199): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
+- [213-226](http://princejs.com?level=213): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
+- [227-240](http://princejs.com?level=227): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)

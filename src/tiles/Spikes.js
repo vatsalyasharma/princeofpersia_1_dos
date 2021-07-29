@@ -47,8 +47,7 @@ PrinceJS.Tile.Spikes.prototype.update = function () {
     case PrinceJS.Tile.Spikes.STATE_FULL_OUT:
       this.step++;
       if (this.step > 15) {
-        this.state = PrinceJS.Tile.Spikes.STATE_DROPPING;
-        this.step = 5;
+        this.drop();
       }
       break;
 
@@ -75,4 +74,9 @@ PrinceJS.Tile.Spikes.prototype.raise = function () {
       this.step = 0;
     }
   }
+};
+
+PrinceJS.Tile.Spikes.prototype.drop = function () {
+  this.state = PrinceJS.Tile.Spikes.STATE_DROPPING;
+  this.step = 5;
 };

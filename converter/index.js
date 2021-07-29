@@ -144,6 +144,8 @@ function mergeProperties(data, existingData, properties) {
 }
 
 function determineSpec(data, file, offset) {
+  const number = parseInt(data.level.number, 10);
+  const id = offset + number;
   const matrix = newArray(SIZE * SIZE);
   const rooms = newArray(SIZE);
   if (data.level.rooms.length === 0) {
@@ -151,7 +153,8 @@ function determineSpec(data, file, offset) {
     console.log("No rooms found");
     process.exit(-1);
   }
-  let start = convert2Pos(SIZE / 2, SIZE / 2);
+  let posStart = convert2Pos(SIZE / 2, SIZE / 2);
+  let start = posStart;
   let room = data.level.rooms.room.find((room) => {
     return room.number === data.level.prince.room;
   });
@@ -179,7 +182,14 @@ function determineSpec(data, file, offset) {
     } else {
       pos = rooms[number];
     }
-    matrix[pos] = parseInt(number, 10);
+    const num = parseInt(number, 10);
+    if (matrix[pos] !== undefined && matrix[pos] !== num) {
+      // eslint-disable-next-line no-console
+      console.log("Level with broken rooms cannot be played correctly. Level: " + id + ", Room: " + number);
+    }
+    if (matrix[pos] === undefined || pos !== posStart) {
+      matrix[pos] = num;
+    }
     if (room.links) {
       if (room.links.left && room.links.left !== "0") {
         if (rooms[room.links.left] === undefined) {
@@ -225,8 +235,6 @@ function determineSpec(data, file, offset) {
     width: bounds.x2 - bounds.x1 + 1,
     height: bounds.y2 - bounds.y1 + 1
   };
-  const number = parseInt(data.level.number, 10);
-  const id = offset + number;
   const name = `level${id}`;
   const layoutMatrix = newArray2D(size, -1);
   for (let y = bounds.y1; y <= bounds.y2; y++) {

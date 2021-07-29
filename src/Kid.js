@@ -476,8 +476,7 @@ PrinceJS.Kid.prototype.tryEngarde = function () {
   this.dodgeChoppers();
 
   if (this.opponent && this.opponent.alive && this.opponentDistance() <= 100) {
-    this.engarde();
-    return true;
+    return this.engarde();
   }
   return false;
 };
@@ -528,7 +527,8 @@ PrinceJS.Kid.prototype.tryGrabEdge = function () {
       tileT.element
     ) &&
     isInDistance &&
-    this.inGrabDistance(tileTF)
+    this.inGrabDistance(tileTF) &&
+    ![PrinceJS.Level.TILE_TAPESTRY].includes(tileTF.element)
   ) {
     return this.grab(this.charBlockX);
   } else {
@@ -538,7 +538,8 @@ PrinceJS.Kid.prototype.tryGrabEdge = function () {
         tileTR.element
       ) &&
       isInDistance &&
-      this.inGrabDistance(tileT, 20)
+      this.inGrabDistance(tileT, 20) &&
+      ![PrinceJS.Level.TILE_TAPESTRY].includes(tileT.element)
     ) {
       return this.grab(this.charBlockX - this.charFace);
     }
@@ -580,7 +581,8 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
       "climbdown",
       "climbfail",
       "stand",
-      "turn"
+      "turn",
+      "fastsheathe"
     ].includes(this.action)
   ) {
     return;
@@ -621,7 +623,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
         this.charBlockX -= this.charFace;
       }
       if (this.swordDrawn) {
-        this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) + 2 * (this.moveL() ? 1 : -1);
+        this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) - 2;
       } else {
         this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) + 5;
       }
@@ -659,7 +661,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
               this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX) + 3;
               this.updateBlockXY();
             } else {
-              if (this.centerX - 6 > tileNext.centerX) {
+              if (this.centerX - 8 > tileNext.centerX) {
                 this.charX = PrinceJS.Utils.convertBlockXtoX(blockX + 1) - 1;
                 this.updateBlockXY();
                 this.bump();
@@ -712,7 +714,7 @@ PrinceJS.Kid.prototype.bump = function () {
           if (this.moveR()) {
             this.charX -= 2;
           } else if (this.moveL()) {
-            this.charX += 10;
+            this.charX += 6;
           } else {
             this.charX += 5 * this.charFace;
           }
@@ -881,8 +883,8 @@ PrinceJS.Kid.prototype.checkFloor = function () {
           case PrinceJS.Level.TILE_SPIKES:
             tile.raise();
             if (
-              (this.inSpikeDistance(tile) &&
-                ["running", "runjump", "runturn", "softland", "medland"].includes(this.action)) ||
+              (this.inSpikeDistance(tile) && ["running", "runjump", "runturn", "softland"].includes(this.action)) ||
+              (this.action === "medland" && this.frameID(108, 109)) ||
               (this.action === "standjump" && this.frameID(26, 28))
             ) {
               this.game.sound.play("SpikedBySpikes"); // HardLandingSplat
@@ -908,9 +910,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
-  if (
-    [16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
-  ) {
+  if ([16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)) {
     return;
   }
   let footX = this.charX + this.charFdx * this.charFace;
@@ -1633,12 +1633,18 @@ PrinceJS.Kid.prototype.flipScreen = function () {
 };
 
 PrinceJS.Kid.prototype.floatFall = function () {
+  if (this.inFloatTimeoutCancel !== null) {
+    this.inFloatTimeoutCancel();
+    this.inFloatTimeoutCancel = null;
+  }
   this.inFloat = true;
   this.game.sound.play("Float");
-  PrinceJS.Utils.delayed(() => {
+  const handle = PrinceJS.Utils.delayedCancelable(() => {
     this.inFloat = false;
+    this.inFloatTimeoutCancel = null;
     this.fallingBlocks = 0;
   }, 18000);
+  this.inFloatTimeoutCancel = handle.cancel;
 };
 
 PrinceJS.Kid.prototype.damageStruck = function () {

@@ -260,11 +260,15 @@
       ]
     },
     {
-      "id": 5,
+      "id": 4,
       "tile": [
         {
-          "element": 20,
-          "modifier": 1
+          "element": 0,
+          "modifier": 0
+        },
+        {
+          "element": 0,
+          "modifier": 3
         },
         {
           "element": 0,
@@ -284,7 +288,7 @@
         },
         {
           "element": 0,
-          "modifier": 0
+          "modifier": 3
         },
         {
           "element": 0,
@@ -293,53 +297,49 @@
         {
           "element": 0,
           "modifier": 0
-        },
-        {
-          "element": 0,
-          "modifier": 0
-        },
-        {
-          "element": 12,
-          "modifier": 2
         },
         {
           "element": 20,
           "modifier": 0
         },
         {
-          "element": 1,
-          "modifier": 2
+          "element": 19,
+          "modifier": 0
         },
         {
           "element": 1,
           "modifier": 2
         },
         {
-          "element": 1,
-          "modifier": 2
+          "element": 19,
+          "modifier": 0
+        },
+        {
+          "element": 16,
+          "modifier": 0
+        },
+        {
+          "element": 17,
+          "modifier": 0
+        },
+        {
+          "element": 19,
+          "modifier": 0
         },
         {
           "element": 1,
           "modifier": 2
         },
         {
-          "element": 1,
-          "modifier": 2
+          "element": 19,
+          "modifier": 0
         },
         {
           "element": 1,
-          "modifier": 2
+          "modifier": 0
         },
         {
-          "element": 1,
-          "modifier": 2
-        },
-        {
-          "element": 1,
-          "modifier": 2
-        },
-        {
-          "element": 1,
+          "element": 20,
           "modifier": 0
         },
         {

@@ -57,6 +57,8 @@ PrinceJS.Tile.Button.prototype.reset = function () {
   delete this.frontOriginalY;
   this.back.frameName = this.key + "_" + this.element;
   this.offsetY = 0;
+  this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height));
+  this.frontBevel.crop(null);
 };
 
 PrinceJS.Tile.Button.prototype.push = function () {
@@ -65,7 +67,8 @@ PrinceJS.Tile.Button.prototype.push = function () {
     this.offsetY = 1;
     this.frontOriginalY = this.front.y;
     this.front.y += this.offsetY;
-
+    this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height - 1));
+    this.frontBevel.crop(new Phaser.Rectangle(0, 0, 33, this.frontBevel.height - 1));
     this.back.frameName += "_down";
     this.trigger();
     if (!this.mute) {
@@ -76,5 +79,5 @@ PrinceJS.Tile.Button.prototype.push = function () {
 };
 
 PrinceJS.Tile.Button.prototype.trigger = function () {
-  this.onPushed.dispatch(this.modifier, this.element);
+  this.onPushed.dispatch(this.modifier, this.element, this.debris);
 };

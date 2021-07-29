@@ -26,6 +26,7 @@ PrinceJS.Fighter = function (game, level, location, direction, room, key, animKe
   this.inJumpUp = false;
   this.inFallDown = false;
   this.inFloat = false;
+  this.inFloatTimeoutCancel = null;
   this.fallingBlocks = 0;
 
   this.swordFrame = 0;
@@ -285,8 +286,8 @@ PrinceJS.Fighter.prototype.checkFight = function () {
       if (!this.opponent.frameID(150) && !this.opponent.frameID(0)) {
         if (this.frameID(154) || this.frameID(4)) {
           let minHurtDistance = this.opponent.swordDrawn ? 12 : 8;
-
-          if ((distance >= minHurtDistance || distance <= 0) && distance < 29) {
+          let maxHurtDistance = 29 + (this.opponent.baseCharName === "fatguard" ? 2 : 0);
+          if ((distance >= minHurtDistance || distance <= 0) && distance < maxHurtDistance) {
             this.opponent.stabbed();
           }
         }
@@ -401,8 +402,13 @@ PrinceJS.Fighter.prototype.turn = function () {
 
 PrinceJS.Fighter.prototype.engarde = function () {
   if (!this.hasSword) {
-    return;
+    return false;
   }
+
+  if (this.nearBarrier()) {
+    return false;
+  }
+
   this.action = "engarde";
   this.swordDrawn = true;
   this.flee = false;
@@ -415,6 +421,7 @@ PrinceJS.Fighter.prototype.engarde = function () {
   if (this.onInitLife) {
     this.onInitLife.dispatch(this);
   }
+  return true;
 };
 
 PrinceJS.Fighter.prototype.turnengarde = function () {
@@ -468,7 +475,7 @@ PrinceJS.Fighter.prototype.advance = function () {
 };
 
 PrinceJS.Fighter.prototype.strike = function () {
-  if (!this.opponentOnSameLevel()) {
+  if (!this.opponentOnSameLevel() && this.charName !== "kid") {
     return;
   }
 
@@ -671,6 +678,10 @@ PrinceJS.Fighter.prototype.canSeeOpponent = function (below = false) {
   }
 
   if (!(this.opponent.charBlockY === this.charBlockY || (below && this.opponent.charBlockY === this.charBlockY + 1))) {
+    return false;
+  }
+
+  if (!(this.x > 0 && this.opponent.x > 0)) {
     return false;
   }
 
@@ -1264,28 +1275,28 @@ PrinceJS.Fighter.prototype.proceedOnDead = function () {
 };
 
 PrinceJS.Fighter.prototype.moveR = function (extended = true) {
-  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
+  if (["stoop", "bump", "stand", "turn", "turnengarde", "strike"].includes(this.action)) {
     return false;
   }
   if (extended && ["engarde"].includes(this.action)) {
     return false;
   }
   return (
-    (this.faceL() && ["retreat", "stabbed", "strike"].includes(this.action)) ||
-    (this.faceR() && !["retreat", "stabbed", "strike"].includes(this.action))
+    (this.faceL() && ["retreat", "stabbed"].includes(this.action)) ||
+    (this.faceR() && !["retreat", "stabbed"].includes(this.action))
   );
 };
 
 PrinceJS.Fighter.prototype.moveL = function (extended = true) {
-  if (["stoop", "bump", "stand", "turn", "turnengarde"].includes(this.action)) {
+  if (["stoop", "bump", "stand", "turn", "turnengarde", "strike"].includes(this.action)) {
     return false;
   }
   if (extended && ["engarde"].includes(this.action)) {
     return false;
   }
   return (
-    (this.faceR() && ["retreat", "stabbed", "strike"].includes(this.action)) ||
-    (this.faceL() && !["retreat", "stabbed", "strike"].includes(this.action))
+    (this.faceR() && ["retreat", "stabbed"].includes(this.action)) ||
+    (this.faceL() && !["retreat", "stabbed"].includes(this.action))
   );
 };
 

@@ -19,6 +19,7 @@ PrinceJS.Tile.Gate = function (game, modifier, type) {
 
   this.state = modifier;
   this.step = 0;
+  this.closedFast = false;
 
   this.setCanMute(true);
 };
@@ -133,7 +134,10 @@ PrinceJS.Tile.Gate.prototype.update = function () {
   }
 };
 
-PrinceJS.Tile.Gate.prototype.raise = function () {
+PrinceJS.Tile.Gate.prototype.raise = function (stuck) {
+  if (this.closedFast && stuck) {
+    return;
+  }
   this.step = 0;
   if (
     this.state !== PrinceJS.Tile.Gate.STATE_WAITING &&
@@ -141,12 +145,14 @@ PrinceJS.Tile.Gate.prototype.raise = function () {
     this.state !== PrinceJS.Tile.Gate.STATE_RAISING
   ) {
     this.state = PrinceJS.Tile.Gate.STATE_RAISING;
+    this.closedFast = false;
   }
 };
 
 PrinceJS.Tile.Gate.prototype.drop = function () {
   if (this.state !== PrinceJS.Tile.Gate.STATE_FAST_DROPPING) {
     this.state = PrinceJS.Tile.Gate.STATE_FAST_DROPPING;
+    this.closedFast = true;
   }
 };
 

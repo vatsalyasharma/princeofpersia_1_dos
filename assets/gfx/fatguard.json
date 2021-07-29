@@ -136,6 +136,22 @@
       "sourceSize": { "w": 22, "h": 38 },
       "pivot": { "x": 0.5, "y": 0.5 }
     },
+    "fatguard-27": {
+      "frame": { "x": 763, "y": 2, "w": 33, "h": 14 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 33, "h": 14 },
+      "sourceSize": { "w": 33, "h": 14 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "fatguard-28": {
+      "frame": { "x": 763, "y": 2, "w": 33, "h": 14 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 33, "h": 14 },
+      "sourceSize": { "w": 33, "h": 14 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
     "fatguard-29": {
       "frame": { "x": 601, "y": 2, "w": 15, "h": 40 },
       "rotated": false,

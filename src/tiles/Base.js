@@ -28,9 +28,6 @@ PrinceJS.Tile.Base.prototype = {
   toggleMask: function () {
     if (this.frame !== null) {
       this.front.frameName = this.frame;
-      if (this.debrisBack) {
-        this.back.addChild(this.debrisBack);
-      }
       if (this.decoration) {
         this.front.removeChild(this.decoration);
       }
@@ -40,9 +37,10 @@ PrinceJS.Tile.Base.prototype = {
     } else {
       this.frame = this.front.frameName;
       if (![25].includes(this.element)) {
-        this.front.frameName = this.back.frameName;
-        if (this.debrisBack) {
-          this.front.addChild(this.debrisBack);
+        if (this.debris) {
+          this.front.frameName = this.debrisBack.frameName;
+        } else {
+          this.front.frameName = this.back.frameName;
         }
         if ([10].includes(this.element)) {
           this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.frame);
@@ -171,6 +169,7 @@ PrinceJS.Tile.Base.prototype = {
     }
 
     if (this.element === PrinceJS.Level.TILE_SPIKES) {
+      this.drop();
       this.element = PrinceJS.Level.TILE_FLOOR;
       this.revalidate();
     }

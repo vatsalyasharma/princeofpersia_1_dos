@@ -237,7 +237,7 @@ PrinceJS.Level.prototype = {
     }
   },
 
-  fireEvent: function (event, type) {
+  fireEvent: function (event, type, stuck) {
     if (!this.events[event]) {
       return;
     }
@@ -253,13 +253,13 @@ PrinceJS.Level.prototype = {
 
     if (type === PrinceJS.Level.TILE_RAISE_BUTTON) {
       if (tile.raise) {
-        tile.raise();
+        tile.raise(stuck);
         if ([PrinceJS.Level.TILE_EXIT_LEFT, PrinceJS.Level.TILE_EXIT_RIGHT].includes(tile.element)) {
           this.exitDoorOpen = true;
         }
       }
     } else if (tile.drop) {
-      tile.drop();
+      tile.drop(stuck);
     }
 
     if (this.events[event].next) {
