@@ -25,14 +25,14 @@ PrinceJS.Tile.Button.prototype.constructor = PrinceJS.Tile.Button;
 
 PrinceJS.Tile.Button.prototype.update = function () {
   if (this.active && this.element === PrinceJS.Level.TILE_RAISE_BUTTON && this.step === 0) {
-    this.trigger();
+    this.trigger(true);
   }
 
   if (this.debris) {
     if (!this.active) {
       this.active = true;
       this.step = 0;
-      this.trigger();
+      this.trigger(false);
       if (!this.mute) {
         this.game.sound.play("FloorButton");
       }
@@ -70,7 +70,7 @@ PrinceJS.Tile.Button.prototype.push = function () {
     this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height - 1));
     this.frontBevel.crop(new Phaser.Rectangle(0, 0, 33, this.frontBevel.height - 1));
     this.back.frameName += "_down";
-    this.trigger();
+    this.trigger(false);
     if (!this.mute) {
       this.game.sound.play("FloorButton");
     }
@@ -78,6 +78,6 @@ PrinceJS.Tile.Button.prototype.push = function () {
   this.step = 0;
 };
 
-PrinceJS.Tile.Button.prototype.trigger = function () {
-  this.onPushed.dispatch(this.modifier, this.element, this.debris);
+PrinceJS.Tile.Button.prototype.trigger = function (stuck) {
+  this.onPushed.dispatch(this.modifier, this.element, stuck);
 };

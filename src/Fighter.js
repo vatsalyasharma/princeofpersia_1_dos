@@ -1328,7 +1328,7 @@ PrinceJS.Fighter.prototype.alignToTile = function (tile) {
 
 PrinceJS.Fighter.prototype.alignToFloor = function () {
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-  if (tile.roomY) {
+  if (tile.roomY >= 0) {
     this.charY = PrinceJS.Utils.convertBlockYtoY(tile.roomY);
   }
   this.inJumpUp = false;
@@ -1336,7 +1336,7 @@ PrinceJS.Fighter.prototype.alignToFloor = function () {
 };
 
 PrinceJS.Fighter.prototype.maskAndCrop = function () {
-  if (this.frameID(16) || this.frameID(21)) {
+  if (this.frameID(16) || this.frameID(21) || this.frameID(35)) {
     this.level.unMaskTile(this);
   }
 };

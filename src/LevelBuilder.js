@@ -265,6 +265,12 @@ PrinceJS.LevelBuilder.prototype = {
 
       default:
         tile = new PrinceJS.Tile.Base(this.game, t.element, t.modifier, this.type);
+        if (t.element === PrinceJS.Level.TILE_BOTTOM_BIG_PILLAR) {
+          if (this.getTileAt(x, y - 1, id) !== PrinceJS.Level.TILE_TOP_BIG_PILLAR) {
+            tile.front.frameName += "_low";
+            tile.back.frameName += "_low";
+          }
+        }
         break;
     }
 

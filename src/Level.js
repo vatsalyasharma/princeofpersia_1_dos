@@ -187,7 +187,7 @@ PrinceJS.Level.prototype = {
 
   unMaskTile: function (actor) {
     if (this.maskedTiles[actor.id]) {
-      this.maskedTiles[actor.id].toggleMask();
+      this.maskedTiles[actor.id].toggleMask(actor);
       delete this.maskedTiles[actor.id];
     }
   },
@@ -204,7 +204,7 @@ PrinceJS.Level.prototype = {
 
     if (tile.isWalkable()) {
       this.maskedTiles[actor.id] = tile;
-      tile.toggleMask();
+      tile.toggleMask(actor);
     }
   },
 

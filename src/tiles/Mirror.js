@@ -20,7 +20,7 @@ PrinceJS.Tile.Mirror = function (game, modifier, type) {
     this.reflectionGroup.visible = false;
     this.back.addChild(this.reflectionGroup);
 
-    this.reflectionCover = this.game.make.sprite(-105, -5, this.key, this.key + "_" + this.element + "_mirror_cover");
+    this.reflectionCover = this.game.make.sprite(-103, -5, this.key, this.key + "_" + this.element + "_mirror_cover");
     this.reflectionCover.visible = false;
     this.back.addChild(this.reflectionCover);
   }
@@ -44,7 +44,7 @@ PrinceJS.Tile.Mirror.prototype.addObject = function () {
 
 PrinceJS.Tile.Mirror.prototype.toggleMask = function () {
   if (this.element === PrinceJS.Level.TILE_FLOOR) {
-    PrinceJS.Tile.Base.prototype.toggleMask.call(this);
+    PrinceJS.Tile.Base.prototype.toggleMask.call(this, ...arguments);
   }
 };
 

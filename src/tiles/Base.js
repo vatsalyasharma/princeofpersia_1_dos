@@ -25,7 +25,7 @@ PrinceJS.Tile.Base = function (game, element, modifier, type) {
 };
 
 PrinceJS.Tile.Base.prototype = {
-  toggleMask: function () {
+  toggleMask: function (actor) {
     if (this.frame !== null) {
       this.front.frameName = this.frame;
       if (this.decoration) {
@@ -47,9 +47,16 @@ PrinceJS.Tile.Base.prototype = {
           this.front.addChild(this.decoration);
         }
       }
-      this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, 33, this.front.height));
+      this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, this.maskWidth(actor), this.front.height));
       this.crop = true;
     }
+  },
+
+  maskWidth: function() {
+    if (this.element === PrinceJS.Level.TILE_EXIT_LEFT) {
+      return 31;
+    }
+    return 33;
   },
 
   isWalkable: function () {

@@ -26,12 +26,8 @@ PrinceJS.Tile.Loose.prototype = Object.create(PrinceJS.Tile.Base.prototype);
 PrinceJS.Tile.Loose.prototype.constructor = PrinceJS.Tile.Loose;
 
 PrinceJS.Tile.Loose.prototype.toggleMask = function () {
-  PrinceJS.Tile.Base.prototype.toggleMask.call(this);
-  if (this.crop) {
-    this.front.visible = true;
-  } else {
-    this.front.visible = false;
-  }
+  PrinceJS.Tile.Base.prototype.toggleMask.call(this, ...arguments);
+  this.front.visible = this.crop;
 };
 
 PrinceJS.Tile.Loose.prototype.update = function () {

@@ -60,10 +60,7 @@ PrinceJS.Kid.prototype.CMD_DOWN = function (data) {
     this.charY -= 189;
     this.baseY += 189;
     this.charBlockY = 0;
-    if (this.level.rooms[this.room]) {
-      this.room = this.level.rooms[this.room].links.down;
-      this.onChangeRoom.dispatch(this.room);
-    }
+    this.changeRoomDown();
   }
 };
 
@@ -582,7 +579,8 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
       "climbfail",
       "stand",
       "turn",
-      "fastsheathe"
+      "fastsheathe",
+      "freefall",
     ].includes(this.action)
   ) {
     return;
@@ -595,9 +593,10 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
   }
 
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-  let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
+  /*
+  let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
   if (this.action === "freefall" && tile.isBarrier() && tileT.isBarrier()) {
     if (this.moveL()) {
       this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - 1;
@@ -608,6 +607,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
     this.bump();
     return;
   }
+  */
 
   if (
     this.moveR() &&
@@ -938,10 +938,31 @@ PrinceJS.Kid.prototype.checkRoomChange = function () {
   if (this.charY > 189) {
     this.charY -= 189;
     this.baseY += 189;
-    if (this.level.rooms[this.room]) {
-      this.room = this.level.rooms[this.room].links.down;
-      this.onChangeRoom.dispatch(this.room);
+    this.changeRoomDown();
+  }
+};
+
+PrinceJS.Kid.prototype.changeRoomDown = function () {
+  if (this.level.rooms[this.room]) {
+    let room = this.level.rooms[this.room].links.down;
+    if (room > 0) {
+      this.room = room;
+    } else if (this.charBlockX >= 9) {
+      room = this.level.rooms[this.room].links.right;
+      room = this.level.rooms[room].links.down;
+      this.charX -= 140;
+      this.baseX += 320;
+      this.charBlockX = 0;
+      this.room = room;
+    } else if (this.charBlockX <= 0) {
+      room = this.level.rooms[this.room].links.left;
+      room = this.level.rooms[room].links.down;
+      this.charX += 140;
+      this.baseX -= 320;
+      this.charBlockX = 9;
+      this.room = room;
     }
+    this.onChangeRoom.dispatch(this.room);
   }
 };
 
@@ -963,7 +984,7 @@ PrinceJS.Kid.prototype.maskAndCrop = function () {
   }
 
   // Unmask falling / hangdrop
-  if (this.frameID(15) || this.frameID(158) || (this.faceL() && this.action === "hang")) {
+  if (this.frameID(15) || this.frameID(158) || this.frameID(185) || (this.faceL() && this.action === "hang")) {
     this.level.unMaskTile(this);
   }
 

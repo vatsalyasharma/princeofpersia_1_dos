@@ -1200,6 +1200,22 @@
       "sourceSize": { "w": 64, "h": 79 },
       "pivot": { "x": 0.5, "y": 0.5 }
     },
+    "palace_8_low": {
+      "frame": { "x": 442, "y": 699, "w": 64, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 79 },
+      "sourceSize": { "w": 64, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "palace_8_fg_low": {
+      "frame": { "x": 508, "y": 699, "w": 64, "h": 79 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 79 },
+      "sourceSize": { "w": 64, "h": 79 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
     "palace_9": {
       "frame": { "x": 68, "y": 537, "w": 64, "h": 79 },
       "rotated": false,
@@ -1425,7 +1441,7 @@
       "pivot": { "x": 0.5, "y": 0.5 }
     },
     "palace_1_mirror": {
-      "frame": { "x": 2, "y": 696, "w": 60, "h": 79 },
+      "frame": { "x": 2, "y": 699, "w": 60, "h": 79 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
@@ -1433,7 +1449,7 @@
       "pivot": { "x": 0.5, "y": 0.5 }
     },
     "palace_1_fg_mirror": {
-      "frame": { "x": 64, "y": 696, "w": 60, "h": 79 },
+      "frame": { "x": 64, "y": 699, "w": 60, "h": 79 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 60, "h": 79 },
@@ -1441,7 +1457,7 @@
       "pivot": { "x": 0.5, "y": 0.5 }
     },
     "palace_1_mirror_cover": {
-      "frame": { "x": 126, "y": 696, "w": 113, "h": 79 },
+      "frame": { "x": 126, "y": 699, "w": 113, "h": 79 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 113, "h": 79 },
@@ -1449,7 +1465,7 @@
       "pivot": { "x": 0.5, "y": 0.5 }
     },
     "palace_30": {
-      "frame": { "x": 304, "y": 697, "w": 64, "h": 79 },
+      "frame": { "x": 304, "y": 699, "w": 64, "h": 79 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 79 },
@@ -1465,7 +1481,7 @@
       "pivot": { "x": 0.5, "y": 0.5 }
     },
     "palace_31": {
-      "frame": { "x": 370, "y": 697, "w": 64, "h": 79 },
+      "frame": { "x": 370, "y": 699, "w": 64, "h": 79 },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 79 },

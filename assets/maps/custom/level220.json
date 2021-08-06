@@ -2451,7 +2451,8 @@
       "skill": 1,
       "colors": 4,
       "type": "guard",
-      "direction": 1
+      "direction": 1,
+      "bias": 2
     },
     {
       "room": 7,
@@ -2459,7 +2460,8 @@
       "skill": 11,
       "colors": 2,
       "type": "guard",
-      "direction": 1
+      "direction": 1,
+      "bias": 1
     },
     {
       "room": 13,
