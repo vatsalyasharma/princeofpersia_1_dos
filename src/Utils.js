@@ -68,6 +68,7 @@ PrinceJS.Utils = {
     for (let i = 0; i < count * 2; i++) {
       PrinceJS.Utils.delayed(() => {
         game.stage.backgroundColor = i % 2 === 0 ? color : 0x000000;
+        PrinceJS.InterfaceCurrent.flash(game.stage.backgroundColor);
       }, time * i);
     }
   },

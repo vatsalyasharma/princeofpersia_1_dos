@@ -32,7 +32,7 @@ PrinceJS.Tile.Spikes.STATE_DROPPING = 3;
 PrinceJS.Tile.Spikes.prototype = Object.create(PrinceJS.Tile.Base.prototype);
 PrinceJS.Tile.Spikes.prototype.constructor = PrinceJS.Tile.Spikes;
 
-PrinceJS.Tile.Spikes.prototype.maskWidth = function(actor) {
+PrinceJS.Tile.Spikes.prototype.maskWidth = function (actor) {
   return actor.action === "climbdown" ? 21 : 22;
 };
 

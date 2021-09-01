@@ -57,7 +57,7 @@ PrinceJS.Tile.Button.prototype.reset = function () {
   delete this.frontOriginalY;
   this.back.frameName = this.key + "_" + this.element;
   this.offsetY = 0;
-  this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height));
+  this.front.crop(new Phaser.Rectangle(0, this.front.cropRect.y || 0, 33, this.front.height));
   this.frontBevel.crop(null);
 };
 

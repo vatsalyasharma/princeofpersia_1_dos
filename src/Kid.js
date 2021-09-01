@@ -472,6 +472,7 @@ PrinceJS.Kid.prototype.tryEngarde = function () {
   }
   this.dodgeChoppers();
 
+  this.level.recheckCurrentRoom();
   if (this.opponent && this.opponent.alive && this.opponentDistance() <= 100) {
     return this.engarde();
   }
@@ -525,7 +526,7 @@ PrinceJS.Kid.prototype.tryGrabEdge = function () {
     ) &&
     isInDistance &&
     this.inGrabDistance(tileTF) &&
-    ![PrinceJS.Level.TILE_TAPESTRY].includes(tileTF.element)
+    !(this.faceL() && [PrinceJS.Level.TILE_TAPESTRY].includes(tileTF.element))
   ) {
     return this.grab(this.charBlockX);
   } else {
@@ -536,7 +537,7 @@ PrinceJS.Kid.prototype.tryGrabEdge = function () {
       ) &&
       isInDistance &&
       this.inGrabDistance(tileT, 20) &&
-      ![PrinceJS.Level.TILE_TAPESTRY].includes(tileT.element)
+      !(this.faceL() && [PrinceJS.Level.TILE_TAPESTRY].includes(tileT.element))
     ) {
       return this.grab(this.charBlockX - this.charFace);
     }
@@ -579,8 +580,7 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
       "climbfail",
       "stand",
       "turn",
-      "fastsheathe",
-      "freefall",
+      "fastsheathe"
     ].includes(this.action)
   ) {
     return;
@@ -593,11 +593,10 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
   }
 
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
+  let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
 
-  /*
-  let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
-  if (this.action === "freefall" && tile.isBarrier() && tileT.isBarrier()) {
+  if (this.action === "freefall" && tile.isFreeFallBarrier() && tileT.isFreeFallBarrier()) {
     if (this.moveL()) {
       this.charX = PrinceJS.Utils.convertBlockXtoX(this.charBlockX + 1) - 1;
     } else if (this.moveR()) {
@@ -607,7 +606,6 @@ PrinceJS.Kid.prototype.checkBarrier = function () {
     this.bump();
     return;
   }
-  */
 
   if (
     this.moveR() &&
@@ -950,16 +948,20 @@ PrinceJS.Kid.prototype.changeRoomDown = function () {
     } else if (this.charBlockX >= 9) {
       room = this.level.rooms[this.room].links.right;
       room = this.level.rooms[room].links.down;
-      this.charX -= 140;
-      this.baseX += 320;
-      this.charBlockX = 0;
+      if (room > 0) {
+        this.charX -= 140;
+        this.baseX += 320;
+        this.charBlockX = 0;
+      }
       this.room = room;
     } else if (this.charBlockX <= 0) {
       room = this.level.rooms[this.room].links.left;
-      room = this.level.rooms[room].links.down;
-      this.charX += 140;
-      this.baseX -= 320;
-      this.charBlockX = 9;
+      if (room > 0) {
+        room = this.level.rooms[room].links.down;
+        this.charX += 140;
+        this.baseX -= 320;
+        this.charBlockX = 9;
+      }
       this.room = room;
     }
     this.onChangeRoom.dispatch(this.room);
@@ -1601,7 +1603,7 @@ PrinceJS.Kid.prototype.jump = function () {
 };
 
 PrinceJS.Kid.prototype.checkJump = function (tile) {
-  return (this.faceL() && tile.isSpace()) || (this.faceR() && tile.isJumpSpace());
+  return (this.faceL() && tile.isSpace()) || (this.faceR() && tile.isJumpSpace()) || tile.hidden;
 };
 
 PrinceJS.Kid.prototype.checkClimbable = function (tile) {

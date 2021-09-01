@@ -2654,7 +2654,7 @@
     "version": "1.0",
     "image": "dungeon.png",
     "format": "RGBA8888",
-    "size": { "w": 994, "h": 994 },
+    "size": { "w": 994, "h": 1095 },
     "scale": "1",
     "smartupdate": "$TexturePacker:SmartUpdate:dbf5317b7a592a0855d048ba9c9e90f3:1fa90b9bd65e0da3d77a9cb354980e8b:9c0fba27a8a0c106083a8713f6c67b32$"
   }

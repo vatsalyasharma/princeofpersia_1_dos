@@ -31,28 +31,30 @@ PrinceJS.Tile.Base.prototype = {
       if (this.decoration) {
         this.front.removeChild(this.decoration);
       }
-      this.front.crop(null);
+      if (this instanceof PrinceJS.Tile.Button && this.active) {
+        this.front.crop(new Phaser.Rectangle(0, 0, this.maskWidth(actor), this.front.height - this.offsetY || 0));
+      } else {
+        this.front.crop(null);
+      }
       this.frame = null;
       this.crop = false;
     } else {
       this.frame = this.front.frameName;
-      if (![25].includes(this.element)) {
-        if (this.debris) {
-          this.front.frameName = this.debrisBack.frameName;
-        } else {
-          this.front.frameName = this.back.frameName;
-        }
-        if ([10].includes(this.element)) {
-          this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.frame);
-          this.front.addChild(this.decoration);
-        }
+      if (this.debris) {
+        this.front.frameName = this.debrisBack.frameName;
+      } else {
+        this.front.frameName = this.back.frameName;
+      }
+      if ([10, 25].includes(this.element)) {
+        this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.frame);
+        this.front.addChild(this.decoration);
       }
       this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, this.maskWidth(actor), this.front.height));
       this.crop = true;
     }
   },
 
-  maskWidth: function() {
+  maskWidth: function () {
     if (this.element === PrinceJS.Level.TILE_EXIT_LEFT) {
       return 31;
     }
@@ -104,6 +106,10 @@ PrinceJS.Tile.Base.prototype = {
       this.element === PrinceJS.Level.TILE_TAPESTRY ||
       this.element === PrinceJS.Level.TILE_TAPESTRY_TOP
     );
+  },
+
+  isFreeFallBarrier: function () {
+    return this.isBarrier() && ![PrinceJS.Level.TILE_TAPESTRY, PrinceJS.Level.TILE_TAPESTRY_TOP].includes(this.element);
   },
 
   isBarrierWalk: function () {

@@ -995,7 +995,7 @@ PrinceJS.Fighter.prototype.checkFall = function (tile) {
       this.land();
     } else {
       this.level.maskTile(this.charBlockX + 1, charBlockY, this.room, this);
-      if (tile.isBarrier()) {
+      if (tile.isFreeFallBarrier()) {
         this.charX -= (tile.isBarrierLeft() ? 10 : 5) * this.charFace;
         this.updateBlockXY();
         tile = this.level.getTileAt(this.charBlockX, charBlockY, this.room);

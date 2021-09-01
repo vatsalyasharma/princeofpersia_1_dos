@@ -4,13 +4,39 @@ PrinceJS.Interface = function (game, delegate) {
   this.game = game;
   this.delegate = delegate;
 
-  this.text;
-
   let bmd = this.game.make.bitmapData(PrinceJS.SCREEN_WIDTH, PrinceJS.UI_HEIGHT);
   bmd.fill(0, 0, 0);
 
   this.layer = this.game.add.sprite(0, (PrinceJS.SCREEN_HEIGHT - PrinceJS.UI_HEIGHT) * PrinceJS.SCALE_FACTOR, bmd);
   this.layer.fixedToCamera = true;
+
+  let bmdRed = this.game.make.bitmapData(PrinceJS.SCREEN_WIDTH, PrinceJS.UI_HEIGHT);
+  bmdRed.fill(255, 0, 0);
+  this.layerRed = this.game.add.sprite(0, 0, bmdRed);
+  this.layerRed.visible = false;
+  this.layer.addChild(this.layerRed);
+  let bmdGreen = this.game.make.bitmapData(PrinceJS.SCREEN_WIDTH, PrinceJS.UI_HEIGHT);
+  bmdGreen.fill(0, 255, 0);
+  this.layerGreen = this.game.add.sprite(0, 0, bmdGreen);
+  this.layerGreen.visible = false;
+  this.layer.addChild(this.layerGreen);
+  let bmdYellow = this.game.make.bitmapData(PrinceJS.SCREEN_WIDTH, PrinceJS.UI_HEIGHT);
+  bmdYellow.fill(255, 255, 0);
+  this.layerYellow = this.game.add.sprite(0, 0, bmdYellow);
+  this.layerYellow.visible = false;
+  this.layer.addChild(this.layerYellow);
+  let bmdWhite = this.game.make.bitmapData(PrinceJS.SCREEN_WIDTH, PrinceJS.UI_HEIGHT);
+  bmdWhite.fill(255, 255, 255);
+  this.layerWhite = this.game.add.sprite(0, 0, bmdWhite);
+  this.layerWhite.visible = false;
+  this.layer.addChild(this.layerWhite);
+
+  this.flashMap = {
+    [PrinceJS.Level.FLASH_RED]: this.layerRed,
+    [PrinceJS.Level.FLASH_GREEN]: this.layerGreen,
+    [PrinceJS.Level.FLASH_YELLOW]: this.layerYellow,
+    [PrinceJS.Level.FLASH_WHITE]: this.layerWhite
+  };
 
   this.text = this.game.make.bitmapText(PrinceJS.SCREEN_WIDTH * 0.5, (PrinceJS.UI_HEIGHT - 2) * 0.5, "font", "", 16);
   this.text.anchor.setTo(0.5, 0.5);
@@ -29,6 +55,8 @@ PrinceJS.Interface = function (game, delegate) {
 
   this.pressButtonToContinueTimer = -1;
   this.hideTextTimer = -1;
+
+  PrinceJS.InterfaceCurrent = this;
 };
 
 PrinceJS.Interface.prototype = {
@@ -113,7 +141,7 @@ PrinceJS.Interface.prototype = {
     }
     this.opp.onDamageLife.removeAll();
     this.opp.onDead.removeAll();
-    this.opp.opponent = null;
+    // this.opp.opponent = null;
     this.opp = null;
     this.oppHPs = [];
     this.oppHPActive = 0;
@@ -205,7 +233,7 @@ PrinceJS.Interface.prototype = {
     }
     let minutes = PrinceJS.Utils.getRemainingMinutes();
     this.showText(minutes + (minutes === 1 ? " MINUTE " : " MINUTES ") + "LEFT", "minutes");
-    this.hideTextTimer = 40;
+    this.hideTextTimer = 30;
   },
 
   isRemainingMinutesShown: function () {
@@ -256,5 +284,11 @@ PrinceJS.Interface.prototype = {
     if (this.text.scale.y === -1) {
       this.text.y += 2;
     }
+  },
+
+  flash: function (flashColor) {
+    Object.keys(this.flashMap).forEach((color) => {
+      this.flashMap[color].visible = color === String(flashColor);
+    });
   }
 };
