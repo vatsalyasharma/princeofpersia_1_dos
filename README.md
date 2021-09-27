@@ -10,7 +10,7 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 ## Play Mobile
 
 - Browser: https://princejs.com
-  - Use Landscape Mode (single Browser Tab)
+  - Use Landscape Mode (Single Tab, Disable Landscape Tab Bar in Browser Settings)
   - Force Fullscreen: https://princejs.com?fullscreen=true
 - Add to Home Screen to start as Fullscreen App
 - Reduced difficulty (50%):
