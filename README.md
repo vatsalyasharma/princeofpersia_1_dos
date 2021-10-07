@@ -97,3 +97,7 @@ Converted levels from https://www.popot.org/custom_levels.php:
 - [199-212](https://princejs.com?level=199): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
 - [213-226](https://princejs.com?level=213): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
 - [227-240](https://princejs.com?level=227): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)
+
+## Credits
+
+- https://github.com/ultrabolido
