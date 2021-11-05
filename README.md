@@ -85,16 +85,16 @@ Custom levels can be played performing the following steps.
 Converted levels from https://www.popot.org/custom_levels.php:
 
 - [100](https://princejs.com?level=100&strength=50): Tower of Revenge (own)
-- [101-114](https://princejs.com?level=101&strength=50): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
-- [115-128](https://princejs.com?level=115&strength=50): [Jaffar's House](https://www.popot.org/custom_levels.php?mod=0000220)
-- [129-142](https://princejs.com?level=129&strength=50): [Ipank's Levels](https://www.popot.org/custom_levels.php?mod=0000151)
-- [143-156](https://princejs.com?level=143&strength=50): [Barre's Alternative](https://www.popot.org/custom_levels.php?mod=0000189)
-- [157-170](https://princejs.com?level=157&strength=50): [Miracles Don't Exist](https://www.popot.org/custom_levels.php?mod=0000098)
-- [171-184](https://princejs.com?level=171&strength=50): [Babylon Tower Climb](https://www.popot.org/custom_levels.php?mod=0000109)
-- [185-198](https://princejs.com?level=185&strength=50): [Lost in Errors](https://www.popot.org/custom_levels.php?mod=0000144)
-- [199-212](https://princejs.com?level=199&strength=50): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
-- [213-226](https://princejs.com?level=213&strength=50): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
-- [227-240](https://princejs.com?level=227&strength=50): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)
+- [101-114](https://princejs.com?level=101&strength=50): Prince of Persia Revisited ([source](https://www.popot.org/custom_levels.php?mod=0000163))
+- [115-128](https://princejs.com?level=115&strength=50): Jaffar's House ([source](https://www.popot.org/custom_levels.php?mod=0000220))
+- [129-142](https://princejs.com?level=129&strength=50): Ipank's Levels ([source](https://www.popot.org/custom_levels.php?mod=0000151))
+- [143-156](https://princejs.com?level=143&strength=50): Barre's Alternative ([source](https://www.popot.org/custom_levels.php?mod=0000189))
+- [157-170](https://princejs.com?level=157&strength=50): Miracles Don't Exist ([source](https://www.popot.org/custom_levels.php?mod=0000098))
+- [171-184](https://princejs.com?level=171&strength=50): Babylon Tower Climb ([source](https://www.popot.org/custom_levels.php?mod=0000109))
+- [185-198](https://princejs.com?level=185&strength=50): Lost in Errors ([source](https://www.popot.org/custom_levels.php?mod=0000144))
+- [199-212](https://princejs.com?level=199&strength=50): Story Retold ([source](https://www.popot.org/custom_levels.php?mod=0000146))
+- [213-226](https://princejs.com?level=213&strength=50): Prince of Persia Guard Revolt ([source](https://www.popot.org/custom_levels.php?mod=0000162))
+- [227-240](https://princejs.com?level=227&strength=50): Return of Prince ([source](https://www.popot.org/custom_levels.php?mod=0000207))
 
 ## Credits
 
