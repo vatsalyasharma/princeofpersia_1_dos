@@ -52,7 +52,7 @@ https://princejs.com?level=1&health=3&time=60&strength=100&width=0
 
 Default shortcut url looks as follows:
 
-https://princejs.com?l=1&h=3&t=60&s=100&w=0&f=false&_=true
+https://princejs.com?l=1&h=3&t=60&s=100&w=0&_=true
 
 Manual adjustments of url parameters is possible as preset options.
 
