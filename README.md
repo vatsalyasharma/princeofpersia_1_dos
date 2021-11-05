@@ -11,10 +11,9 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 
 - Browser: https://princejs.com
   - Use Landscape Mode (Single Tab, Disable Landscape Tab Bar in Browser Settings)
-  - Force Fullscreen: https://princejs.com?fullscreen=true
 - Add to Home Screen to start as Fullscreen App
 - Reduced difficulty (50%):
-  - https://princejs.com?strength=50&fullscreen=true
+  - https://princejs.com?strength=50
 - Touch Controls (tap/drag area on screen):
 
   ![Mobile](assets/web/mobile.svg)
@@ -45,12 +44,11 @@ Url parameters are leveraged to save game state automatically (shortcut in brack
 - `time (t)`: Remaining Minutes (1-60, default: 60)
 - `strength (s)`: Guard Strength in "%" (0-100, default: 100)
 - `width (w)`: Game Width in "px" (default: 0 (fit to screen))
-- `fullscreen (f)`: Fullscreen mode (=100vh) (default: false)
 - `shortcut (_)`: Write url in shortcut version (default: false)
 
 Default url looks as follows:
 
-https://princejs.com?level=1&health=3&time=60&strength=100&width=0&fullscreen=false
+https://princejs.com?level=1&health=3&time=60&strength=100&width=0
 
 Default shortcut url looks as follows:
 
@@ -86,17 +84,17 @@ Custom levels can be played performing the following steps.
 
 Converted levels from https://www.popot.org/custom_levels.php:
 
-- [100](https://princejs.com?level=100): Tower of Revenge (own)
-- [101-114](https://princejs.com?level=101): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
-- [115-128](https://princejs.com?level=115): [Jaffar's House](https://www.popot.org/custom_levels.php?mod=0000220)
-- [129-142](https://princejs.com?level=129): [Ipank's Levels](https://www.popot.org/custom_levels.php?mod=0000151)
-- [143-156](https://princejs.com?level=143): [Barre's Alternative](https://www.popot.org/custom_levels.php?mod=0000189)
-- [157-170](https://princejs.com?level=157): [Miracles Don't Exist](https://www.popot.org/custom_levels.php?mod=0000098)
-- [171-184](https://princejs.com?level=171): [Babylon Tower Climb](https://www.popot.org/custom_levels.php?mod=0000109)
-- [185-198](https://princejs.com?level=185): [Lost in Errors](https://www.popot.org/custom_levels.php?mod=0000144)
-- [199-212](https://princejs.com?level=199): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
-- [213-226](https://princejs.com?level=213): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
-- [227-240](https://princejs.com?level=227): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)
+- [100](https://princejs.com?level=100&strength=50): Tower of Revenge (own)
+- [101-114](https://princejs.com?level=101&strength=50): [Prince of Persia Revisited](https://www.popot.org/custom_levels.php?mod=0000163)
+- [115-128](https://princejs.com?level=115&strength=50): [Jaffar's House](https://www.popot.org/custom_levels.php?mod=0000220)
+- [129-142](https://princejs.com?level=129&strength=50): [Ipank's Levels](https://www.popot.org/custom_levels.php?mod=0000151)
+- [143-156](https://princejs.com?level=143&strength=50): [Barre's Alternative](https://www.popot.org/custom_levels.php?mod=0000189)
+- [157-170](https://princejs.com?level=157&strength=50): [Miracles Don't Exist](https://www.popot.org/custom_levels.php?mod=0000098)
+- [171-184](https://princejs.com?level=171&strength=50): [Babylon Tower Climb](https://www.popot.org/custom_levels.php?mod=0000109)
+- [185-198](https://princejs.com?level=185&strength=50): [Lost in Errors](https://www.popot.org/custom_levels.php?mod=0000144)
+- [199-212](https://princejs.com?level=199&strength=50): [Story Retold](https://www.popot.org/custom_levels.php?mod=0000146)
+- [213-226](https://princejs.com?level=213&strength=50): [Prince of Persia Guard Revolt](https://www.popot.org/custom_levels.php?mod=0000162)
+- [227-240](https://princejs.com?level=227&strength=50): [Return of Prince](https://www.popot.org/custom_levels.php?mod=0000207)
 
 ## Credits
 

@@ -265,15 +265,6 @@ PrinceJS.Utils = {
       }
     }
 
-    if (query.get("fullscreen") || query.get("f")) {
-      PrinceJS.screenFull = (query.get("fullscreen") || query.get("f")) === "true";
-      if (PrinceJS.screenFull) {
-        PrinceJS.Utils.gameContainer().classList.add("fullscreen");
-      } else {
-        PrinceJS.Utils.gameContainer().classList.remove("fullscreen");
-      }
-    }
-
     if (query.get("shortcut") || query.get("_")) {
       PrinceJS.shortcut = (query.get("shortcut") || query.get("_")) === "true";
     }
@@ -294,7 +285,6 @@ PrinceJS.Utils = {
         t: PrinceJS.minutes,
         s: PrinceJS.strength,
         w: PrinceJS.screenWidth,
-        f: PrinceJS.screenFull,
         _: true
       });
     } else {
@@ -303,8 +293,7 @@ PrinceJS.Utils = {
         health: PrinceJS.maxHealth,
         time: PrinceJS.minutes,
         strength: PrinceJS.strength,
-        width: PrinceJS.screenWidth,
-        fullscreen: PrinceJS.screenFull
+        width: PrinceJS.screenWidth
       });
     }
   },
@@ -322,14 +311,12 @@ PrinceJS.Utils = {
       PrinceJS.Utils.setHistoryState({
         s: PrinceJS.strength,
         w: PrinceJS.screenWidth,
-        f: PrinceJS.screenFull,
         _: true
       });
     } else {
       PrinceJS.Utils.setHistoryState({
         strength: PrinceJS.strength,
-        width: PrinceJS.screenWidth,
-        fullscreen: PrinceJS.screenFull
+        width: PrinceJS.screenWidth
       });
     }
   },
