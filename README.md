@@ -6,7 +6,9 @@ Prince of Persia reimplementation written in HTML5 / JavaScript
 
 - Browser: https://princejs.com
 - Keyboard / Mouse Controls
-
+  - `Cursor keys`: Movement
+  - `SHIFT`: Sword, Drink Potion, Grab Edges
+  
 ## Play Mobile
 
 - Browser: https://princejs.com
@@ -98,4 +100,5 @@ Converted levels from https://www.popot.org/custom_levels.php:
 
 ## Credits
 
-- https://github.com/ultrabolido
+- https://github.com/ultrabolido ( [PrinceJS](https://github.com/ultrabolido/PrinceJS) )
+- https://github.com/jmechner ( [Prince-of-Persia-Apple-II](https://github.com/jmechner/Prince-of-Persia-Apple-II) )
