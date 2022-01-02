@@ -1,28 +1,38 @@
-# Prince of Persia (JS)
+# Prince of Persia (JavaScript) - princejs.com
 
-Prince of Persia reimplementation written in HTML5 / JavaScript
+Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 
 ## Play Online
 
 - Browser: https://princejs.com
-- Keyboard / Mouse Controls
+- Keyboard
   - `Cursor keys`: Movement
   - `SHIFT`: Sword, Drink Potion, Grab Edges
-  
+  - `SPACE`: Show Remaining Time
+- Mouse Controls
+  - See Touch Controls for Mobile
+
 ## Play Mobile
 
 - Browser: https://princejs.com
-  - Use Landscape Mode (Single Tab, Disable Landscape Tab Bar in Browser Settings)
+  - Use Landscape Mode 
+  - Single Tab
+  - Disable Landscape Tab Bar in Browser Settings
 - Add to Home Screen to start as Fullscreen App
 - Reduced difficulty (50%):
   - https://princejs.com?strength=50
-- Touch Controls (tap/drag area on screen):
+- Touch Controls (tap/drag area on screen, fight mode in brackets):
 
   ![Mobile](assets/web/mobile.svg)
 
   - Dragging can be used to trigger continuous move sequences, e.g.
-    - _Run Jump_: Tap Left / Right -> Hold -> Drag in Left / Right corner
+    - _Run Jump_: Tap Left or Right -> Hold -> Drag in Left or Right corner
     - _Jump Grab_: (Run) Jump -> Hold -> Drag to Center (Shift)
+  - Fight
+    - _Left/Right_: Advance/Retreat
+    - _Shift_: Strike
+    - _Up_: Block
+    - _Down_: Sheathe
 
 ## Play GitHub Version
 
@@ -100,5 +110,5 @@ Converted levels from https://www.popot.org/custom_levels.php:
 
 ## Credits
 
-- https://github.com/ultrabolido ( [PrinceJS](https://github.com/ultrabolido/PrinceJS) )
-- https://github.com/jmechner ( [Prince-of-Persia-Apple-II](https://github.com/jmechner/Prince-of-Persia-Apple-II) )
+- https://github.com/ultrabolido ([PrinceJS](https://github.com/ultrabolido/PrinceJS))
+- https://github.com/jmechner ([Prince-of-Persia-Apple-II](https://github.com/jmechner/Prince-of-Persia-Apple-II))

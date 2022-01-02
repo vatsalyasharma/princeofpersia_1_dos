@@ -1161,7 +1161,7 @@ PrinceJS.Kid.prototype.flashShadowOverlay = function () {
 PrinceJS.Kid.prototype.turn = function () {
   if (!this.hasSword || !this.canReachOpponent(false, true)) {
     this.action = "turn";
-  } else if (!this.facingOpponent() && this.canReachOpponent(false, true) && !this.nearBarrier()) {
+  } else if (this.canReachOpponent(false, true) && !this.facingOpponent() && !this.nearBarrier()) {
     this.action = "turndraw";
     this.flee = false;
     if (!this.swordDrawn) {

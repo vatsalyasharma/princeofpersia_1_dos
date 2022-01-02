@@ -4,7 +4,10 @@
   "description": "Prince of Persia (JavaScript)",
   "main": "index.js",
   "directories": {
-    "lib": "lib"
+    "assets": "assets",
+    "converter": "converter",
+    "lib": "lib",
+    "src": "src"
   },
   "scripts": {
     "start": "http-server",
@@ -21,11 +24,11 @@
   },
   "homepage": "https://github.com/oklemenz/PrinceJS#readme",
   "devDependencies": {
-    "eslint": "^8.1.0",
+    "eslint": "^8.6.0",
     "eslint-config": "^0.3.0",
     "eslint-config-prettier": "^8.3.0",
     "http-server": "^14.0.0",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.1",
     "xml2json": "^0.12.0"
   }
 }

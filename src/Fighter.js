@@ -266,7 +266,7 @@ PrinceJS.Fighter.prototype.checkFight = function () {
         if (!this.facingOpponent()) {
           this.turnengarde();
         }
-        if (!this.opponent.facingOpponent()) {
+        if (this.opponent.opponent !== null && !this.opponent.facingOpponent()) {
           this.opponent.turnengarde();
         }
       }
