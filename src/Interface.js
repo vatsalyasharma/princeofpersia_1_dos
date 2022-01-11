@@ -202,6 +202,7 @@ PrinceJS.Interface.prototype = {
     this.hideTextTimer = 25;
     PrinceJS.Utils.delayed(() => {
       if (!this.showTextType || this.showTextType === "level") {
+        this.hideText();
         this.showRegularRemainingTime(true);
       }
     }, 2000);

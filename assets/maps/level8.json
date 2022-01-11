@@ -2733,7 +2733,8 @@
       "skill": 3,
       "colors": 4,
       "type": "guard",
-      "direction": -1
+      "direction": -1,
+      "sneak": true
     }
   ],
   "events": [

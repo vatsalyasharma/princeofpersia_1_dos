@@ -236,7 +236,8 @@ PrinceJS.Fighter.prototype.checkFight = function () {
     !this.facingOpponent() &&
     this.x > 0 &&
     this.opponent.x > 0 &&
-    Math.abs(this.x - this.opponent.x) >= 20
+    Math.abs(this.x - this.opponent.x) >= 20 &&
+    !this.opponent.sneaks()
   ) {
     this.turn();
   }
@@ -287,7 +288,7 @@ PrinceJS.Fighter.prototype.checkFight = function () {
         if (this.frameID(154) || this.frameID(4)) {
           let minHurtDistance = this.opponent.swordDrawn ? 12 : 8;
           let maxHurtDistance = 29 + (this.opponent.baseCharName === "fatguard" ? 2 : 0);
-          if ((distance >= minHurtDistance || distance <= 0) && distance < maxHurtDistance) {
+          if ((distance >= minHurtDistance || distance <= 0) && distance <= maxHurtDistance) {
             this.opponent.stabbed();
           }
         }
@@ -553,11 +554,24 @@ PrinceJS.Fighter.prototype.stabbed = function () {
 
   if (this.health === 0) {
     this.action = "stabkill";
+    this.bringAboveOpponent();
   } else {
     this.action = "stabbed";
   }
 
   this.showSplash();
+};
+
+PrinceJS.Fighter.prototype.bringAboveOpponent = function () {
+  if (!this.opponent) {
+    return;
+  }
+  let group = this.game.world;
+  let opponentIndex = group.getIndex(this.opponent);
+  if (opponentIndex >= 0 && group.getIndex(this) < opponentIndex) {
+    group.remove(this, false, true);
+    group.add(this, true, opponentIndex);
+  }
 };
 
 PrinceJS.Fighter.prototype.opponentNextRoom = function (opponent, room) {
@@ -1298,6 +1312,10 @@ PrinceJS.Fighter.prototype.moveL = function (extended = true) {
     (this.faceR() && ["retreat", "stabbed"].includes(this.action)) ||
     (this.faceL() && !["retreat", "stabbed"].includes(this.action))
   );
+};
+
+PrinceJS.Fighter.prototype.sneaks = function () {
+  return ["stand", "turn"].includes(this.action) || this.action.startsWith("step");
 };
 
 PrinceJS.Fighter.prototype.getCharBounds = function () {

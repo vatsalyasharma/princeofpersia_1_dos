@@ -21,6 +21,7 @@ PrinceJS.Enemy = function (game, level, location, direction, room, skill, color,
   this.strikeTimer = 0;
   this.lookBelow = false;
   this.startFight = false;
+  this.sneakUp = false;
 
   this.health = PrinceJS.Enemy.EXTRA_STRENGTH[skill] + PrinceJS.Enemy.STRENGTH[this.level.number];
 
@@ -88,9 +89,9 @@ PrinceJS.Enemy.prototype.updateBehaviour = function () {
   if (!this.opponent.alive) {
     return;
   }
-  if (this.active && !this.startFight && this.opponentCloseRoom(this.opponent, this.room)) {
+  if (this.willStartFight()) {
     PrinceJS.Utils.delayed(() => {
-      if (this.active && !this.startFight && this.opponentCloseRoom(this.opponent, this.room)) {
+      if (this.willStartFight()) {
         this.startFight = true;
       }
     }, 500);
@@ -132,9 +133,19 @@ PrinceJS.Enemy.prototype.updateBehaviour = function () {
     }
   } else {
     if (this.canReachOpponent(this.lookBelow) || this.canSeeOpponent(this.lookBelow)) {
-      this.engarde();
+      if (!this.sneakUp || this.facingOpponent()) {
+        this.engarde();
+      }
     }
   }
+};
+
+PrinceJS.Enemy.prototype.willStartFight = function () {
+  return (
+    this.active &&
+    !this.startFight &&
+    (this.opponentCloseRoom(this.opponent, this.room) || Math.abs(this.opponentDistance()) < 35)
+  );
 };
 
 PrinceJS.Enemy.prototype.enemyAdvance = function () {
@@ -256,7 +267,7 @@ PrinceJS.Enemy.prototype.oppInRangeArmed = function (distance) {
   if (!this.opponentOnSameLevel()) {
     return;
   }
-  if (distance < 10 || distance >= 29) {
+  if (distance < 10 || distance >= 28) {
     this.tryAdvance();
   } else {
     this.tryBlock();
@@ -361,6 +372,10 @@ PrinceJS.Enemy.prototype.setInactive = function () {
   if (this.charName === "skeleton") {
     this.action = "laydown";
   }
+};
+
+PrinceJS.Enemy.prototype.setSneakUp = function () {
+  this.sneakUp = true;
 };
 
 PrinceJS.Enemy.prototype.checkBarrier = function () {

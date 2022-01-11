@@ -87,7 +87,7 @@ PrinceJS.Kid.prototype.CMD_TAP = function (data) {
   if (data.p1 === 1) {
     this.game.sound.play("Footsteps");
   } else if (data.p1 === 2) {
-    this.game.sound.play("BumpIntoWallHard");
+    this.game.sound.play("BumpIntoWallSoft");
   }
 };
 
@@ -226,6 +226,10 @@ PrinceJS.Kid.prototype.updateTimer = function () {
 };
 
 PrinceJS.Kid.prototype.updateBehaviour = function () {
+  if (this.x === 0 && this.y === 0) {
+    return;
+  }
+
   if (!this.keyL() && this.faceL()) {
     this.allowCrawl = this.allowAdvance = true;
   }
@@ -473,7 +477,8 @@ PrinceJS.Kid.prototype.tryEngarde = function () {
   this.dodgeChoppers();
 
   this.level.recheckCurrentRoom();
-  if (this.opponent && this.opponent.alive && this.opponentDistance() <= 100) {
+  let engardeDistance = !this.opponent.facingOpponent() && this.opponent.sneakUp ? 35 : 100;
+  if (this.opponent && this.opponent.alive && this.opponentDistance() <= engardeDistance) {
     return this.engarde();
   }
   return false;
@@ -557,6 +562,7 @@ PrinceJS.Kid.prototype.grab = function (x) {
   this.stopFall();
   this.updateBlockXY();
   this.action = "hang";
+  this.game.sound.play("BumpIntoWallHard");
   this.processCommand();
 
   let tile = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
@@ -834,7 +840,10 @@ PrinceJS.Kid.prototype.checkFloor = function () {
   if (["climbup", "climbdown"].includes(this.action) && ![PrinceJS.Level.TILE_LOOSE_BOARD].includes(tile.element)) {
     return;
   }
-  if (["stoop", "strike"].includes(this.action)) {
+  if (["stoop"].includes(this.action) && ![PrinceJS.Level.TILE_SPACE].includes(tile.element)) {
+    return;
+  }
+  if (["strike"].includes(this.action)) {
     return;
   }
 
@@ -914,7 +923,7 @@ PrinceJS.Kid.prototype.checkRoomChange = function () {
   let footX = this.charX + this.charFdx * this.charFace;
   let footBlockX = PrinceJS.Utils.convertXtoBlockX(footX);
 
-  if (footBlockX >= 9 && this.moveR(false)) {
+  if (footBlockX >= 9 && (this.moveR(false) || ["bump"].includes(this.action))) {
     let cameraRoom = this.room;
     if (footX > 142 || (this.swordDrawn && (footX > 130 || footX < 0))) {
       // Camera check

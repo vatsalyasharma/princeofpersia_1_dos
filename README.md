@@ -1,4 +1,4 @@
-# Prince of Persia (JavaScript) - princejs.com
+# Prince of Persia (JS) - princejs.com
 
 Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 
@@ -15,7 +15,7 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 ## Play Mobile
 
 - Browser: https://princejs.com
-  - Use Landscape Mode 
+  - Use Landscape Mode
   - Single Tab
   - Disable Landscape Tab Bar in Browser Settings
 - Add to Home Screen to start as Fullscreen App
@@ -33,6 +33,13 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
     - _Shift_: Strike
     - _Up_: Block
     - _Down_: Sheathe
+
+## Play on Apple Watch
+
+- Send mail or message to yourself with body: https://princejs.com
+- On Apple Watch open Mail or Message app
+- Click included link to open Browser
+- Play using Touch Controls like on Mobile
 
 ## Play GitHub Version
 

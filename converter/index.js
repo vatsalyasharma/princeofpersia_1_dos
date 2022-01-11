@@ -131,7 +131,14 @@ function mergeLevel(level, existingLevel) {
     }
   }
   for (let i = 0; i < level.guards.length; i++) {
-    mergeProperties(level.guards[i], existingLevel.guards[i], ["type", "active", "visible", "bias", "reverse"]);
+    mergeProperties(level.guards[i], existingLevel.guards[i], [
+      "type",
+      "active",
+      "visible",
+      "bias",
+      "reverse",
+      "sneak"
+    ]);
   }
 }
 

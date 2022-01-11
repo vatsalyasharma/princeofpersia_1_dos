@@ -65,6 +65,9 @@ PrinceJS.Game.prototype = {
       if (data.active === false) {
         enemy.setInactive();
       }
+      if (data.sneak === true) {
+        enemy.setSneakUp();
+      }
       enemy.onInitLife.add((fighter) => {
         this.ui.setOpponentLive(fighter);
       }, this);
