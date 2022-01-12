@@ -54,7 +54,7 @@ PrinceJS.Preloader.prototype = {
     // SFX
     this.game.load.audio("FreeFallLand", "assets/sfx/01_Free_fall_land.mp3");
     this.game.load.audio("LooseFloorLands", "assets/sfx/02_Loose_floor_lands.mp3");
-    this.game.load.audio("LooseFloorShakes", "assets/sfx/03_Loose_floor_shakes.mp3");
+    this.game.load.audio("LooseFloorShakes1", "assets/sfx/03_Loose_floor_shakes.mp3");
     this.game.load.audio("GateComingDownSlow", "assets/sfx/04_Gate_coming_down_slow.mp3");
     this.game.load.audio("GateRising", "assets/sfx/05_Gate_rising.mp3");
     this.game.load.audio("GateReachesBottomClang", "assets/sfx/06_Gate_reaches_bottom_clang.mp3");

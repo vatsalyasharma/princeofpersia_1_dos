@@ -1,5 +1,7 @@
 "use strict";
 
+let Sounds = ["LooseFloorShakes1", "LooseFloorShakes2", "LooseFloorShakes3"];
+
 PrinceJS.Tile.Loose = function (game, modifier, type) {
   PrinceJS.Tile.Base.call(this, game, PrinceJS.Level.TILE_LOOSE_BOARD, modifier, type);
 
@@ -39,7 +41,6 @@ PrinceJS.Tile.Loose.prototype.update = function () {
         this.step = 0;
         this.back.frameName = this.key + "_falling";
         this.onStartFalling.dispatch(this);
-        this.game.sound.play("LooseFloorShakes");
       } else {
         if (this.step === 3 && !this.fall) {
           this.front.visible = true;
@@ -47,17 +48,11 @@ PrinceJS.Tile.Loose.prototype.update = function () {
           this.state = PrinceJS.Tile.Loose.STATE_INACTIVE;
         } else {
           this.back.frameName = this.key + PrinceJS.Tile.Loose.frames[this.step];
-          if (this.step % 3 === 1) {
-            this.game.sound.play("LooseFloorShakes");
-          } else if (this.step % 2 === 0) {
-            if (PrinceJS.Utils.random(2) === 0) {
-              this.game.sound.play("LooseFloorShakes2");
-            } else {
-              this.game.sound.play("LooseFloorShakes3");
-            }
-          }
           this.step++;
         }
+      }
+      if (this.step === 0 || this.step === 3 || this.step === 7) {
+        this.game.sound.play(Sounds[PrinceJS.Utils.random(3)]);
       }
       break;
 
@@ -89,7 +84,7 @@ PrinceJS.Tile.Loose.prototype.sweep = function () {
   this.step = 0;
   this.back.frameName = this.key + "_falling";
   this.onStartFalling.dispatch(this);
-  this.game.sound.play("LooseFloorShakes");
+  this.game.sound.play(Sounds[0]);
 };
 
 PrinceJS.Tile.Loose.prototype.fallStarted = function () {

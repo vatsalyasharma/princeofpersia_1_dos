@@ -570,21 +570,21 @@ PrinceJS.Game.prototype = {
   },
 
   restartGameEvent(event) {
-    if (!event.ctrlKey) {
+    if (!event.ctrlKey && !event.shiftKey) {
       return;
     }
     this.restartGame();
   },
 
   restartLevelEvent(event) {
-    if (!event.ctrlKey) {
+    if (!event.ctrlKey && !event.shiftKey) {
       return;
     }
     this.restartLevel();
   },
 
   nextLevelEvent: function (event) {
-    if (!event.ctrlKey) {
+    if (!event.ctrlKey && !event.shiftKey) {
       return;
     }
 

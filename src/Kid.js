@@ -888,16 +888,19 @@ PrinceJS.Kid.prototype.checkFloor = function () {
             break;
 
           case PrinceJS.Level.TILE_SPIKES:
-            tile.raise();
-            if (
-              (this.inSpikeDistance(tile) && ["running", "runjump", "runturn", "softland"].includes(this.action)) ||
-              (this.action === "medland" && this.frameID(108, 109)) ||
-              (this.action === "standjump" && this.frameID(26, 28))
-            ) {
-              this.game.sound.play("SpikedBySpikes"); // HardLandingSplat
-              this.alignToTile(tile);
-              this.dieSpikes();
+            if (this.inSpikeDistance(tile)) {
+              if (
+                (tile.state !== PrinceJS.Tile.Spikes.STATE_FULL_OUT && ["running", "runjump", "runturn"].includes(this.action)) ||
+                this.action === "softland" ||
+                (this.action === "medland" && this.frameID(108, 109)) ||
+                (this.action === "standjump" && this.frameID(26, 28))
+              ) {
+                this.game.sound.play("SpikedBySpikes"); // HardLandingSplat
+                this.alignToTile(tile);
+                this.dieSpikes();
+              }
             }
+            tile.raise();
             break;
         }
       }
