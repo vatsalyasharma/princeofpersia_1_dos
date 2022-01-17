@@ -90,11 +90,14 @@ PrinceJS.Enemy.prototype.updateBehaviour = function () {
     return;
   }
   if (this.willStartFight()) {
-    PrinceJS.Utils.delayed(() => {
-      if (this.willStartFight()) {
-        this.startFight = true;
-      }
-    }, 500);
+    PrinceJS.Utils.delayed(
+      () => {
+        if (this.willStartFight()) {
+          this.startFight = true;
+        }
+      },
+      this.baseCharName === "jaffar" ? 2300 : 500
+    );
   }
 
   if (this.refracTimer > 0) {

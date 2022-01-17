@@ -67,6 +67,10 @@ PrinceJS.Interface.prototype = {
       this.playerHPs[i] = this.game.add.sprite(i * 7, 2, "general", "kid-live");
       this.layer.addChild(this.playerHPs[i]);
     }
+    for (let i = this.playerHPActive; i < this.player.maxHealth; i++) {
+      this.playerHPs[i] = this.game.add.sprite(i * 7, 2, "general", "kid-emptylive");
+      this.layer.addChild(this.playerHPs[i]);
+    }
     this.player.onDamageLife.add(this.damagePlayerLive, this);
     this.player.onRecoverLive.add(this.recoverPlayerLive, this);
     this.player.onAddLive.add(this.addPlayerLive, this);
@@ -195,7 +199,7 @@ PrinceJS.Interface.prototype = {
   },
 
   showLevel: function () {
-    if (PrinceJS.endTime) {
+    if (PrinceJS.endTime || PrinceJS.skipShowLevel) {
       return;
     }
     this.showText("LEVEL " + PrinceJS.currentLevel, "level");

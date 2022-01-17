@@ -1322,13 +1322,18 @@ PrinceJS.Fighter.prototype.getCharBounds = function () {
   let f = this.game.cache.getFrameData(this.charName).getFrameByName(this.charName + "-" + this.charFrame);
   let x = PrinceJS.Utils.convertX(this.charX + this.charFdx * this.charFace);
   let y = this.charY + this.charFdy - f.height;
+  let w = f.width;
+  let h = f.height;
   if (this.faceR()) {
     x -= f.width - 5;
   }
   if ((this.charFood && this.faceL()) || (!this.charFood && this.faceR())) {
     x += 1;
   }
-  return new Phaser.Rectangle(x, y, f.width, f.height);
+  if (["runturn"].includes(this.action)) {
+    w += 2;
+  }
+  return new Phaser.Rectangle(x, y, w, h);
 };
 
 PrinceJS.Fighter.prototype.alignToTile = function (tile) {

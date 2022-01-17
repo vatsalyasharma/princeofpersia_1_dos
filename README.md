@@ -36,7 +36,7 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 
 ## Play on Apple Watch
 
-- Mail/Message 
+- Mail/Message
   - Send mail or message to yourself with body: https://princejs.com
   - On Apple Watch open Mail or Message app
   - Click included link to open Browser

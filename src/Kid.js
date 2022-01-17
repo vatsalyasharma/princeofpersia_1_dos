@@ -31,7 +31,7 @@ PrinceJS.Kid = function (game, level, location, direction, room) {
   this.registerCommand(0xf1, this.CMD_NEXTLEVEL); // 241
 
   this.maxHealth = PrinceJS.maxHealth;
-  this.health = this.maxHealth;
+  this.health = PrinceJS.currentHealth || this.maxHealth;
 
   this.hasSword = PrinceJS.currentLevel > 1;
   this.blockEngarde = false;
@@ -113,7 +113,7 @@ PrinceJS.Kid.prototype.CMD_NEXTLEVEL = function (data) {
   if (PrinceJS.currentLevel === 4) {
     this.game.sound.play("TheShadow");
     waitTime = 9000;
-  } else if (PrinceJS.currentLevel < 13 || PrinceJS.currentLevel >= 100) {
+  } else if (![13, 14].includes(PrinceJS.currentLevel)) {
     this.game.sound.play("Prince");
     waitTime = 13000;
   }
@@ -890,7 +890,8 @@ PrinceJS.Kid.prototype.checkFloor = function () {
           case PrinceJS.Level.TILE_SPIKES:
             if (this.inSpikeDistance(tile)) {
               if (
-                (tile.state !== PrinceJS.Tile.Spikes.STATE_FULL_OUT && ["running", "runjump", "runturn"].includes(this.action)) ||
+                (tile.state !== PrinceJS.Tile.Spikes.STATE_FULL_OUT &&
+                  ["running", "runjump", "runturn"].includes(this.action)) ||
                 this.action === "softland" ||
                 (this.action === "medland" && this.frameID(108, 109)) ||
                 (this.action === "standjump" && this.frameID(26, 28))

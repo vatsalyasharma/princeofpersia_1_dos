@@ -149,11 +149,11 @@ PrinceJS.Game.prototype = {
       ) {
         if (this.isRemainingMinutesShown() || this.isLevelShown()) {
           if (pos.x >= 0 && pos.x <= 0.2 * size.width) {
-            this.previousLevel();
+            this.previousLevel(PrinceJS.currentLevel, true);
           } else if (pos.x >= 0.8 * size.width && pos.x <= size.width) {
-            this.nextLevel();
+            this.nextLevel(PrinceJS.currentLevel, true);
           } else if (pos.x >= 0.4 * size.width && pos.x <= 0.6 * size.width) {
-            this.restartLevel();
+            this.restartLevel(true);
           }
         }
         if (pos.x >= 0 && pos.x <= size.width) {
@@ -409,6 +409,7 @@ PrinceJS.Game.prototype = {
             !this.level.shadowMerge
           ) {
             this.level.shadowMerge = true;
+            this.level.leapOfFaith = true;
             this.ui.resetOpponentLive();
             this.kid.addLife();
             this.kid.mergeShadowPosition();
@@ -416,12 +417,7 @@ PrinceJS.Game.prototype = {
             this.kid.flashShadowOverlay();
             PrinceJS.Utils.flashWhiteShadowMerge(this.game);
             PrinceJS.Utils.delayed(() => {
-              if (this.level.shadowMerge) {
-                this.game.sound.play("Prince");
-              }
-              PrinceJS.Utils.delayed(() => {
-                this.level.leapOfFaith = true;
-              }, 13000);
+              this.game.sound.play("Prince");
             }, 2000);
           }
         }
@@ -485,7 +481,7 @@ PrinceJS.Game.prototype = {
 
       case 14:
         if (this.currentCameraRoom === 5) {
-          this.nextLevel();
+          this.nextLevel(PrinceJS.currentLevel);
         }
         break;
     }
@@ -580,7 +576,7 @@ PrinceJS.Game.prototype = {
     if (!event.ctrlKey && !event.shiftKey) {
       return;
     }
-    this.restartLevel();
+    this.restartLevel(true);
   },
 
   nextLevelEvent: function (event) {
@@ -601,8 +597,9 @@ PrinceJS.Game.prototype = {
     this.state.start("Title");
   },
 
-  restartLevel() {
+  restartLevel(skipped = true) {
     this.reset(true);
+    PrinceJS.skipShowLevel = [13, 14].includes(PrinceJS.currentLevel) && !skipped;
   },
 
   levelFinished() {
@@ -615,8 +612,9 @@ PrinceJS.Game.prototype = {
     }
 
     PrinceJS.danger = null;
-    PrinceJS.maxHealth = this.kid.maxHealth;
     PrinceJS.currentLevel++;
+    PrinceJS.currentHealth = PrinceJS.currentLevel === 13 ? this.kid.health : null;
+    PrinceJS.maxHealth = this.kid.maxHealth;
     if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel < 100) {
       this.restartGame();
       return;
@@ -631,6 +629,7 @@ PrinceJS.Game.prototype = {
     }
 
     this.reset();
+    PrinceJS.skipShowLevel = [13, 14].includes(PrinceJS.currentLevel) && !skipped;
   },
 
   previousLevel: function () {
@@ -687,6 +686,7 @@ PrinceJS.Game.prototype = {
     } else {
       this.state.start("Game");
     }
+    PrinceJS.skipShowLevel = [13, 14].includes(PrinceJS.currentLevel);
   },
 
   onPause: function () {
