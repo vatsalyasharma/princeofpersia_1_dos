@@ -96,14 +96,12 @@ PrinceJS.Title.prototype = {
 
   play: function () {
     this.stopMusic();
-
     this.input.keyboard.onDownCallback = null;
     this.state.start("Game");
   },
 
   cutscene: function () {
     this.stopMusic();
-
     this.input.keyboard.onDownCallback = null;
     this.state.start("Cutscene");
   },

@@ -43,7 +43,10 @@ PrinceJS.Credits.prototype = {
       .to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, false, 0, 0, false);
     this.tween4.onComplete.add(this.play, this);
 
-    this.input.keyboard.onDownCallback = this.play.bind(this);
+    this.input.keyboard.onDownCallback = null;
+    PrinceJS.Utils.delayed(() => {
+      this.input.keyboard.onDownCallback = this.play.bind(this);
+    }, 1000);
   },
 
   update: function () {

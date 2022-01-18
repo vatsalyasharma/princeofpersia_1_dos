@@ -55,7 +55,11 @@ PrinceJS.Cutscene.prototype = {
 
     this.executeProgram();
 
-    this.input.keyboard.onDownCallback = this.continue.bind(this);
+    this.input.keyboard.onDownCallback = null;
+    PrinceJS.Utils.delayed(() => {
+      this.input.keyboard.onDownCallback = this.continue.bind(this);
+    }, 1000);
+
     this.game.time.events.loop(120, this.updateScene, this);
   },
 
@@ -181,14 +185,12 @@ PrinceJS.Cutscene.prototype = {
 
   play: function () {
     this.stopMusic();
-
     this.input.keyboard.onDownCallback = null;
     this.state.start("Game");
   },
 
   next: function () {
     this.input.keyboard.onDownCallback = null;
-
     if (PrinceJS.currentLevel === 1) {
       this.state.start("Credits");
     } else if (PrinceJS.currentLevel === 15) {
