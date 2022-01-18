@@ -43,7 +43,7 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 - Siri
   - Tell Siri 'princejs.com' on Apple Watch
   - Watch out for correct localized pronunciation
-- Play using Touch Controls like on Mobile
+- Play using Touch Controls as on Mobile
 
 ## Play GitHub Version
 
