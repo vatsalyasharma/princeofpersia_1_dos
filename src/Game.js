@@ -151,7 +151,7 @@ PrinceJS.Game.prototype = {
           if (pos.x >= 0 && pos.x <= 0.2 * size.width) {
             this.previousLevel(PrinceJS.currentLevel, true);
           } else if (pos.x >= 0.8 * size.width && pos.x <= size.width) {
-            this.nextLevel(PrinceJS.currentLevel, true);
+            this.nextLevel(PrinceJS.currentLevel, true, true);
           } else if (pos.x >= 0.4 * size.width && pos.x <= 0.6 * size.width) {
             this.restartLevel(true);
           }
@@ -606,7 +606,7 @@ PrinceJS.Game.prototype = {
     this.pressButtonToNext = true;
   },
 
-  nextLevel: function (triggerLevel, skipped = false) {
+  nextLevel: function (triggerLevel, skipped = false, keepRemainingTime = false) {
     if (triggerLevel !== undefined && triggerLevel !== PrinceJS.currentLevel) {
       return;
     }
@@ -620,7 +620,7 @@ PrinceJS.Game.prototype = {
       return;
     }
 
-    if (skipped) {
+    if (skipped && !keepRemainingTime) {
       PrinceJS.Utils.setRemainingMinutesTo15();
     }
 
@@ -632,12 +632,18 @@ PrinceJS.Game.prototype = {
     PrinceJS.skipShowLevel = [13, 14].includes(PrinceJS.currentLevel) && !skipped;
   },
 
-  previousLevel: function () {
+  previousLevel: function (triggerLevel, skipped = false) {
+    if (triggerLevel !== undefined && triggerLevel !== PrinceJS.currentLevel) {
+      return;
+    }
+
     PrinceJS.danger = null;
     if (PrinceJS.currentLevel > 1) {
       PrinceJS.currentLevel--;
-      this.reset();
     }
+
+    this.reset();
+    PrinceJS.skipShowLevel = [13, 14].includes(PrinceJS.currentLevel) && !skipped;
   },
 
   handleDead: function () {
