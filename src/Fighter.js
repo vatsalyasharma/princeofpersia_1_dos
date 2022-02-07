@@ -1069,7 +1069,7 @@ PrinceJS.Fighter.prototype.land = function () {
     this.game.sound.play("SpikedBySpikes"); // HardLandingSplat
     this.alignToTile(tile);
     this.dieSpikes();
-  } else {
+  } else if (this.alive) {
     switch (fallingBlocks) {
       case 0:
       case 1:
