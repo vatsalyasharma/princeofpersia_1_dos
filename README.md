@@ -7,10 +7,10 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 - Browser: https://princejs.com
 - Keyboard
   - `Cursor keys`: Movement
-    - `Left/Right key`: Move left/right
-    - `Up key`: Jump
-    - `Down key`: Crouch, crawl
-  - `SHIFT`: Sword, Drink Potion, Grab Edges
+    - `Left/Right key`: Move Left/Right, Advance/Retreat
+    - `Up key`: Jump, Climb Up, Block Attack
+    - `Down key`: Crouch, Crawl, Climb Down, Sheathe Sword
+  - `SHIFT`: Drink Potion, Grab Edge, Sword Strike
   - `SPACE`: Show Remaining Time
   - `ENTER`: Continue Game
 - Mouse Controls
@@ -34,9 +34,9 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
     - _Jump Grab_: (Run) Jump -> Hold -> Drag to Center (Shift)
   - Fight
     - _Left/Right_: Advance/Retreat
-    - _Shift_: Strike
-    - _Up_: Block
-    - _Down_: Sheathe
+    - _Shift_: Sword Strike
+    - _Up_: Block Attack
+    - _Down_: Sheathe Sword
 
 ## Play on Apple Watch
 

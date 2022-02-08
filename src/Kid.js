@@ -163,14 +163,17 @@ PrinceJS.Kid.prototype.updateActor = function () {
 };
 
 PrinceJS.Kid.prototype.drinkPotion = function () {
+  this.pickupPotion = false;
+  this.allowCrawl = true;
   let tile = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
   if (tile.element !== PrinceJS.Level.TILE_POTION) {
     tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
   }
+  if (tile.element !== PrinceJS.Level.TILE_POTION) {
+    return;
+  }
   this.game.sound.play("DrinkPotionGlugGlug");
   this.action = "drinkpotion";
-  this.pickupPotion = false;
-  this.allowCrawl = true;
   let potionType = tile.modifier;
   this.level.removeObject(tile.roomX, tile.roomY, tile.room);
   PrinceJS.Utils.delayed(() => {
@@ -202,11 +205,11 @@ PrinceJS.Kid.prototype.drinkPotion = function () {
 };
 
 PrinceJS.Kid.prototype.gotSword = function () {
+  this.pickupSword = false;
+  this.allowCrawl = true;
   this.action = "pickupsword";
   PrinceJS.Utils.flashYellowSword(this.game);
   this.game.sound.play("Victory");
-  this.pickupSword = false;
-  this.allowCrawl = true;
   this.level.removeObject(this.charBlockX + this.charFace, this.charBlockY, this.room);
   this.hasSword = true;
 };
@@ -312,7 +315,7 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
           return this.standjump();
         }
       } else {
-        if (this.keyU()) {
+        if (this.keyU() && this.frameID(6)) {
           return this.runjump();
         }
       }
@@ -844,6 +847,9 @@ PrinceJS.Kid.prototype.checkFloor = function () {
     return;
   }
   if (["strike"].includes(this.action)) {
+    return;
+  }
+  if (this.pickupPotion || this.pickupSword) {
     return;
   }
 

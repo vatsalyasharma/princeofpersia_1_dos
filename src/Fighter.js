@@ -1333,6 +1333,9 @@ PrinceJS.Fighter.prototype.getCharBounds = function () {
   if (["runturn"].includes(this.action)) {
     w += 2;
   }
+  if (this.charFrame === 38) {
+    w += 5;
+  }
   return new Phaser.Rectangle(x, y, w, h);
 };
 
