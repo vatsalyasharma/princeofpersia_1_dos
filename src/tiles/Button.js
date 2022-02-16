@@ -29,9 +29,9 @@ PrinceJS.Tile.Button.prototype.update = function () {
   }
 
   if (this.debris) {
+    this.step = 0;
     if (!this.active) {
       this.active = true;
-      this.step = 0;
       this.trigger(false);
       if (!this.mute) {
         this.game.sound.play("FloorButton");
@@ -57,7 +57,7 @@ PrinceJS.Tile.Button.prototype.reset = function () {
   delete this.frontOriginalY;
   this.back.frameName = this.key + "_" + this.element;
   this.offsetY = 0;
-  this.front.crop(new Phaser.Rectangle(0, this.front.cropRect.y || 0, 33, this.front.height));
+  this.front.crop(new Phaser.Rectangle(0, this.front.cropRect.y || 0, 33, this.tileHeight));
   this.frontBevel.crop(null);
 };
 
@@ -67,7 +67,7 @@ PrinceJS.Tile.Button.prototype.push = function () {
     this.offsetY = 1;
     this.frontOriginalY = this.front.y;
     this.front.y += this.offsetY;
-    this.front.crop(new Phaser.Rectangle(0, 0, 33, this.front.height - 1));
+    this.front.crop(new Phaser.Rectangle(0, 0, 33, this.tileHeight - 1));
     this.frontBevel.crop(new Phaser.Rectangle(0, 0, 33, this.frontBevel.height - 1));
     this.back.frameName += "_down";
     this.trigger(false);

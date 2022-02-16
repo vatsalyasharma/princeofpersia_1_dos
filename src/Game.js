@@ -43,6 +43,7 @@ PrinceJS.Game.prototype = {
     }
     this.level = new PrinceJS.LevelBuilder(this.game, this).buildFromJSON(json);
     this.specialEvents = json.prince.specialEvents !== false;
+    this.playDanger = json.prince.danger !== false;
 
     this.shadow = null;
     this.mouse = null;
@@ -132,7 +133,7 @@ PrinceJS.Game.prototype = {
 
     this.firstUpdate = true;
     if (PrinceJS.danger === null) {
-      PrinceJS.danger = this.level.number === 1;
+      PrinceJS.danger = this.level.number === 1 && this.playDanger;
     }
     PrinceJS.Utils.resetFlipScreen();
     PrinceJS.Utils.updateQuery();

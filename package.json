@@ -12,6 +12,7 @@
   "scripts": {
     "start": "http-server",
     "convert": "node converter/index.js",
+    "convert:own": "node converter/index.js './converter/99 - Own/level1.xml' 99",
     "lint": "npm run prettier && eslint . --fix",
     "prettier": "prettier \"**/*.{js,json,md,html}\" --write --loglevel error"
   },

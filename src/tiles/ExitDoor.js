@@ -31,6 +31,8 @@ PrinceJS.Tile.ExitDoor.STATE_CLOSED = 3;
 PrinceJS.Tile.ExitDoor.prototype = Object.create(PrinceJS.Tile.Base.prototype);
 PrinceJS.Tile.ExitDoor.prototype.constructor = PrinceJS.Tile.ExitDoor;
 
+PrinceJS.Tile.ExitDoor.prototype.toggleMask = function () {};
+
 PrinceJS.Tile.ExitDoor.prototype.update = function () {
   let door = this.tileChildBack;
 

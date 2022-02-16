@@ -14,6 +14,7 @@ PrinceJS.Tile.Base = function (game, element, modifier, type) {
 
   this.back = this.game.make.sprite(0, 0, this.key, this.key + "_" + element);
   this.front = this.game.make.sprite(0, 0, this.key, this.key + "_" + element + "_fg");
+  this.tileHeight = this.front.height;
 
   this.room;
   this.roomX;
@@ -32,7 +33,7 @@ PrinceJS.Tile.Base.prototype = {
         this.front.removeChild(this.decoration);
       }
       if (this instanceof PrinceJS.Tile.Button && this.active) {
-        this.front.crop(new Phaser.Rectangle(0, 0, this.maskWidth(actor), this.front.height - this.offsetY || 0));
+        this.front.crop(new Phaser.Rectangle(0, 0, this.maskWidth(actor), this.tileHeight - this.offsetY || 0));
       } else {
         this.front.crop(null);
       }
@@ -49,7 +50,7 @@ PrinceJS.Tile.Base.prototype = {
         this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.frame);
         this.front.addChild(this.decoration);
       }
-      this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, this.maskWidth(actor), this.front.height));
+      this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, this.maskWidth(actor), this.tileHeight));
       this.crop = true;
     }
   },

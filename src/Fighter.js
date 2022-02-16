@@ -405,7 +405,6 @@ PrinceJS.Fighter.prototype.engarde = function () {
   if (!this.hasSword) {
     return false;
   }
-
   if (this.nearBarrier()) {
     return false;
   }
@@ -426,7 +425,7 @@ PrinceJS.Fighter.prototype.engarde = function () {
 };
 
 PrinceJS.Fighter.prototype.turnengarde = function () {
-  if (!this.opponentOnSameLevel()) {
+  if (!this.hasSword) {
     return;
   }
   if (this.flee) {
@@ -436,6 +435,9 @@ PrinceJS.Fighter.prototype.turnengarde = function () {
     return;
   }
   if (!["stand", "engarde", "advance", "retreat"].includes(this.action)) {
+    return;
+  }
+  if (!this.opponentOnSameLevel()) {
     return;
   }
   let begin = this.charName === "kid" && this.action === "stand" && Math.abs(this.opponentDistance()) > 10;
@@ -554,7 +556,6 @@ PrinceJS.Fighter.prototype.stabbed = function () {
 
   if (this.health === 0) {
     this.action = "stabkill";
-    this.bringAboveOpponent();
   } else {
     this.action = "stabbed";
   }
@@ -798,7 +799,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false, turn = fa
     }
   );
 
-  if (hasNoBarrier && Math.abs(this.opponentDistance()) <= 50) {
+  if (hasNoBarrier && Math.abs(this.opponentDistance()) < 40) {
     return true;
   }
 
@@ -1276,6 +1277,7 @@ PrinceJS.Fighter.prototype.die = function (action) {
   this.alive = false;
   this.swordDrawn = false;
   this.hideSplash();
+  this.bringAboveOpponent();
 };
 
 PrinceJS.Fighter.prototype.inLooseFloorDistance = function (tile) {

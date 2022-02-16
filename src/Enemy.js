@@ -180,6 +180,9 @@ PrinceJS.Enemy.prototype.enemyAdvance = function () {
 };
 
 PrinceJS.Enemy.prototype.engarde = function () {
+  if (!this.hasSword) {
+    return;
+  }
   if (!this.startFight) {
     return;
   }
@@ -194,6 +197,10 @@ PrinceJS.Enemy.prototype.retreat = function () {
   }
   if (this.nearBarrier(this.charBlockX, this.charBlockY, true)) {
     return;
+  }
+
+  if (!this.opponent.opponent) {
+    this.opponent.opponent = this;
   }
 
   if (
@@ -219,6 +226,10 @@ PrinceJS.Enemy.prototype.advance = function () {
   }
   if (this.nearBarrier(this.charBlockX, this.charBlockY, true)) {
     return;
+  }
+
+  if (!this.opponent.opponent) {
+    this.opponent.opponent = this;
   }
 
   let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);

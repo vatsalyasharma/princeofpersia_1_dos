@@ -164,12 +164,12 @@ PrinceJS.Kid.prototype.updateActor = function () {
 
 PrinceJS.Kid.prototype.drinkPotion = function () {
   this.pickupPotion = false;
-  this.allowCrawl = true;
   let tile = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
   if (tile.element !== PrinceJS.Level.TILE_POTION) {
     tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
   }
   if (tile.element !== PrinceJS.Level.TILE_POTION) {
+    this.allowCrawl = true;
     return;
   }
   this.game.sound.play("DrinkPotionGlugGlug");
@@ -201,6 +201,7 @@ PrinceJS.Kid.prototype.drinkPotion = function () {
         this.damageLife();
         break;
     }
+    this.allowCrawl = true;
   }, 1000);
 };
 
@@ -315,8 +316,12 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
           return this.standjump();
         }
       } else {
-        if (this.keyU() && this.frameID(6)) {
-          return this.runjump();
+        if (this.keyU()) {
+          if (this.frameID(4, 6)) {
+            return this.runjump();
+          } else {
+            return this.standjump();
+          }
         }
       }
       break;
@@ -474,6 +479,9 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
 };
 
 PrinceJS.Kid.prototype.tryEngarde = function () {
+  if (!this.hasSword) {
+    return false;
+  }
   if (this.blockEngarde) {
     return false;
   }
@@ -794,14 +802,16 @@ PrinceJS.Kid.prototype.block = function () {
   this.allowBlock = false;
 };
 
-PrinceJS.Kid.prototype.checkButton = function () {
+PrinceJS.Kid.prototype.prepareCheckFloor = function () {
   let checkCharBlockX = this.charBlockX;
   let checkCharBlockY = this.charBlockY;
   let checkCharFcheck = this.charFcheck;
 
   // skip charBlockY switch frame
   if (this.charFrame === 141) {
-    return;
+    return {
+      skip: true,
+    };
   }
   if (
     ["hang", "hangstraight"].includes(this.action) ||
@@ -813,7 +823,17 @@ PrinceJS.Kid.prototype.checkButton = function () {
   if (["hang", "hangstraight", "climbup", "climbdown", "runturn"].includes(this.action)) {
     checkCharFcheck = true;
   }
+  return {
+    tile: this.level.getTileAt(checkCharBlockX, checkCharBlockY, this.room),
+    checkCharFcheck,
+  };
+};
 
+PrinceJS.Kid.prototype.checkButton = function () {
+  let { skip, tile, checkCharFcheck } = this.prepareCheckFloor();
+  if (skip) {
+    return;
+  }
   switch (this.actionCode) {
     case 0: // stand
     case 1: // running
@@ -822,7 +842,6 @@ PrinceJS.Kid.prototype.checkButton = function () {
     case 6: // hangstraight
     case 7: // turn
       if (checkCharFcheck) {
-        let tile = this.level.getTileAt(checkCharBlockX, checkCharBlockY, this.room);
         if (tile) {
           switch (tile.element) {
             case PrinceJS.Level.TILE_RAISE_BUTTON:
@@ -837,9 +856,11 @@ PrinceJS.Kid.prototype.checkButton = function () {
 };
 
 PrinceJS.Kid.prototype.checkFloor = function () {
-  let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
-  let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
-
+  let { skip, tile, checkCharFcheck } = this.prepareCheckFloor();
+  if (skip) {
+    return;
+  }
+  let tileR = this.level.getTileAt(tile.roomX - this.charFace, tile.roomY, this.room);
   if (["climbup", "climbdown"].includes(this.action) && ![PrinceJS.Level.TILE_LOOSE_BOARD].includes(tile.element)) {
     return;
   }
@@ -851,11 +872,6 @@ PrinceJS.Kid.prototype.checkFloor = function () {
   }
   if (this.pickupPotion || this.pickupSword) {
     return;
-  }
-
-  let checkCharFcheck = this.charFcheck;
-  if (this.action === "runturn") {
-    checkCharFcheck = true;
   }
 
   switch (this.actionCode) {
@@ -927,7 +943,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
-  if ([16, 17, 27, 28, 47, 48, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)) {
+  if ([16, 17, 27, 28, 47, 48, 49, 50, 51, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)) {
     return;
   }
   let footX = this.charX + this.charFdx * this.charFace;
@@ -1180,7 +1196,7 @@ PrinceJS.Kid.prototype.flashShadowOverlay = function () {
 PrinceJS.Kid.prototype.turn = function () {
   if (!this.hasSword || !this.canReachOpponent(false, true)) {
     this.action = "turn";
-  } else if (this.canReachOpponent(false, true) && !this.facingOpponent() && !this.nearBarrier()) {
+  } else if (this.hasSword && this.canReachOpponent(false, true) && !this.facingOpponent() && !this.nearBarrier()) {
     this.action = "turndraw";
     this.flee = false;
     if (!this.swordDrawn) {

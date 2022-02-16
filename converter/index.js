@@ -28,7 +28,7 @@ const PrinceJS = {
 const args = process.argv.slice(2);
 
 (function () {
-  const offset = args[1] > 100 ? parseInt(args[1]) : 100;
+  const offset = args[1] >= 99 ? parseInt(args[1]) : 100;
   buildLevels(args[0], offset);
 })();
 
@@ -119,7 +119,8 @@ function mergeLevel(level, existingLevel) {
     "specialEvents",
     "falling",
     "bias",
-    "reverse"
+    "reverse",
+    "danger"
   ]);
   for (let i = 0; i < level.room.length; i++) {
     for (let j = 0; j < (level.room[i].tile || []).length; j++) {
@@ -139,6 +140,9 @@ function mergeLevel(level, existingLevel) {
       "reverse",
       "sneak"
     ]);
+    if (level.guards[i].type !== PrinceJS.Level.GUARD_NORMAL) {
+      level.guards[i].colors = 0;
+    }
   }
 }
 
