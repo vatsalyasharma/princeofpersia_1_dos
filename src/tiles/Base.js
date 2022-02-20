@@ -40,19 +40,26 @@ PrinceJS.Tile.Base.prototype = {
       this.frame = null;
       this.crop = false;
     } else {
+      this.initDecoration();
       this.frame = this.front.frameName;
       if (this.debris) {
         this.front.frameName = this.debrisBack.frameName;
       } else {
         this.front.frameName = this.back.frameName;
       }
-      if ([10, 25].includes(this.element)) {
-        this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.frame);
+      if (this.decoration) {
         this.front.addChild(this.decoration);
       }
       this.front.crop(new Phaser.Rectangle(0, this.offsetY || 0, this.maskWidth(actor), this.tileHeight));
       this.crop = true;
     }
+  },
+
+  initDecoration: function () {
+    if ([10, 25].includes(this.element)) {
+      this.decoration = this.decoration || this.game.make.sprite(0, 0, this.key, this.front.frameName);
+    }
+    return this.decoration;
   },
 
   maskWidth: function () {
@@ -176,6 +183,10 @@ PrinceJS.Tile.Base.prototype = {
       return;
     }
     this.debris = true;
+
+    if (this.initDecoration()) {
+      this.decoration.addChild(this.game.make.sprite(0, 0, this.key, this.key + "_" + PrinceJS.Level.TILE_DEBRIS + "_fg"));
+    }
 
     if (this.element === PrinceJS.Level.TILE_LOOSE_BOARD) {
       this.sweep();

@@ -40,5 +40,6 @@ PrinceJS.Tile.Potion.prototype.removeObject = function () {
   this.back.addChild(tileChild);
   if (this.decoration) {
     this.decoration.destroy();
+    this.decoration = undefined;
   }
 };
