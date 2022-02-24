@@ -18,6 +18,7 @@ PrinceJS.Kid = function (game, level, location, direction, room) {
   this.recoverCrop = false;
   this.checkFloorStepFall = false;
   this.backwardsFall = 1;
+  this.ledgeSwing = 0;
 
   this.cursors = this.game.input.keyboard.createCursorKeys();
   this.shiftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
@@ -257,6 +258,7 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
   switch (this.action) {
     case "stand":
       this.blockEngarde = false;
+      this.ledgeSwing = 0;
       if (!this.flee && this.canReachOpponent() && this.facingOpponent() && this.hasSword) {
         if (this.tryEngarde()) {
           return;
@@ -396,6 +398,9 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
       }
       if (!this.keyS()) {
         return this.startFall();
+      }
+      if (this.frameID(92)) {
+        this.ledgeSwing++;
       }
       break;
 
@@ -570,6 +575,7 @@ PrinceJS.Kid.prototype.grab = function (x) {
   this.charY = PrinceJS.Utils.convertBlockYtoY(this.charBlockY);
   this.charXVel = 0;
   this.charYVel = 0;
+  this.ledgeSwing = 0;
   this.stopFall();
   this.updateBlockXY();
   this.action = "hang";
@@ -763,6 +769,7 @@ PrinceJS.Kid.prototype.bumpFall = function () {
   if (this.actionCode === 4) {
     this.charX -= this.charFace * this.backwardsFall;
     this.charXVel = 0;
+    this.ledgeSwing = 0;
   } else {
     this.charX -= 2 * this.charFace * this.backwardsFall;
     this.bumpSound();
@@ -810,7 +817,7 @@ PrinceJS.Kid.prototype.prepareCheckFloor = function () {
   // skip charBlockY switch frame
   if (this.charFrame === 141) {
     return {
-      skip: true,
+      skip: true
     };
   }
   if (
@@ -825,7 +832,7 @@ PrinceJS.Kid.prototype.prepareCheckFloor = function () {
   }
   return {
     tile: this.level.getTileAt(checkCharBlockX, checkCharBlockY, this.room),
-    checkCharFcheck,
+    checkCharFcheck
   };
 };
 
@@ -937,13 +944,22 @@ PrinceJS.Kid.prototype.checkFloor = function () {
       }
       this.checkFloorStepFall = false;
       this.checkFall(tile);
+      this.checkLedgeSwing();
       break;
+  }
+};
+
+PrinceJS.Kid.prototype.checkLedgeSwing = function () {
+  if (this.ledgeSwing >= 4) {
+    this.charX += 1.5 * this.charFace;
   }
 };
 
 PrinceJS.Kid.prototype.checkRoomChange = function () {
   // Ignore frames around alternating chx (+/-)
-  if ([16, 17, 27, 28, 47, 48, 49, 50, 51, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)) {
+  if (
+    [16, 17, 27, 28, 47, 48, 49, 50, 51, 61, 62, 76, 77, 116, 117, 125, 126, 127, 128, 157].includes(this.charFrame)
+  ) {
     return;
   }
   let footX = this.charX + this.charFdx * this.charFace;
@@ -997,6 +1013,8 @@ PrinceJS.Kid.prototype.changeRoomDown = function () {
         this.baseX -= 320;
         this.charBlockX = 9;
       }
+      this.room = room;
+    } else {
       this.room = room;
     }
     this.onChangeRoom.dispatch(this.room);
@@ -1253,6 +1271,7 @@ PrinceJS.Kid.prototype.land = function () {
   this.charY = PrinceJS.Utils.convertBlockYtoY(this.charBlockY);
   this.charXVel = 0;
   this.charYVel = 0;
+  this.ledgeSwing = 0;
 
   let fallingBlocks = this.inFloat ? 0 : this.fallingBlocks;
   this.stopFall();

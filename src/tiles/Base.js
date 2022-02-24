@@ -185,7 +185,9 @@ PrinceJS.Tile.Base.prototype = {
     this.debris = true;
 
     if (this.initDecoration()) {
-      this.decoration.addChild(this.game.make.sprite(0, 0, this.key, this.key + "_" + PrinceJS.Level.TILE_DEBRIS + "_fg"));
+      this.decoration.addChild(
+        this.game.make.sprite(0, 0, this.key, this.key + "_" + PrinceJS.Level.TILE_DEBRIS + "_fg")
+      );
     }
 
     if (this.element === PrinceJS.Level.TILE_LOOSE_BOARD) {

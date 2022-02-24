@@ -164,7 +164,6 @@ Object.defineProperty(PrinceJS.Actor.prototype, "action", {
 
   set: function (value) {
     this._action = value;
-
     this._seqpointer = 0;
   }
 });
