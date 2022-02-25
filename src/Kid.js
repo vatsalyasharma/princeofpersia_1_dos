@@ -951,7 +951,7 @@ PrinceJS.Kid.prototype.checkFloor = function () {
 
 PrinceJS.Kid.prototype.checkLedgeSwing = function () {
   if (this.ledgeSwing >= 4) {
-    this.charX += 1.5 * this.charFace;
+    this.charX += (this.inFloat ? 2.0 : 1.5) * this.charFace;
   }
 };
 
