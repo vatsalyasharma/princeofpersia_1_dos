@@ -107,7 +107,7 @@ Custom levels can be played performing the following steps.
 - Execute `npm run convert`
 - Corresponding JSON files are placed at `/assets/maps/`
 
-### Level IDs
+### Level Numbers
 
 Converted levels from https://www.popot.org/custom_levels.php:
 
@@ -122,6 +122,12 @@ Converted levels from https://www.popot.org/custom_levels.php:
 - [199-212](https://princejs.com?level=199&strength=50): Story Retold ([source](https://www.popot.org/custom_levels.php?mod=0000146))
 - [213-226](https://princejs.com?level=213&strength=50): Prince of Persia Guard Revolt ([source](https://www.popot.org/custom_levels.php?mod=0000162))
 - [227-240](https://princejs.com?level=227&strength=50): Return of Prince ([source](https://www.popot.org/custom_levels.php?mod=0000207))
+
+### Level Walkthrough
+
+- **Level 100:**
+
+![Mobile](assets/web/level100.gif)
 
 ## Credits
 
