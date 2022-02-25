@@ -125,7 +125,7 @@ Converted levels from https://www.popot.org/custom_levels.php:
 
 ### Level Walkthrough
 
-- **Level 100:**
+- **Level 100:** https://youtu.be/PAHACXdWQ_M
 
 ![Mobile](assets/web/level100.gif)
 
