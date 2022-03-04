@@ -333,7 +333,7 @@
 			<tile element="1" modifier="0" />
 			<tile element="25" modifier="0" />
 			<tile element="4" modifier="0" />
-			<tile element="6" modifier="8" />
+			<tile element="15" modifier="8" />
 			<tile element="20" modifier="0" />
 			<tile element="3" modifier="0" />
 			<tile element="12" modifier="2" />
