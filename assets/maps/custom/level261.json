@@ -3177,7 +3177,7 @@
     "location": 23,
     "room": 1,
     "direction": 1,
-    "turn": false,
+    "turn": true,
     "cameraRoom": 1
   }
 }

@@ -547,10 +547,10 @@ PrinceJS.Fighter.prototype.stabbed = function () {
   this.charY = PrinceJS.Utils.convertBlockYtoY(this.charBlockY);
 
   if (this.charName !== "skeleton") {
-    if (this.swordDrawn) {
-      this.damageLife();
-    } else {
+    if (this.charName === "kid" && !this.swordDrawn) {
       this.die();
+    } else {
+      this.damageLife();
     }
   }
 

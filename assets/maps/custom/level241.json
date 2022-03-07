@@ -3136,6 +3136,6 @@
     "direction": -1,
     "turn": false,
     "offset": 7,
-    "sword": false
+    "sword": true
   }
 }

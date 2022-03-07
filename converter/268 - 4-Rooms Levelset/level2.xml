@@ -72,7 +72,7 @@
 		</room>
 		<room number="3">
 			<tile element="32" modifier="0" />
-			<tile element="15" modifier="1" />
+			<tile element="15" modifier="0" />
 			<tile element="11" modifier="0" />
 			<tile element="11" modifier="0" />
 			<tile element="32" modifier="0" />
@@ -108,7 +108,7 @@
 			<tile element="33" modifier="0" />
 			<tile element="1" modifier="1" />
 			<tile element="1" modifier="0" />
-			<tile element="15" modifier="2" />
+			<tile element="15" modifier="1" />
 			<tile element="4" modifier="0" />
 			<tile element="11" modifier="0" />
 			<tile element="1" modifier="0" />
@@ -820,8 +820,8 @@
 		</room>
 	</rooms>
 	<events>
-		<event number="1" room="2" location="15" next="1" />
 		<event number="2" room="3" location="9" next="0" />
+		<event number="1" room="2" location="15" next="1" />
 		<event number="3" room="4" location="5" next="0" />
 		<event number="4" room="1" location="1" next="0" />
 		<event number="5" room="1" location="1" next="0" />
