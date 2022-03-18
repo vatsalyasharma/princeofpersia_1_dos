@@ -172,6 +172,13 @@ PrinceJS.LevelBuilder.prototype = {
 
       case PrinceJS.Level.TILE_POTION:
         tile = new PrinceJS.Tile.Potion(this.game, t.modifier, this.type);
+        if (tile.isSpecial) {
+          const specialTile = this.getTileObjectAt(0, 0, 8);
+          if (specialTile) {
+            tile.specialModifier = specialTile.modifier;
+            tile.onDrank.add(this.delegate.fireEvent, this.delegate);
+          }
+        }
         this.level.addTrob(tile);
         break;
 
@@ -277,7 +284,7 @@ PrinceJS.LevelBuilder.prototype = {
     return tile;
   },
 
-  getTileAt: function (x, y, id) {
+  getTileObjectAt: function (x, y, id) {
     let room = this.level.rooms[id];
 
     if (x < 0) {
@@ -298,10 +305,18 @@ PrinceJS.LevelBuilder.prototype = {
     }
 
     if (id === -1) {
-      return PrinceJS.Level.TILE_WALL;
+      return null;
     }
 
-    return this.level.rooms[id].tiles[x + y * 10].element;
+    return this.level.rooms[id].tiles[x + y * 10];
+  },
+
+  getTileAt: function (x, y, id) {
+    let tile = this.getTileObjectAt(x, y, id);
+    if (!tile) {
+      return PrinceJS.Level.TILE_WALL;
+    }
+    return tile.element;
   },
 
   getRoomId: function (x, y) {

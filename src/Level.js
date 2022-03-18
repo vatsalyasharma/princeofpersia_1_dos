@@ -65,6 +65,7 @@ PrinceJS.Level.POTION_ADD = 2;
 PrinceJS.Level.POTION_BUFFER = 3;
 PrinceJS.Level.POTION_FLIP = 4;
 PrinceJS.Level.POTION_DAMAGE = 5;
+PrinceJS.Level.POTION_SPECIAL = 6;
 
 PrinceJS.Level.FLASH_RED = 0xff0000;
 PrinceJS.Level.FLASH_GREEN = 0x00ff00;

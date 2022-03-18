@@ -19,7 +19,7 @@ PrinceJS.Game.prototype = {
     this.game.load.audio("JaffarDead", "assets/music/20_Jaffar_Dead.mp3");
     this.game.load.audio("HeroicDeath", "assets/music/13_Heroic_Death.mp3");
 
-    let levelBasePath = PrinceJS.currentLevel < 100 ? "assets/maps/" : "assets/maps/custom/";
+    let levelBasePath = PrinceJS.currentLevel < 90 ? "assets/maps/" : "assets/maps/custom/";
     this.load.json("level", levelBasePath + "level" + PrinceJS.currentLevel + ".json");
   },
 
@@ -585,7 +585,7 @@ PrinceJS.Game.prototype = {
       return;
     }
 
-    if (PrinceJS.currentLevel > 3 && PrinceJS.currentLevel < 100) {
+    if (PrinceJS.currentLevel > 3 && PrinceJS.currentLevel < 90) {
       return;
     }
 
@@ -616,7 +616,7 @@ PrinceJS.Game.prototype = {
     PrinceJS.currentLevel++;
     PrinceJS.currentHealth = PrinceJS.currentLevel === 13 ? this.kid.health : null;
     PrinceJS.maxHealth = this.kid.maxHealth;
-    if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel < 100) {
+    if (PrinceJS.currentLevel > 15 && PrinceJS.currentLevel < 90) {
       this.restartGame();
       return;
     }

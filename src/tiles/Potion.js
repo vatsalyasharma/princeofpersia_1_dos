@@ -1,6 +1,8 @@
 "use strict";
 
 PrinceJS.Tile.Potion = function (game, modifier, type) {
+  this.specialModifier = modifier;
+  this.isSpecial = modifier >= PrinceJS.Level.POTION_SPECIAL;
   modifier = Math.max(1, Math.min(5, modifier));
   PrinceJS.Tile.Base.call(this, game, PrinceJS.Level.TILE_POTION, modifier, type);
 
@@ -8,6 +10,8 @@ PrinceJS.Tile.Potion = function (game, modifier, type) {
   if (modifier > 1 && modifier < 5) {
     yy -= 4;
   }
+
+  this.onDrank = new Phaser.Signal();
 
   this.tileChild = this.game.make.sprite(25, yy, "general");
   this.front.frameName += "_" + modifier;
@@ -41,5 +45,10 @@ PrinceJS.Tile.Potion.prototype.removeObject = function () {
   if (this.decoration) {
     this.decoration.destroy();
     this.decoration = undefined;
+  }
+  if (this.isSpecial) {
+    PrinceJS.Utils.delayed(() => {
+      this.onDrank.dispatch(this.specialModifier, PrinceJS.Level.TILE_RAISE_BUTTON);
+    }, 1000);
   }
 };

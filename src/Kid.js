@@ -177,6 +177,9 @@ PrinceJS.Kid.prototype.drinkPotion = function () {
   this.action = "drinkpotion";
   let potionType = tile.modifier;
   this.level.removeObject(tile.roomX, tile.roomY, tile.room);
+  if (tile.isSpecial) {
+    return;
+  }
   PrinceJS.Utils.delayed(() => {
     switch (potionType) {
       case PrinceJS.Level.POTION_RECOVER:

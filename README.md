@@ -111,6 +111,7 @@ Custom levels can be played performing the following steps.
 
 Converted levels from https://www.popot.org/custom_levels.php:
 
+- [99](https://princejs.com?level=99&strength=50): Chamber Play (own)
 - [100](https://princejs.com?level=100&strength=50): Tower of Revenge (own)
 - [101-114](https://princejs.com?level=101&strength=50): Prince of Persia Revisited ([source](https://www.popot.org/custom_levels.php?mod=0000163))
 - [115-128](https://princejs.com?level=115&strength=50): Jaffar's House ([source](https://www.popot.org/custom_levels.php?mod=0000220))
@@ -128,9 +129,13 @@ Converted levels from https://www.popot.org/custom_levels.php:
 
 ### Level Walkthrough
 
+- **Level 99:** https://youtu.be/Aj3tfAaXD4c
+
+![Level 99 - Chamber Play](assets/web/level99.gif)
+
 - **Level 100:** https://youtu.be/PAHACXdWQ_M
 
-![Mobile](assets/web/level100.gif)
+![Level 100 - Tower of Revenge](assets/web/level100.gif)
 
 ## Credits
 

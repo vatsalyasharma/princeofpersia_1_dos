@@ -12,7 +12,8 @@
   "scripts": {
     "start": "http-server",
     "convert": "node converter/index.js",
-    "convert:own": "node converter/index.js './converter/99 - Own/level1.xml' 99",
+    "convert:own:99": "node converter/index.js './converter/98 - Own/level1.xml' 98",
+    "convert:own:100": "node converter/index.js './converter/98 - Own/level2.xml' 98",
     "lint": "npm run prettier && eslint . --fix",
     "prettier": "prettier \"**/*.{js,json,md,html}\" --write --loglevel error"
   },
@@ -25,11 +26,11 @@
   },
   "homepage": "https://github.com/oklemenz/PrinceJS#readme",
   "devDependencies": {
-    "eslint": "^8.9.0",
+    "eslint": "^8.11.0",
     "eslint-config": "^0.3.0",
-    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-prettier": "^8.5.0",
     "http-server": "^14.1.0",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.0",
     "xml2json": "^0.12.0"
   }
 }

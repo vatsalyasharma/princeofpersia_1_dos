@@ -28,7 +28,7 @@ const PrinceJS = {
 const args = process.argv.slice(2);
 
 (function () {
-  const offset = args[1] >= 99 ? parseInt(args[1]) : 100;
+  const offset = args[1] >= 90 ? parseInt(args[1]) : 100;
   buildLevels(args[0], offset);
 })();
 
@@ -52,11 +52,11 @@ function buildLevelFile(file, offset) {
   const data = JSON.parse(xml2json.toJson(dataXML));
   const spec = determineSpec(data, file, offset);
   const level = transformLevel(spec);
-  if (level.id >= 100) {
+  if (level.id >= 90) {
     writeLevel(level);
   } else {
     // eslint-disable-next-line no-console
-    console.log("Level with id lower 100 is not (over)written: " + level.id);
+    console.log("Level with id lower 90 is not (over)written: " + level.id);
   }
 }
 
