@@ -43,7 +43,11 @@ PrinceJS.Fighter = function (game, level, location, direction, room, key, animKe
     this.splashTimer = 0;
   }
 
-  this.sword = this.game.make.sprite(0, 0, "general");
+  if (this.charName === "skeleton") {
+    this.sword = this.game.make.sprite(0, 0, "sword");
+  } else {
+    this.sword = this.game.make.sprite(0, 0, "general");
+  }
   this.sword.scale.x *= -this.charFace;
   this.sword.anchor.setTo(0, 1);
 

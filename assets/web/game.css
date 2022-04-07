@@ -17,8 +17,8 @@ body {
 body,
 body * {
     -webkit-touch-callout: none;
-    user-select: none;
     -webkit-user-select: none;
+    user-select: none;
     overflow: hidden;
 }
 
@@ -38,11 +38,6 @@ canvas {
     .game {
         height: 100%;
     }
-}
-
-.game_container {
-    display: block;
-    touch-action: none;
 }
 
 .flipped {
