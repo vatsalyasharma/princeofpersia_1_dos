@@ -20,7 +20,12 @@ body * {
     -webkit-user-select: none;
     user-select: none;
     overflow: hidden;
-    margin-top: 0.5px;
+}
+
+@supports (-webkit-touch-callout: none) {
+    body {
+        margin-top: 0.5px;
+    }
 }
 
 canvas {
