@@ -21,6 +21,9 @@ PrinceJS.Level = function (game, number, name, type) {
   this.maskedTiles = {};
 
   this.dummyWall = new PrinceJS.Tile.Base(this.game, PrinceJS.Level.TILE_WALL, 0, this.type);
+
+  this.exitDoorOpen = false;
+  this.activeGates = [];
 };
 
 PrinceJS.Level.TYPE_DUNGEON = 0;
@@ -86,9 +89,6 @@ PrinceJS.Level.prototype = {
 
     this.back.add(tile.back);
     this.front.add(tile.front);
-
-    this.exitDoorOpen = false;
-    this.activeGates = [];
   },
 
   addTrob: function (trob) {
