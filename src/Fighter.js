@@ -1321,7 +1321,7 @@ PrinceJS.Fighter.prototype.moveL = function (extended = true) {
 };
 
 PrinceJS.Fighter.prototype.sneaks = function () {
-  return ["stoop", "stand", "standup", "turn", "jumphanglong", "hang", "climbup", "climbdown"].includes(this.action) || this.action.startsWith("step");
+  return ["stoop", "stand", "standup", "turn", "jumphanglong", "hang", "hangdrop", "climbup", "climbdown", "testfoot"].includes(this.action) || this.action.startsWith("step");
 };
 
 PrinceJS.Fighter.prototype.getCharBounds = function () {

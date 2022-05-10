@@ -2281,7 +2281,8 @@
       "skill": 4,
       "colors": 6,
       "type": "guard",
-      "direction": -1
+      "direction": -1,
+      "bias": 1
     },
     {
       "room": 15,

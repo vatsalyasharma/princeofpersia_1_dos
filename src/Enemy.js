@@ -21,7 +21,7 @@ PrinceJS.Enemy = function (game, level, location, direction, room, skill, color,
   this.strikeTimer = 0;
   this.lookBelow = false;
   this.startFight = false;
-  this.sneakUp = false;
+  this.sneakUp = true;
 
   this.health = PrinceJS.Enemy.EXTRA_STRENGTH[skill] + PrinceJS.Enemy.STRENGTH[this.level.number];
 
@@ -388,8 +388,8 @@ PrinceJS.Enemy.prototype.setInactive = function () {
   }
 };
 
-PrinceJS.Enemy.prototype.setSneakUp = function () {
-  this.sneakUp = true;
+PrinceJS.Enemy.prototype.setSneakUp = function (state) {
+  this.sneakUp = state;
 };
 
 PrinceJS.Enemy.prototype.checkBarrier = function () {
