@@ -72,6 +72,7 @@ PrinceJS.Fighter = function (game, level, location, direction, room, key, animKe
   this.alive = true;
   this.swordDrawn = false;
   this.blocked = false;
+  this.sneakUp = true;
 
   this.onInitLife = new Phaser.Signal();
   this.onDamageLife = new Phaser.Signal();
@@ -241,7 +242,7 @@ PrinceJS.Fighter.prototype.checkFight = function () {
     this.x > 0 &&
     this.opponent.x > 0 &&
     Math.abs(this.x - this.opponent.x) >= 20 &&
-    !this.opponent.sneaks()
+    !(this.sneakUp && this.opponent.sneaks())
   ) {
     this.turn();
   }
@@ -938,6 +939,10 @@ PrinceJS.Fighter.prototype.updateSplash = function () {
   }
 };
 
+PrinceJS.Fighter.prototype.setSneakUp = function (state) {
+  this.sneakUp = state;
+};
+
 PrinceJS.Fighter.prototype.checkButton = function () {
   if (this.charFcheck) {
     let tile = this.level.getTileAt(this.charBlockX, this.charBlockY, this.room);
@@ -1321,7 +1326,7 @@ PrinceJS.Fighter.prototype.moveL = function (extended = true) {
 };
 
 PrinceJS.Fighter.prototype.sneaks = function () {
-  return ["stoop", "stand", "standup", "turn", "jumphanglong", "hang", "hangdrop", "climbup", "climbdown", "testfoot"].includes(this.action) || this.action.startsWith("step");
+  return ["stoop", "stand", "standup", "turn", "jumpbackhang", "jumphanglong", "hang", "hangdrop", "climbup", "climbdown", "testfoot"].includes(this.action) || this.action.startsWith("step");
 };
 
 PrinceJS.Fighter.prototype.getCharBounds = function () {
