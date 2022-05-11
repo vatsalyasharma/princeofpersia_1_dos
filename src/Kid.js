@@ -19,6 +19,7 @@ PrinceJS.Kid = function (game, level, location, direction, room) {
   this.checkFloorStepFall = false;
   this.backwardsFall = 1;
   this.ledgeSwing = 0;
+  this.grabWait = false;
 
   this.cursors = this.game.input.keyboard.createCursorKeys();
   this.shiftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
@@ -396,7 +397,7 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
           this.startFall();
         }
       }
-      if (this.keyU()) {
+      if (this.keyU() && !this.grabWait) {
         return this.climbup();
       }
       if (!this.keyS()) {
@@ -409,7 +410,7 @@ PrinceJS.Kid.prototype.updateBehaviour = function () {
 
     case "hangstraight":
       this.charRepeat = false;
-      if (this.keyU()) {
+      if (this.keyU() && !this.grabWait) {
         return this.climbup();
       }
       if (!this.keyS()) {
@@ -589,6 +590,11 @@ PrinceJS.Kid.prototype.grab = function (x) {
   if (tile.element === PrinceJS.Level.TILE_LOOSE_BOARD) {
     tile.shake(true);
   }
+
+  this.grabWait = true;
+  PrinceJS.Utils.delayed(() => {
+    this.grabWait = false;
+  }, 500);
 };
 
 PrinceJS.Kid.prototype.checkBarrier = function () {
