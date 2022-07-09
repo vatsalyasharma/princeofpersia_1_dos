@@ -1092,6 +1092,13 @@ PrinceJS.Fighter.prototype.land = function () {
     }
   }
   this.processCommand();
+
+  if (this.sneakUp) {
+    this.sneakUp = false;
+    PrinceJS.Utils.delayed(() => {
+      this.sneakUp = true;
+    }, 250);
+  }
 };
 
 PrinceJS.Fighter.prototype.distanceToEdge = function () {
@@ -1326,7 +1333,21 @@ PrinceJS.Fighter.prototype.moveL = function (extended = true) {
 };
 
 PrinceJS.Fighter.prototype.sneaks = function () {
-  return ["stoop", "stand", "standup", "turn", "jumpbackhang", "jumphanglong", "hang", "hangdrop", "climbup", "climbdown", "testfoot"].includes(this.action) || this.action.startsWith("step");
+  return (
+    [
+      "stoop",
+      "stand",
+      "standup",
+      "turn",
+      "jumpbackhang",
+      "jumphanglong",
+      "hang",
+      "hangdrop",
+      "climbup",
+      "climbdown",
+      "testfoot"
+    ].includes(this.action) || this.action.startsWith("step")
+  );
 };
 
 PrinceJS.Fighter.prototype.getCharBounds = function () {
