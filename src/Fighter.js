@@ -821,7 +821,7 @@ PrinceJS.Fighter.prototype.canReachOpponent = function (below = false, turn = fa
         };
       }
       let tile = this.level.getTileAt(charBlockX, charBlockY, room);
-      if (tile.isSpace() && below && charBlockY < 2 && this.opponent.charBlockY === charBlockY + 1) {
+      if (below && tile.isSpace() && charBlockY < 2 && this.opponent.charBlockY === charBlockY + 1) {
         return {
           value: this.checkPathToOpponent(
             tile.centerX,

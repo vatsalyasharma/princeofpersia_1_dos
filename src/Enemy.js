@@ -169,14 +169,25 @@ PrinceJS.Enemy.prototype.enemyAdvance = function () {
 
   let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
-  if (tileF.isSafeWalkable()) {
+  if (this.canWalkSafely(tileF, true)) {
     this.advance();
   } else {
-    if (tileR.isSafeWalkable()) {
+    if (this.canWalkSafely(tileR)) {
       this.retreat();
     }
   }
 };
+
+PrinceJS.Enemy.prototype.canWalkSafely = function (tile, below = false) {
+  if (tile.isSafeWalkable()) {
+    return true;
+  }
+  if (below && tile.isSpace() && tile.roomY < 2 && this.opponent.charBlockY === tile.roomY + 1) {
+    tile = this.level.getTileAt(tile.roomX, tile.roomY + 1, tile.room);
+    return tile.isSafeWalkable();
+  }
+  return false;
+}
 
 PrinceJS.Enemy.prototype.engarde = function () {
   if (!this.hasSword) {
@@ -214,7 +225,7 @@ PrinceJS.Enemy.prototype.retreat = function () {
   }
 
   let tileR = this.level.getTileAt(this.charBlockX - this.charFace, this.charBlockY, this.room);
-  if (tileR.isSafeWalkable()) {
+  if (this.canWalkSafely(tileR)) {
     PrinceJS.Fighter.prototype.retreat.call(this);
   }
 };
@@ -233,7 +244,7 @@ PrinceJS.Enemy.prototype.advance = function () {
 
   let tileF = this.level.getTileAt(this.charBlockX + this.charFace, this.charBlockY, this.room);
   let tileFF = this.level.getTileAt(this.charBlockX + 2 * this.charFace, this.charBlockY, this.room);
-  if (tileF.isSafeWalkable() && (!this.opponent.isHanging() || tileFF.isSafeWalkable())) {
+  if (this.canWalkSafely(tileF, true) && (!this.opponent.isHanging() || this.canWalkSafely(tileFF, true))) {
     PrinceJS.Fighter.prototype.advance.call(this);
   }
 };
