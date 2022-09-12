@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/oklemenz/PrinceJS#readme",
   "devDependencies": {
-    "eslint": "^8.19.0",
+    "eslint": "^8.23.1",
     "eslint-config": "^0.3.0",
     "eslint-config-prettier": "^8.5.0",
     "http-server": "^14.1.1",
