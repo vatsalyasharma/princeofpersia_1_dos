@@ -69,7 +69,7 @@ PrinceJS.Credits.prototype = {
     this.back.updateCrop();
     this.credits.updateCrop();
 
-    if (PrinceJS.Utils.pointerPressed(this.game)) {
+    if (PrinceJS.Utils.continueGame(this.game)) {
       this.play();
     }
   },

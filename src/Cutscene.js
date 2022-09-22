@@ -146,7 +146,7 @@ PrinceJS.Cutscene.prototype = {
   },
 
   update: function () {
-    if (PrinceJS.Utils.pointerPressed(this.game)) {
+    if (PrinceJS.Utils.continueGame(this.game)) {
       this.continue();
     }
   },

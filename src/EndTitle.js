@@ -61,7 +61,7 @@ PrinceJS.EndTitle.prototype = {
     this.tick++;
     this.textBack.updateCrop();
 
-    if (PrinceJS.Utils.pointerPressed(this.game)) {
+    if (PrinceJS.Utils.continueGame(this.game)) {
       this.next();
     }
   },

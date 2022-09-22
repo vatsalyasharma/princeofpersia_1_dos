@@ -114,6 +114,100 @@ PrinceJS.Utils = {
     return Math.floor(Math.random() * Math.floor(max));
   },
 
+  continueGame: function (game) {
+    return PrinceJS.Utils.pointerPressed(game) || PrinceJS.Utils.gamepadAnyPressed(game);
+  },
+
+  gamepadButtonPressedCheck: function (game, buttons, name = "default") {
+    if (this[`_${name}Pressed`]) {
+      return false;
+    }
+    let pressed = false;
+    let pad = game.input.gamepad.pad1;
+    if (pad && pad.connected) {
+      if (!buttons) {
+        buttons = Object.keys(pad._rawPad.buttons).map((button) => parseInt(button));
+      }
+      for (let button of buttons) {
+        if (pad.justPressed(button)) {
+          pressed = true;
+        }
+      }
+    }
+    if (pressed) {
+      this[`_${name}Pressed`] = true;
+      PrinceJS.Utils.delayed(() => {
+        this[`_${name}Pressed`] = false;
+      }, 500);
+    }
+    return pressed;
+  },
+
+  gamepadButtonDownCheck: function (game, buttons) {
+    let pad = game.input.gamepad.pad1;
+    if (pad && pad.connected) {
+      if (!buttons) {
+        buttons = Object.keys(pad._rawPad.buttons).map((button) => parseInt(button));
+      }
+      for (let button of buttons) {
+        if (pad.isDown(button)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+
+  gamepadAxisCheck: function (game, axes, comparison) {
+    let pad = game.input.gamepad.pad1;
+    if (pad && pad.connected) {
+      for (let axis of axes) {
+        if (comparison === "<" && pad.axis(axis) < -0.75) {
+          return true;
+        } else if (comparison === ">" && pad.axis(axis) > 0.75) {
+          return true;
+        }
+      }
+    }
+    return false;
+  },
+
+  gamepadAnyPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game);
+  },
+
+  gamepadUpPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonDownCheck(game, [1, 5, 7, 12]) || PrinceJS.Utils.gamepadAxisCheck(game, [1, 3], "<");
+  },
+
+  gamepadDownPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonDownCheck(game, [13]) || PrinceJS.Utils.gamepadAxisCheck(game, [1, 3], ">");
+  },
+
+  gamepadLeftPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonDownCheck(game, [14]) || PrinceJS.Utils.gamepadAxisCheck(game, [0, 2], "<");
+  },
+
+  gamepadRightPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonDownCheck(game, [15]) || PrinceJS.Utils.gamepadAxisCheck(game, [0, 2], ">");
+  },
+
+  gamepadActionPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonDownCheck(game, [0, 2, 3, 4, 6]);
+  },
+
+  gamepadInfoPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [16, 17, 18, 19, 20, 21], "info");
+  },
+
+  gamepadPreviousPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [8], "previous");
+  },
+
+  gamepadNextPressed: function (game) {
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [9], "next");
+  },
+
   pointerPressed: function (game) {
     let pointerPressed = this._pointerPressed;
     this._pointerPressed = PrinceJS.Utils.pointerDown(game);

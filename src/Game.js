@@ -140,7 +140,7 @@ PrinceJS.Game.prototype = {
   },
 
   update: function () {
-    if (PrinceJS.Utils.pointerPressed(this.game)) {
+    if (PrinceJS.Utils.continueGame(this.game)) {
       this.buttonPressed();
       let pos = PrinceJS.Utils.effectivePointer(this.game);
       let size = PrinceJS.Utils.effectiveScreenSize(this.game);
@@ -160,6 +160,17 @@ PrinceJS.Game.prototype = {
         if (pos.x >= 0 && pos.x <= size.width) {
           this.showRemainingMinutes();
         }
+      }
+      if (PrinceJS.Utils.gamepadInfoPressed(this.game)) {
+        if (this.isRemainingMinutesShown() || this.isLevelShown()) {
+          this.restartLevel(true);
+        } else {
+          this.showRemainingMinutes();
+        }
+      } else if (PrinceJS.Utils.gamepadPreviousPressed(this.game)) {
+        this.previousLevel(PrinceJS.currentLevel, true);
+      } else if (PrinceJS.Utils.gamepadNextPressed(this.game)) {
+        this.nextLevel(PrinceJS.currentLevel, true, true);
       }
     }
   },

@@ -1096,23 +1096,23 @@ PrinceJS.Kid.prototype.tryPickup = function () {
 };
 
 PrinceJS.Kid.prototype.keyL = function () {
-  return this.cursors.left.isDown || this.pointerL();
+  return this.cursors.left.isDown || this.pointerL() || PrinceJS.Utils.gamepadLeftPressed(this.game);
 };
 
 PrinceJS.Kid.prototype.keyR = function () {
-  return this.cursors.right.isDown || this.pointerR();
+  return this.cursors.right.isDown || this.pointerR() || PrinceJS.Utils.gamepadRightPressed(this.game);
 };
 
 PrinceJS.Kid.prototype.keyU = function () {
-  return this.cursors.up.isDown || this.pointerU();
+  return this.cursors.up.isDown || this.pointerU() || PrinceJS.Utils.gamepadUpPressed(this.game);
 };
 
 PrinceJS.Kid.prototype.keyD = function () {
-  return this.cursors.down.isDown || this.pointerD();
+  return this.cursors.down.isDown || this.pointerD() || PrinceJS.Utils.gamepadDownPressed(this.game);
 };
 
 PrinceJS.Kid.prototype.keyS = function () {
-  return this.shiftKey.isDown || this.pointerS();
+  return this.shiftKey.isDown || this.pointerS() || PrinceJS.Utils.gamepadActionPressed(this.game);
 };
 
 PrinceJS.Kid.prototype.pointerL = function () {

@@ -100,13 +100,15 @@ PrinceJS.Preloader.prototype = {
     this.game.input.addPointer();
     this.game.input.addPointer();
 
+    this.game.input.gamepad.start();
+
     this.game.canvas.oncontextmenu = function (event) {
       event.preventDefault();
     };
   },
 
   update: function () {
-    if (PrinceJS.Utils.pointerPressed(this.game)) {
+    if (PrinceJS.Utils.continueGame(this.game)) {
       this.start();
     }
   },

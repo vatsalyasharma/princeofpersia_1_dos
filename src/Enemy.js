@@ -187,7 +187,7 @@ PrinceJS.Enemy.prototype.canWalkSafely = function (tile, below = false) {
     return tile.isSafeWalkable();
   }
   return false;
-}
+};
 
 PrinceJS.Enemy.prototype.engarde = function () {
   if (!this.hasSword) {

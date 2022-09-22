@@ -7,14 +7,25 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 - Browser: https://princejs.com
 - Keyboard
   - `Cursor keys`: Movement
-    - `Left/Right key`: Move Left/Right, Advance/Retreat
+    - `Left / Right key`: Move Left/Right, Advance/Retreat
     - `Up key`: Jump, Climb Up, Block Attack
     - `Down key`: Crouch, Crawl, Climb Down, Sheathe Sword
   - `SHIFT`: Drink Potion, Grab Edge, Sword Strike
   - `SPACE`: Show Remaining Time
   - `ENTER`: Continue Game
-- Mouse Controls
+- Mouse
   - See Touch Controls for Mobile
+- Game Controller
+  - `Left / Right Stick, DPad`: Movement
+    - `Left / Right`: Move Left/Right, Advance/Retreat
+    - `Up`: Jump, Climb Up, Block Attack
+    - `Down`: Crouch, Crawl, Climb Down, Sheathe Sword
+  - `A / R / ZR Button`: Jump, Climb Up, Block Attack
+  - `B / X / Y / L / ZL Button`: Drink Potion, Grab Edge, Sword Strike
+  - `Home/Record`: (1x) Show Remaining Time, (2x) Restart Level
+  - `Minus Button`: Previous Level
+  - `Plus Button`: Next Level
+  - `Any`: Continue Game
 
 ## Play Mobile
 
