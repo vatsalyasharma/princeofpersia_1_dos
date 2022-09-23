@@ -21,8 +21,8 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
     - `Up`: Jump, Climb Up, Block Attack
     - `Down`: Crouch, Crawl, Climb Down, Sheathe Sword
   - `A / R / ZR Button`: Jump, Climb Up, Block Attack
-  - `B / X / Y / L / ZL Button`: Drink Potion, Grab Edge, Sword Strike
-  - `Home/Record`: (1x) Show Remaining Time, (2x) Restart Level
+  - `B / Y / L / ZL Button`: Drink Potion, Grab Edge, Sword Strike
+  - `X`: (1x) Show Remaining Time, (2x) Restart Level
   - `Minus Button`: Previous Level
   - `Plus Button`: Next Level
   - `Any`: Continue Game
