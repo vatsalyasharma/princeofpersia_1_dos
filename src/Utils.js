@@ -177,35 +177,56 @@ PrinceJS.Utils = {
   },
 
   gamepadUpPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonDownCheck(game, [1, 5, 7, 12]) || PrinceJS.Utils.gamepadAxisCheck(game, [1, 3], "<");
+    return (
+      PrinceJS.Utils.gamepadButtonDownCheck(game, [
+        PrinceJS.Gamepad.A,
+        PrinceJS.Gamepad.R,
+        PrinceJS.Gamepad.ZR,
+        PrinceJS.Gamepad.DPadU
+      ]) || PrinceJS.Utils.gamepadAxisCheck(game, [PrinceJS.Gamepad.Axis.LY, PrinceJS.Gamepad.Axis.RY], "<")
+    );
   },
 
   gamepadDownPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonDownCheck(game, [13]) || PrinceJS.Utils.gamepadAxisCheck(game, [1, 3], ">");
+    return (
+      PrinceJS.Utils.gamepadButtonDownCheck(game, [PrinceJS.Gamepad.DPadD]) ||
+      PrinceJS.Utils.gamepadAxisCheck(game, [PrinceJS.Gamepad.Axis.LY, PrinceJS.Gamepad.Axis.RY], ">")
+    );
   },
 
   gamepadLeftPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonDownCheck(game, [14]) || PrinceJS.Utils.gamepadAxisCheck(game, [0, 2], "<");
+    return (
+      PrinceJS.Utils.gamepadButtonDownCheck(game, [PrinceJS.Gamepad.DPadL]) ||
+      PrinceJS.Utils.gamepadAxisCheck(game, [PrinceJS.Gamepad.Axis.LX, PrinceJS.Gamepad.Axis.RX], "<")
+    );
   },
 
   gamepadRightPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonDownCheck(game, [15]) || PrinceJS.Utils.gamepadAxisCheck(game, [0, 2], ">");
+    return (
+      PrinceJS.Utils.gamepadButtonDownCheck(game, [PrinceJS.Gamepad.DPadR]) ||
+      PrinceJS.Utils.gamepadAxisCheck(game, [PrinceJS.Gamepad.Axis.LX, PrinceJS.Gamepad.Axis.RX], ">")
+    );
   },
 
   gamepadActionPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonDownCheck(game, [0, 2, 3, 4, 6]);
+    return PrinceJS.Utils.gamepadButtonDownCheck(game, [
+      PrinceJS.Gamepad.B,
+      PrinceJS.Gamepad.Y,
+      PrinceJS.Gamepad.L,
+      PrinceJS.Gamepad.ZL
+    ]);
   },
 
   gamepadInfoPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [16, 17, 18, 19, 20, 21], "info");
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [PrinceJS.Gamepad.X], "info");
   },
 
   gamepadPreviousPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [8], "previous");
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [PrinceJS.Gamepad.Minus], "previous");
   },
 
   gamepadNextPressed: function (game) {
-    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [9], "next");
+    return PrinceJS.Utils.gamepadButtonPressedCheck(game, [PrinceJS.Gamepad.Plus], "next");
   },
 
   pointerPressed: function (game) {

@@ -108,7 +108,7 @@ PrinceJS.Preloader.prototype = {
   },
 
   update: function () {
-    if (PrinceJS.Utils.continueGame(this.game)) {
+    if (PrinceJS.Utils.pointerPressed(this.game)) {
       this.start();
     }
   },

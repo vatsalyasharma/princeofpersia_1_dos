@@ -36,6 +36,29 @@ PrinceJS.Init = function () {
   PrinceJS.skipShowLevel = false;
 };
 
+PrinceJS.Gamepad = {
+  A: 0,
+  B: 1,
+  X: 2,
+  Y: 3,
+  L: 4,
+  R: 5,
+  ZL: 6,
+  ZR: 7,
+  Minus: 8,
+  Plus: 9,
+  DPadU: 12,
+  DPadD: 13,
+  DPadL: 14,
+  DPadR: 15,
+  Axis: {
+    LX: 0,
+    LY: 1,
+    RX: 2,
+    RY: 3
+  }
+};
+
 PrinceJS.Restart = function () {
   PrinceJS.Utils.clearQuery();
   PrinceJS.Init();
