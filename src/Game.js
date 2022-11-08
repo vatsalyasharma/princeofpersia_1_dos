@@ -249,6 +249,11 @@ PrinceJS.Game.prototype = {
               this.kid.sheathe();
             }, 100);
           }
+          if (skeleton.room === 3 && skeleton.charBlockY === 1 && skeleton.charX <= 45 && !skeleton.inFallDown) {
+            skeleton.charX = 55;
+            skeleton.updateBlockXY();
+            skeleton.startFall();
+          }
           if (skeleton.room === 8 && !skeleton.defeated) {
             skeleton.defeated = true;
             this.game.sound.play("Victory");
