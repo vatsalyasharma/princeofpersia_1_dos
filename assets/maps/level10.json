@@ -2438,8 +2438,7 @@
       "skill": 3,
       "colors": 6,
       "type": "guard",
-      "direction": 1,
-      "sneak": false
+      "direction": 1
     },
     {
       "room": 14,
