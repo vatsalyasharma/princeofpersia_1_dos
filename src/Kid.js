@@ -532,7 +532,7 @@ PrinceJS.Kid.prototype.inGrabDistance = function (tile, distance = 30) {
 
 PrinceJS.Kid.prototype.tryGrabEdge = function () {
   this.updateBlockXY();
-  if (this.fallingBlocks > 3 && !this.inFloat) {
+  if (this.fallingBlocks > 2 && !this.inFloat) {
     return;
   }
   let tileT = this.level.getTileAt(this.charBlockX, this.charBlockY - 1, this.room);
