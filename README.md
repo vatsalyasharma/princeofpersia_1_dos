@@ -96,7 +96,8 @@ Manual adjustments of url parameters is possible as preset options.
 
 ## Custom Levels
 
-Apoplexy (https://www.apoplexy.org) can be used to build custom levels.
+Apoplexy (https://apoplexy.github.io/apoplexysite/) can be used to build custom
+levels.
 Custom levels can be played performing the following steps.
 
 ### Single Conversion
