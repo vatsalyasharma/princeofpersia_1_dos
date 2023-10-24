@@ -1342,6 +1342,7 @@ PrinceJS.Fighter.prototype.sneaks = function () {
       "jumpbackhang",
       "jumphanglong",
       "hang",
+      "hangstraight",
       "hangdrop",
       "climbup",
       "climbdown",
