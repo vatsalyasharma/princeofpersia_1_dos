@@ -173,7 +173,7 @@ PrinceJS.LevelBuilder.prototype = {
       case PrinceJS.Level.TILE_POTION:
         tile = new PrinceJS.Tile.Potion(this.game, t.modifier, this.type);
         if (tile.isSpecial) {
-          const specialTile = this.getTileObjectAt(0, 0, 8);
+          let specialTile = this.getTileObjectAt(0, 0, 8);
           if (specialTile) {
             tile.specialModifier = specialTile.modifier;
             tile.onDrank.add(this.delegate.fireEvent, this.delegate);
@@ -230,6 +230,7 @@ PrinceJS.LevelBuilder.prototype = {
 
       case PrinceJS.Level.TILE_GATE:
         tile = new PrinceJS.Tile.Gate(this.game, t.modifier, this.type);
+        tile.onFastDrop.add(this.delegate.checkGateFastDropped, this.delegate);
         if (t.mute === false) {
           tile.setCanMute(false);
         }

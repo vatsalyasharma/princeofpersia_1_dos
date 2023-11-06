@@ -1725,7 +1725,7 @@ PrinceJS.Kid.prototype.floatFall = function () {
   }
   this.inFloat = true;
   this.game.sound.play("Float");
-  const handle = PrinceJS.Utils.delayedCancelable(() => {
+  let handle = PrinceJS.Utils.delayedCancelable(() => {
     this.inFloat = false;
     this.inFloatTimeoutCancel = null;
     this.fallingBlocks = 0;

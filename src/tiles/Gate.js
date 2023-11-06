@@ -3,6 +3,8 @@
 PrinceJS.Tile.Gate = function (game, modifier, type) {
   PrinceJS.Tile.Base.call(this, game, PrinceJS.Level.TILE_GATE, modifier, type);
 
+  this.onFastDrop = new Phaser.Signal();
+
   this.posY = -modifier * 46;
 
   this.tileChildBack = this.game.make.sprite(0, 0, this.key, this.key + "_gate");
@@ -128,6 +130,7 @@ PrinceJS.Tile.Gate.prototype.update = function () {
         this.state = PrinceJS.Tile.Gate.STATE_CLOSED;
         if (closeSound) {
           this.game.sound.play("GateReachesBottomClang");
+          this.onFastDrop.dispatch(this);
         }
       }
       break;

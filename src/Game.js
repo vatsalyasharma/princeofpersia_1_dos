@@ -753,6 +753,19 @@ PrinceJS.Game.prototype = {
     }
   },
 
+  checkGateFastDropped: function (gate) {
+    for (let i = 0; i < this.enemies.length; i++) {
+      let enemy = this.enemies[i];
+      if (enemy.room === gate.room) {
+        if (enemy.faceL() && enemy.charBlockX <= gate.roomX) {
+          enemy.turn();
+        } else if (enemy.faceR() && enemy.charBlockX >= gate.roomX) {
+          enemy.turn();
+        }
+      }
+    }
+  },
+
   recheckCurrentRoom: function () {
     this.checkForOpponent(this.currentCameraRoom);
   },
