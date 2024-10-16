@@ -4,7 +4,7 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 
 ## Play Online
 
-- Browser: https://princejs.com
+- Browser: https://vatsalyasharma.github.io/princeofpersia_1_dos/
 - Keyboard
   - `Cursor keys`: Movement
     - `Left / Right key`: Move Left/Right, Advance/Retreat
