@@ -29,13 +29,13 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 
 ## Play Mobile
 
-- Browser: https://princejs.com
+- Browser: https://vatsalyasharma.github.io/princeofpersia_1_dos/
   - Use Landscape Mode
   - Single Tab
   - Disable Landscape Tab Bar in Browser Settings
 - Add to Home Screen to start as Fullscreen App
 - Reduced difficulty (50%):
-  - https://princejs.com?strength=50
+  - https://vatsalyasharma.github.io/princeofpersia_1_dos?strength=50
 - Touch Controls (tap/drag area on screen, fight mode in brackets):
 
   ![Mobile](assets/web/mobile.svg)
@@ -86,11 +86,11 @@ Url parameters are leveraged to save game state automatically (shortcut in brack
 
 Default url looks as follows:
 
-https://princejs.com?level=1&health=3&time=60&strength=100&width=0
+https://vatsalyasharma.github.io/princeofpersia_1_dos?level=1&health=3&time=60&strength=100&width=0
 
 Default shortcut url looks as follows:
 
-https://princejs.com?l=1&h=3&t=60&s=100&w=0&_=true
+https://vatsalyasharma.github.io/princeofpersia_1_dos?l=1&h=3&t=60&s=100&w=0&_=true
 
 Manual adjustments of url parameters is possible as preset options.
 
