@@ -52,11 +52,11 @@ Prince of Persia reimplementation written in HTML5 / JavaScript (MS-DOS version)
 ## Play on Apple Watch
 
 - Mail/Message
-  - Send mail or message to yourself with body: https://princejs.com
+  - Send mail or message to yourself with body: https://vatsalyasharma.github.io/princeofpersia_1_dos
   - On Apple Watch open Mail or Message app
   - Click included link to open Browser
 - Siri
-  - Tell Siri 'princejs.com' on Apple Watch
+  - Tell Siri 'vatsalyasharma.github.io/princeofpersia_1_dos' on Apple Watch
   - Watch out for correct localized pronunciation
 - Play using Touch Controls as on Mobile
 
@@ -123,23 +123,23 @@ Custom levels can be played performing the following steps.
 
 Converted levels from https://www.popot.org/custom_levels.php:
 
-- [99](https://princejs.com?level=99&strength=50): Chamber Play (own)
-- [100](https://princejs.com?level=100&strength=50): Tower of Revenge (own)
-- [101-114](https://princejs.com?level=101&strength=50): Prince of Persia Revisited ([source](https://www.popot.org/custom_levels.php?mod=0000163))
-- [115-128](https://princejs.com?level=115&strength=50): Jaffar's House ([source](https://www.popot.org/custom_levels.php?mod=0000220))
-- [129-142](https://princejs.com?level=129&strength=50): Ipank's Levels ([source](https://www.popot.org/custom_levels.php?mod=0000151))
-- [143-156](https://princejs.com?level=143&strength=50): Barre's Alternative ([source](https://www.popot.org/custom_levels.php?mod=0000189))
-- [157-170](https://princejs.com?level=157&strength=50): Miracles Don't Exist ([source](https://www.popot.org/custom_levels.php?mod=0000098))
-- [171-184](https://princejs.com?level=171&strength=50): Babylon Tower Climb ([source](https://www.popot.org/custom_levels.php?mod=0000109))
-- [185-198](https://princejs.com?level=185&strength=50): Lost in Errors ([source](https://www.popot.org/custom_levels.php?mod=0000144))
-- [199-212](https://princejs.com?level=199&strength=50): Story Retold ([source](https://www.popot.org/custom_levels.php?mod=0000146))
-- [213-226](https://princejs.com?level=213&strength=50): Prince of Persia Guard Revolt ([source](https://www.popot.org/custom_levels.php?mod=0000162))
-- [227-240](https://princejs.com?level=227&strength=50): Return of Prince ([source](https://www.popot.org/custom_levels.php?mod=0000207))
-- [241-254](https://princejs.com?level=241&strength=50): The Sequel ([source](https://www.popot.org/custom_levels.php?mod=0000273))
-- [255-268](https://princejs.com?level=255&strength=50): Nahemsan ([source](https://www.popot.org/custom_levels.php?mod=0000272))
-- [269-282](https://princejs.com?level=269&strength=50): 4-Rooms Levelset ([source](https://www.popot.org/custom_levels.php?mod=0000052))
-- [283-296](https://princejs.com?level=283&strength=50): Repetition of Time ([source](https://www.popot.org/custom_levels.php?mod=0000010))
-- [297-310](https://princejs.com?level=297&strength=50): Same Story Different Version ([source](https://www.popot.org/custom_levels.php?mod=0000276))
+- [99](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=99&strength=50): Chamber Play (own)
+- [100](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=100&strength=50): Tower of Revenge (own)
+- [101-114](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=101&strength=50): Prince of Persia Revisited ([source](https://www.popot.org/custom_levels.php?mod=0000163))
+- [115-128](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=115&strength=50): Jaffar's House ([source](https://www.popot.org/custom_levels.php?mod=0000220))
+- [129-142](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=129&strength=50): Ipank's Levels ([source](https://www.popot.org/custom_levels.php?mod=0000151))
+- [143-156](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=143&strength=50): Barre's Alternative ([source](https://www.popot.org/custom_levels.php?mod=0000189))
+- [157-170](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=157&strength=50): Miracles Don't Exist ([source](https://www.popot.org/custom_levels.php?mod=0000098))
+- [171-184](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=171&strength=50): Babylon Tower Climb ([source](https://www.popot.org/custom_levels.php?mod=0000109))
+- [185-198](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=185&strength=50): Lost in Errors ([source](https://www.popot.org/custom_levels.php?mod=0000144))
+- [199-212](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=199&strength=50): Story Retold ([source](https://www.popot.org/custom_levels.php?mod=0000146))
+- [213-226](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=213&strength=50): Prince of Persia Guard Revolt ([source](https://www.popot.org/custom_levels.php?mod=0000162))
+- [227-240](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=227&strength=50): Return of Prince ([source](https://www.popot.org/custom_levels.php?mod=0000207))
+- [241-254](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=241&strength=50): The Sequel ([source](https://www.popot.org/custom_levels.php?mod=0000273))
+- [255-268](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=255&strength=50): Nahemsan ([source](https://www.popot.org/custom_levels.php?mod=0000272))
+- [269-282](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=269&strength=50): 4-Rooms Levelset ([source](https://www.popot.org/custom_levels.php?mod=0000052))
+- [283-296](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=283&strength=50): Repetition of Time ([source](https://www.popot.org/custom_levels.php?mod=0000010))
+- [297-310](https://vatsalyasharma.github.io/princeofpersia_1_dos?level=297&strength=50): Same Story Different Version ([source](https://www.popot.org/custom_levels.php?mod=0000276))
 
 ### Level Walkthrough
 
